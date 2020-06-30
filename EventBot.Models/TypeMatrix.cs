@@ -1,0 +1,57 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace EventBot.Models
+{
+    public class Types
+    {
+        //Normal = 1,
+        //Fighting = 2,
+        //Flying = 3,
+        //Poison = 4,
+        //Ground = 5,
+        //Rock = 6,
+        //Bug = 7,
+        //Ghost = 8,
+        //Steel = 9,
+        //Fire = 10,
+        //Water = 11
+        //Grass = 12,
+        //Electric = 13,
+        //Psychic = 14,
+        //Ice = 15,
+        //Dragon = 16,
+        //Fairy = 17,
+        //Dark = 18,
+
+        public const double STAB = 1.2;
+
+        public const double NORMAL = 1.0;
+        public const double NOT_EF = 0.625;
+        public const double VERY_E = 1.6;
+        public const double IMMUNE = 0.390625;
+
+        public static double[,] TypeMatrix = new double[18, 18] { 
+                //Normal, Fight , Flying, Poison, Ground, Rock  , Bug   , Ghost , Steel , Fire  , Water , Grass , Electr, Pysich, Ice   , Dragon, Fairy , Dark  ,
+/* Normal */    { NORMAL, NORMAL, NORMAL, NORMAL, NORMAL, NOT_EF, NORMAL, NORMAL, NOT_EF, NORMAL, NORMAL, NORMAL, NORMAL, NORMAL, NORMAL, NORMAL, NORMAL, NORMAL },
+/* Fighting */  { VERY_E, NORMAL, NOT_EF, NOT_EF, NORMAL, VERY_E, NOT_EF, IMMUNE, VERY_E, NORMAL, NORMAL, NORMAL, NORMAL, NOT_EF, VERY_E, NORMAL, NOT_EF, VERY_E },
+/* Flying */    { NORMAL, VERY_E, NORMAL, NORMAL, NORMAL, NOT_EF, VERY_E, NORMAL, NOT_EF, NORMAL, NORMAL, VERY_E, NOT_EF, VERY_E, NORMAL, NORMAL, NORMAL, NORMAL },
+/* Poison */    { NORMAL, NORMAL, NORMAL, NOT_EF, NOT_EF, NOT_EF, NORMAL, NOT_EF, IMMUNE, NORMAL, NORMAL, VERY_E, NORMAL, NORMAL, NORMAL, NORMAL, VERY_E, NORMAL },
+/* Ground */    { NORMAL, NORMAL, IMMUNE, VERY_E, NORMAL, VERY_E, NOT_EF, NORMAL, VERY_E, VERY_E, NORMAL, NOT_EF, VERY_E, NORMAL, NORMAL, NORMAL, NORMAL, NORMAL },
+/* Rock */      { NORMAL, NOT_EF, VERY_E, NORMAL, NOT_EF, NORMAL, VERY_E, NORMAL, NOT_EF, VERY_E, NORMAL, NORMAL, NORMAL, NORMAL, VERY_E, NORMAL, NORMAL, NORMAL },
+/* Bug */       { NORMAL, NOT_EF, NOT_EF, NOT_EF, NORMAL, NORMAL, NORMAL, NOT_EF, NOT_EF, NOT_EF, NORMAL, VERY_E, NORMAL, VERY_E, NORMAL, NORMAL, NOT_EF, VERY_E },
+/* Ghost */     { IMMUNE, NORMAL, NORMAL, NORMAL, NORMAL, NORMAL, NORMAL, VERY_E, NORMAL, NORMAL, NORMAL, NORMAL, NORMAL, VERY_E, NORMAL, NORMAL, NORMAL, NOT_EF },
+/* Steel */     { NORMAL, NORMAL, NORMAL, NORMAL, NORMAL, VERY_E, NORMAL, NORMAL, NOT_EF, NOT_EF, NOT_EF, NORMAL, NOT_EF, NORMAL, VERY_E, NORMAL, VERY_E, NORMAL },
+/* Fire */      { NORMAL, NORMAL, NORMAL, NORMAL, NORMAL, NOT_EF, VERY_E, NORMAL, VERY_E, NOT_EF, NOT_EF, VERY_E, NORMAL, NORMAL, VERY_E, NOT_EF, NORMAL, NORMAL },
+/* Water */     { NORMAL, NORMAL, NORMAL, NORMAL, VERY_E, VERY_E, NORMAL, NORMAL, NORMAL, VERY_E, NOT_EF, NOT_EF, NORMAL, NORMAL, NORMAL, NOT_EF, NORMAL, NORMAL },
+/* Grass */     { NORMAL, NORMAL, NOT_EF, NOT_EF, VERY_E, VERY_E, NOT_EF, NORMAL, NOT_EF, NOT_EF, VERY_E, NOT_EF, NORMAL, NORMAL, NORMAL, NOT_EF, NORMAL, NORMAL },
+/* Electric */  { NORMAL, NORMAL, VERY_E, NORMAL, IMMUNE, NORMAL, NORMAL, NORMAL, NORMAL, NORMAL, VERY_E, NOT_EF, NOT_EF, NORMAL, NORMAL, NOT_EF, NORMAL, NORMAL },
+/* Psychic */   { NORMAL, VERY_E, NORMAL, VERY_E, NORMAL, NORMAL, NORMAL, NORMAL, NOT_EF, NORMAL, NORMAL, NORMAL, NORMAL, NOT_EF, NORMAL, NORMAL, NORMAL, IMMUNE },
+/* Ice */       { NORMAL, NORMAL, VERY_E, NORMAL, VERY_E, NORMAL, NORMAL, NORMAL, NOT_EF, NOT_EF, NOT_EF, VERY_E, NORMAL, NORMAL, NOT_EF, VERY_E, NORMAL, NORMAL },
+/* Dragon */    { NORMAL, NORMAL, NORMAL, NORMAL, NORMAL, NORMAL, NORMAL, NORMAL, NOT_EF, NORMAL, NORMAL, NORMAL, NORMAL, NORMAL, NORMAL, VERY_E, IMMUNE, NORMAL },
+/* Fairy */     { NORMAL, VERY_E, NORMAL, NOT_EF, NORMAL, NORMAL, NORMAL, IMMUNE, NOT_EF, NOT_EF, NORMAL, NORMAL, NORMAL, NORMAL, NORMAL, VERY_E, NORMAL, VERY_E },
+/* Dark */      { NORMAL, NOT_EF, NORMAL, NORMAL, NORMAL, NORMAL, NORMAL, VERY_E, NORMAL, NORMAL, NORMAL, NORMAL, NORMAL, VERY_E, NORMAL, NORMAL, NOT_EF, NOT_EF },
+            };
+    }
+}

@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <nullable>enable</nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="PokeAlarm\basevalues.json" />
+    <None Remove="RocketMap\moves.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="PokeAlarm\basevalues.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RocketMap\moves.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="S2Geometry" Version="1.0.3" />
+  </ItemGroup>
+
+</Project>
