@@ -4,10 +4,10 @@
     <nullable>enable</nullable>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Discord.Net" Version="1.0.2"/>
-    <PackageReference Include="Telegram.Bot" Version="15.5.1"/>
+    <PackageReference Include="Discord.Net" Version="2.2.0" />
+    <PackageReference Include="Telegram.Bot" Version="15.7.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EventBot.DataAccess\EventBot.DataAccess.csproj"/>
+    <ProjectReference Include="..\EventBot.DataAccess\EventBot.DataAccess.csproj" />
   </ItemGroup>
 </Project>
