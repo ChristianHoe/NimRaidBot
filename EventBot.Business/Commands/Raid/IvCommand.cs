@@ -1,5 +1,4 @@
 ﻿using EventBot.Business.Interfaces;
-using EventBot.Business.TelegramProxies;
 using EventBot.DataAccess.Commands.Raid;
 using System.Globalization;
 using System.Threading.Tasks;
@@ -25,7 +24,7 @@ namespace EventBot.Business.Commands.Raid
         public override string HelpText => "Setzt das Minimum-IV-Level (0-100) welches gemeldet wird. -1 ist deaktiviert das Feature.";
         public override string Key => "/iv";
 
-        public override async Task<bool> Execute(Message message, string text, BaseTelegramBotClient bot, int step)
+        public override async Task<bool> Execute(Message message, string text, TelegramBotClient bot, int step)
         {
             var chatId = base.GetChatId(message);
 

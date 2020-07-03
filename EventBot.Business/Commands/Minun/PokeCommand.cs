@@ -1,6 +1,4 @@
 ﻿using EventBot.Business.Interfaces;
-using EventBot.Business.TelegramProxies;
-using EventBot.DataAccess.Commands.Minun;
 using EventBot.DataAccess.Queries.Base;
 using EventBot.Models;
 using EventBot.Models.PokeAlarm;
@@ -10,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Telegram.Bot;
 using Telegram.Bot.Types;
 
 namespace EventBot.Business.Commands.Minun
@@ -42,7 +41,7 @@ namespace EventBot.Business.Commands.Minun
         public override string Key => "/poke";
         public override string HelpText => "Fragt die Eigenschaften eines Pokemon ab.";
 
-        protected async Task<bool> Step0(Message message, string text, BaseTelegramBotClient bot, int step)
+        protected async Task<bool> Step0(Message message, string text, TelegramBotClient bot, int step)
         {
             var chatId = GetChatId(message);
 

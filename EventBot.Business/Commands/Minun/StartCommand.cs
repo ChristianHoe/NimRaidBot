@@ -1,9 +1,7 @@
 ﻿using EventBot.Business.Interfaces;
-using EventBot.Business.TelegramProxies;
 using EventBot.DataAccess.Commands.Base;
 using EventBot.DataAccess.Commands.Minun;
 using EventBot.DataAccess.Commands.Raid;
-using System;
 using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Exceptions;
@@ -34,7 +32,7 @@ namespace EventBot.Business.Commands.Minun
         public override string Key => "/start";
         public override string HelpText => "Willkommensnachricht";
 
-        public override async Task<bool> Execute(Message message, string text, BaseTelegramBotClient bot, int step)
+        public override async Task<bool> Execute(Message message, string text, TelegramBotClient bot, int step)
         {
             this.botAddCommand.Execute(new BotAddRequest { ChatId = base.GetChatId(message), BotId = bot.BotId });
             this.addMinunUserCommand.Execute(new AddUserRequest { UserId = base.GetUserId(message), FirstName = message.From.Username });

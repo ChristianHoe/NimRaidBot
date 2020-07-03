@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using EventBot.Business.Helper;
 using EventBot.Business.TelegramProxies;
 using EventBot.DataAccess.Queries.Raid;
+using Telegram.Bot;
 using Telegram.Bot.Types.Enums;
 
 namespace EventBot.Business.Tasks.NimPokeBot
@@ -13,8 +14,8 @@ namespace EventBot.Business.Tasks.NimPokeBot
     public class QuestAnnouncer : IScheduledTask
     {
         private readonly PichuProxy pichuProxy;
-        private readonly BaseTelegramBotClient proxy;
-        private readonly BaseTelegramBotClient raidBotProxy;
+        private readonly TelegramBotClient proxy;
+        private readonly TelegramBotClient raidBotProxy;
 
         private readonly IGetActivePogoGroups activeUsers;
         private readonly DataAccess.Queries.Raid.IGetNextQuestToProcessQuery getNextQuestToProcessQuery;

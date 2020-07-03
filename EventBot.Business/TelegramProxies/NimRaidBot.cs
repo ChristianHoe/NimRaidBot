@@ -1,6 +1,8 @@
-﻿namespace EventBot.Business.TelegramProxies
+﻿using Telegram.Bot;
+
+namespace EventBot.Business.TelegramProxies
 {
-    public class NimRaidBot : BaseTelegramBotClient
+    public class NimRaidBot : TelegramBotClient
     {
         public NimRaidBot(string token)
             : base(token)

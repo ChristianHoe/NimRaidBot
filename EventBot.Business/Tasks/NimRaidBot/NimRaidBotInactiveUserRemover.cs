@@ -3,16 +3,16 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using EventBot.Business.Helper;
-using EventBot.Business.TelegramProxies;
 using EventBot.DataAccess.Commands.Raid;
 using EventBot.DataAccess.Queries.Raid;
+using Telegram.Bot;
 using Telegram.Bot.Types.Enums;
 
 namespace EventBot.Business.Tasks.NimRaidBot
 {
     public class NimRaidBotInactiveUserRemover : IScheduledTask
     {
-        private readonly BaseTelegramBotClient proxy;
+        private readonly TelegramBotClient proxy;
         private readonly IGetActivePogoGroups getActiveUsers;
         private readonly IRemoveMembershipByUserIdsCommand removeMembershipByUserIdsCommand;
 

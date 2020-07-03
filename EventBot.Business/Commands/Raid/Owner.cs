@@ -1,11 +1,5 @@
 using EventBot.Business.Interfaces;
-using EventBot.Business.TelegramProxies;
-using EventBot.DataAccess.Commands.Minun;
 using EventBot.DataAccess.Queries.Raid;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
 using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Types;
@@ -35,7 +29,7 @@ namespace EventBot.Business.Commands.Raid
         public override string HelpText => "Liest den Ersteller eines Raids aus";
         public override string Key => "/owner";
 
-        public override async Task<bool> Execute(Message message, string text, BaseTelegramBotClient bot, int step)
+        public override async Task<bool> Execute(Message message, string text, TelegramBotClient bot, int step)
         {
             var chatId = base.GetChatId(message);
             var messageId = message.ReplyToMessage?.MessageId;

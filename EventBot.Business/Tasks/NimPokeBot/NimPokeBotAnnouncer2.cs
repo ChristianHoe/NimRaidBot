@@ -1,6 +1,5 @@
 ﻿using EventBot.DataAccess.Models;
 using EventBot.Business.Helper;
-using EventBot.Business.Interfaces;
 using EventBot.Business.TelegramProxies;
 using System;
 using System.Collections.Generic;
@@ -16,8 +15,8 @@ namespace EventBot.Business.NimPokeBot
     public class Announcer2 : IScheduledTask
     {
         private readonly PichuProxy pichuProxy;
-        private readonly BaseTelegramBotClient proxy;
-        private readonly BaseTelegramBotClient raidBotProxy;
+        private readonly TelegramBotClient proxy;
+        private readonly TelegramBotClient raidBotProxy;
 
         private readonly IGetActivePogoGroups activeUsers;
         private readonly DataAccess.Queries.Pokes.IMarkAsProcessedQuery markAsProcessedQuery;

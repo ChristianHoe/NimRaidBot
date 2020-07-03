@@ -1,6 +1,5 @@
 ﻿using EventBot.Business.Helper;
 using EventBot.Business.Tasks;
-using EventBot.Business.TelegramProxies;
 using EventBot.DataAccess.Commands.Pokes;
 using EventBot.DataAccess.Queries.Pokes;
 using EventBot.DataAccess.Queries.Raid;
@@ -8,12 +7,13 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Telegram.Bot;
 
 namespace EventBot.Business.NimPokeBot
 {
     public class NimPokeBotCleaner : IScheduledTask
     {
-        private readonly BaseTelegramBotClient proxy;
+        private readonly TelegramBotClient proxy;
         private readonly IGetPokesToCleanUpQuery getPokesToCleanUpQuery;
         private readonly IGetActivePogoGroups getActiveUsers;
         private readonly IRemoveNotificationsByIdsCommand removeNotificationsByIdsCommand;

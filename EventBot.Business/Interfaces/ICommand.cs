@@ -38,7 +38,7 @@ namespace EventBot.Business.Interfaces
         /// <param name="bot"></param>
         /// <param name="step"></param>
         /// <returns>If needs state support True := finally finished => state support can be removed</returns>
-        Task<bool> Execute(Message message, string text, BaseTelegramBotClient bot, int step);
+        Task<bool> Execute(Message message, string text, TelegramBotClient bot, int step);
     }
 
     public abstract class Command : ICommand
@@ -49,7 +49,7 @@ namespace EventBot.Business.Interfaces
 
         public abstract string HelpText { get; }
         public abstract string Key { get; }
-        public abstract Task<bool> Execute(Message message, string text, BaseTelegramBotClient bot, int step);
+        public abstract Task<bool> Execute(Message message, string text, TelegramBotClient bot, int step);
 
         protected long GetChatId(Message message)
         {
@@ -86,7 +86,7 @@ namespace EventBot.Business.Interfaces
     {
         public override bool UsesStates {  get { return true; } }
 
-        protected Dictionary<int, Func<Message, string, BaseTelegramBotClient, int, Task<bool>>> Steps = new Dictionary<int, Func<Message, string, BaseTelegramBotClient, int, Task<bool>>>();
+        protected Dictionary<int, Func<Message, string, TelegramBotClient, int, Task<bool>>> Steps = new Dictionary<int, Func<Message, string, TelegramBotClient, int, Task<bool>>>();
 
         readonly protected IStateUpdateCommand stateUpdateCommand;
         readonly protected IStatePopCommand statePopCommand;
@@ -111,7 +111,7 @@ namespace EventBot.Business.Interfaces
             this.stateUpdateCommand.Execute(new StateUpdateRequest(new State(message.Chat.Id, this.Key, step)));
         }
 
-        public override async Task<bool> Execute(Message message, string text, BaseTelegramBotClient bot, int step)
+        public override async Task<bool> Execute(Message message, string text, TelegramBotClient bot, int step)
         {
             if (step == 0)
             {

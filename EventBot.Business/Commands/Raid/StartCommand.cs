@@ -1,8 +1,8 @@
 ﻿using EventBot.Business.Interfaces;
-using EventBot.Business.TelegramProxies;
 using EventBot.DataAccess.Commands.Raid;
 using EventBot.DataAccess.Queries.Raid;
 using System.Threading.Tasks;
+using Telegram.Bot;
 using Telegram.Bot.Types;
 
 namespace EventBot.Business.Commands.Raid
@@ -37,7 +37,7 @@ namespace EventBot.Business.Commands.Raid
             get { return "/start"; }
         }
 
-        public override async Task<bool> Execute(Message message, string text, BaseTelegramBotClient bot, int step)
+        public override async Task<bool> Execute(Message message, string text, TelegramBotClient bot, int step)
         {
             if (message.Chat.Type != Telegram.Bot.Types.Enums.ChatType.Private)
             {

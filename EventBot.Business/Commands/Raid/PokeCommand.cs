@@ -1,10 +1,7 @@
 ﻿using EventBot.Business.Interfaces;
-using EventBot.Business.TelegramProxies;
 using EventBot.DataAccess.Commands.Minun;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Types;
@@ -31,7 +28,7 @@ namespace EventBot.Business.Commands.Raid
         public override string HelpText => "De-/Aktiviert die Benachrichtung zu einem Pokemon. Ein negativer IV entfernt die Benachrichtigung. /poke [id+] [iv*] [M|W*]";
         public override string Key => "/poke";
 
-        public override async Task<bool> Execute(Message message, string text, BaseTelegramBotClient bot, int step)
+        public override async Task<bool> Execute(Message message, string text, TelegramBotClient bot, int step)
         {
             var chatId = base.GetChatId(message);
 

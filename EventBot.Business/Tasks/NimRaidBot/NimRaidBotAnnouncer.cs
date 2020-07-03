@@ -1,6 +1,5 @@
 ﻿using EventBot.Business.Helper;
 using EventBot.Business.Tasks;
-using EventBot.Business.TelegramProxies;
 using EventBot.DataAccess.ModelsEx;
 using EventBot.DataAccess.Queries.Minun;
 using EventBot.DataAccess.Queries.Raid;
@@ -8,12 +7,13 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Telegram.Bot;
 
 namespace EventBot.Business.NimRaidBot
 {
     public class Announcer : IScheduledTask
     {
-        readonly private BaseTelegramBotClient proxy;
+        readonly private TelegramBotClient proxy;
 
         private readonly IGetNextNewRaidQuery getNextNewRaidQuery;
         private readonly IMarkEventAsProcessedQuery markAsProcessedQuery;

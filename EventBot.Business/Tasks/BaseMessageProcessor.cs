@@ -1,12 +1,12 @@
 ﻿using EventBot.Business.Helper;
 using EventBot.Business.Interfaces;
 using EventBot.Business.Intrastructure;
-using EventBot.Business.TelegramProxies;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 
@@ -14,14 +14,14 @@ namespace EventBot.Business.Tasks
 {
     public abstract class BaseMessageProcessor : IScheduledTask
     {
-        private readonly BaseTelegramBotClient proxy;
+        private readonly TelegramBotClient proxy;
         private readonly BaseDispatcher dispatcher;
 
         readonly private Queries.StatePeakQuery lastStateQuery;
         readonly private DataAccess.Commands.Raid.IModifyChatTitleCommand modifyChatTitleCommand;
 
         public BaseMessageProcessor(
-            BaseTelegramBotClient proxy,
+            TelegramBotClient proxy,
             BaseDispatcher dispatcher,
             Queries.StatePeakQuery lastStateQuery,
             DataAccess.Commands.Raid.IModifyChatTitleCommand modifyChatTitleCommand

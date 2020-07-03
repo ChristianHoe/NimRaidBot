@@ -1,12 +1,11 @@
 using System;
-using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using EventBot.Business.Interfaces;
-using EventBot.Business.TelegramProxies;
 using EventBot.DataAccess.Commands.Raid;
 using EventBot.DataAccess.Models;
 using EventBot.DataAccess.Queries.Raid;
+using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 
@@ -37,7 +36,7 @@ namespace EventBot.Business.Commands.Raid
         public override string HelpText => "Aktualisiert den Raidboss des zugehörigen Raids per Reply";
         public override string Key => "[RaidBossName]";
 
-        public override async Task<bool> Execute(Message message, string text, BaseTelegramBotClient bot, int step)
+        public override async Task<bool> Execute(Message message, string text, TelegramBotClient bot, int step)
         {
             var chatId = base.GetChatId(message);
             var messageId = message.ReplyToMessage?.MessageId;

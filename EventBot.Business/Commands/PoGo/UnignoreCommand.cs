@@ -1,6 +1,6 @@
 ﻿using EventBot.Business.Interfaces;
-using EventBot.Business.TelegramProxies;
 using System.Threading.Tasks;
+using Telegram.Bot;
 using Telegram.Bot.Types;
 
 namespace EventBot.Business.Commands.PoGo
@@ -30,7 +30,7 @@ namespace EventBot.Business.Commands.PoGo
             get { return "/unignore"; }
         }
 
-        public override async Task<bool> Execute(Message message, string text, BaseTelegramBotClient bot, int step)
+        public override async Task<bool> Execute(Message message, string text, TelegramBotClient bot, int step)
         {
             var userId = message.From.Id;
             int monsterId;

@@ -1,6 +1,6 @@
 ﻿using EventBot.Business.Interfaces;
-using EventBot.Business.TelegramProxies;
 using System.Threading.Tasks;
+using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
 
@@ -31,7 +31,7 @@ namespace EventBot.Business.Commands.PoGo
             get { return "/poll"; }
         }
 
-        public override async Task<bool> Execute(Message message, string text, BaseTelegramBotClient bot, int step)
+        public override async Task<bool> Execute(Message message, string text, TelegramBotClient bot, int step)
         {
             if (string.IsNullOrWhiteSpace(text))
             {

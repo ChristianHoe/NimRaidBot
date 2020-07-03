@@ -1,6 +1,4 @@
 ﻿using EventBot.Business.Helper;
-using EventBot.Business.Interfaces;
-using EventBot.Business.TelegramProxies;
 using EventBot.DataAccess.Queries.Raid;
 using System;
 using System.Threading.Tasks;
@@ -14,7 +12,7 @@ namespace EventBot.Business.NimRaidBot
 {
     public class PollRemover : IScheduledTask
     {
-        private readonly BaseTelegramBotClient proxy;
+        private readonly TelegramBotClient proxy;
         private readonly IGetPollsToCleanUpsQuery getPollsToCleanUpsQuery;
         private readonly IGetActivePogoGroups getActiveUsers;
         private readonly IDeletePollsByIdsCommand deletePollsByIdsCommand;

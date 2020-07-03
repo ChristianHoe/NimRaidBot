@@ -1,9 +1,6 @@
 ﻿using EventBot.Business.Interfaces;
-using EventBot.Business.TelegramProxies;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
+using Telegram.Bot;
 using Telegram.Bot.Types;
 
 namespace EventBot.Business.Commands.Minun
@@ -28,7 +25,7 @@ namespace EventBot.Business.Commands.Minun
         public override string Key => "/gyms";
         public override string HelpText => "De-/Aktiviert die Benachrichtigung für einzelne Gyms";
 
-        public override async Task<bool> Execute(Message message, string text, BaseTelegramBotClient bot, int step)
+        public override async Task<bool> Execute(Message message, string text, TelegramBotClient bot, int step)
         {
             // TODO:
             //var z = this.getCurrentPokeSettings.Execute(new GetCurrentPokeSettingsRequest { UserId = base.GetUserId(message) });

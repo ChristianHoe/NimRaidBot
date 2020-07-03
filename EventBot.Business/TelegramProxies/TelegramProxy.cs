@@ -1,6 +1,8 @@
-﻿namespace EventBot.Business.TelegramProxies
+﻿using Telegram.Bot;
+
+namespace EventBot.Business.TelegramProxies
 {
-    public class TelegramProxy : BaseTelegramBotClient
+    public class TelegramProxy : TelegramBotClient
     {
         public TelegramProxy(string token)
             : base(token)

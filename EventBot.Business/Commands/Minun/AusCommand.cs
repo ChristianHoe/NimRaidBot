@@ -2,6 +2,7 @@
 using EventBot.Business.TelegramProxies;
 using EventBot.DataAccess.Commands.Minun;
 using System.Threading.Tasks;
+using Telegram.Bot;
 using Telegram.Bot.Exceptions;
 using Telegram.Bot.Types;
 
@@ -28,7 +29,7 @@ namespace EventBot.Business.Commands.Minun
         public override string Key => "/aus";
         public override string HelpText => "Deaktiviert die Benachrichtigungen. /aus";
 
-        public override async Task<bool> Execute(Message message, string text, BaseTelegramBotClient bot, int step)
+        public override async Task<bool> Execute(Message message, string text, TelegramBotClient bot, int step)
         {
             this.disableNotificationCommand.Execute(new DisableNotificationsRequest { UserId = GetUserId(message), BotId = bot.BotId });
 
