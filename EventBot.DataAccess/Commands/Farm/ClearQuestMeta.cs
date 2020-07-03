@@ -27,7 +27,7 @@ namespace EventBot.DataAccess.Commands.Farm
             using (var db = databaseFactory.CreateNew())
             {
                 var date = DateTime.UtcNow.AddHours(-4);
-                db.Database.ExecuteSqlCommand("DELETE FROM POGO_QUESTS_META WHERE CREATED < @p0", date);
+                db.Database.ExecuteSqlInterpolated($"DELETE FROM POGO_QUESTS_META WHERE CREATED < {date}");
 
                 return;
             }

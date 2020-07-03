@@ -28,7 +28,7 @@ namespace EventBot.DataAccess.Commands.Raid
             using (var db = databaseFactory.CreateNew())
             {
                 var date = DateTime.UtcNow.AddDays(-7);
-                db.Database.ExecuteSqlCommand("DELETE FROM POGO_RAIDS WHERE FINISHED < @p0", date);
+                db.Database.ExecuteSqlInterpolated($"DELETE FROM POGO_RAIDS WHERE FINISHED < {date}");
 
                 return;
             }
