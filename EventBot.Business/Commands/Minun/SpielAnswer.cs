@@ -7,7 +7,7 @@ using Telegram.Bot.Types;
 namespace EventBot.Business.Commands.Minun {
     public interface ISpielAnswer : IAnswer { }
 
-    public class SpielAnswer : ISpielAnswer {
+    public class SpielAnswer : Answer, ISpielAnswer {
         private readonly IGameAnswerCommand gameAnswerCommand;
         
         public SpielAnswer (
@@ -17,11 +17,11 @@ namespace EventBot.Business.Commands.Minun {
             this.gameAnswerCommand = gameAnswerCommand;
         }
 
-        public bool CanExecute (CallbackQuery message) {
+        public override bool CanExecute (CallbackQuery message) {
             return true;
         }
 
-        public async Task<AnswerResult> Execute (CallbackQuery message, string text, TelegramBotClient bot) {
+        public override async Task<AnswerResult> ExecuteAsync (CallbackQuery message, string text, TelegramBotClient bot) {
             var messageId = this.GetMessageId (message);
             var chatId = this.GetChatId (message);
             var userId = this.GetUserId (message);
@@ -32,18 +32,6 @@ namespace EventBot.Business.Commands.Minun {
 
             this.gameAnswerCommand.Execute(new GameAnswerRequest{UserId = userId, UserName = userName.Length <= 25 ? userName : userName.Substring(0, 25), Choice = pokeId, MessageId = messageId, ChatId = chatId });
             return new AnswerResult(EventBot.Models.GoMap.Helper.PokeNames[pokeId]);
-        }
-
-        private long GetChatId (CallbackQuery message) {
-            return message.Message.Chat.Id;
-        }
-
-        private int GetMessageId (CallbackQuery message) {
-            return message.Message.MessageId;
-        }
-
-        private int GetUserId (CallbackQuery message) {
-            return message.From.Id;
         }
     }
 }

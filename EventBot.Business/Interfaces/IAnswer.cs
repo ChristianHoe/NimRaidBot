@@ -19,6 +19,27 @@ namespace EventBot.Business.Interfaces
     public interface IAnswer
     {
         bool CanExecute(CallbackQuery message);
-        Task<AnswerResult> Execute(CallbackQuery message, string text, TelegramBotClient bot);
+        Task<AnswerResult> ExecuteAsync(CallbackQuery message, string text, TelegramBotClient bot);
+    }
+
+    public abstract class Answer : IAnswer
+    {
+        public abstract bool CanExecute(CallbackQuery message);
+        public abstract Task<AnswerResult> ExecuteAsync(CallbackQuery message, string text, TelegramBotClient bot);
+
+        protected long GetChatId(CallbackQuery message)
+        {
+            return message.Message.Chat.Id;
+        }
+
+        protected int GetMessageId(CallbackQuery message)
+        {
+            return message.Message.MessageId;
+        }
+
+        protected int GetUserId(CallbackQuery message)
+        {
+            return message.From.Id;
+        }
     }
 }

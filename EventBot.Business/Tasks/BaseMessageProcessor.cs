@@ -131,7 +131,7 @@ namespace EventBot.Business.Tasks
             var answer = this.dispatcher.GetAnswer(callbackQuery);
             if (answer != null)
             {
-                return await answer.Execute(callbackQuery, callbackQuery.Data, proxy).ConfigureAwait(false);
+                return await answer.ExecuteAsync(callbackQuery, callbackQuery.Data, proxy).ConfigureAwait(false);
             }
 
             return new AnswerResult();

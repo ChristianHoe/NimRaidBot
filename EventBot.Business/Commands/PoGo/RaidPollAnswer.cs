@@ -1,19 +1,14 @@
 ﻿using EventBot.Business.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Types;
-using Telegram.Bot.Types.ReplyMarkups;
 
 namespace EventBot.Business.Commands.PoGo
 {
     public interface IRaidPollAnswer : IAnswer
     { }
 
-    public class RaidPollAnswer : IRaidPollAnswer
+    public class RaidPollAnswer : Answer, IRaidPollAnswer
     {
         private readonly DataAccess.Queries.PoGo.IIsActivePoll isActivePoll;
         private readonly DataAccess.Queries.PoGo.IActivePoll activePoll;
@@ -40,12 +35,12 @@ namespace EventBot.Business.Commands.PoGo
             this.getUserByIdQuery = getUserByIdQuery;
         }
 
-        public bool CanExecute(CallbackQuery message)
+        public override bool CanExecute(CallbackQuery message)
         {
             return this.isActivePoll.Execute(new DataAccess.Queries.PoGo.IsActivePollRequest { ChatId = this.GetChatId(message), MessageId = this.GetMessageId(message) });
         }
 
-        public async Task<AnswerResult> Execute(CallbackQuery message, string text, TelegramBotClient bot)
+        public override async Task<AnswerResult> ExecuteAsync(CallbackQuery message, string text, TelegramBotClient bot)
         {
             //var messageId = this.GetMessageId(message);
             //var chatId = this.GetChatId(message);
@@ -67,16 +62,6 @@ namespace EventBot.Business.Commands.PoGo
             //await bot.EditMessageTextAsync(GetChatId(message), messageId, updatedMessage, replyMarkup: reply).ConfigureAwait(false);
 
             return new AnswerResult();
-        }
-
-        private long GetChatId(CallbackQuery message)
-        {
-            return message.Message.Chat.Id;
-        }
-
-        private int GetMessageId(CallbackQuery message)
-        {
-            return message.Message.MessageId;
         }
     }
 }

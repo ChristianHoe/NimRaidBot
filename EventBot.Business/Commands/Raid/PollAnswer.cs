@@ -14,7 +14,7 @@ namespace EventBot.Business.Commands.Raid
     public interface IPollAnswer : IAnswer
     { }
 
-    public class PollAnswer : IPollAnswer
+    public class PollAnswer : Answer, IPollAnswer
     {
         private readonly DataAccess.Queries.PoGo.IIsActivePoll isActivePoll;
         private readonly DataAccess.Queries.PoGo.IActivePoll activePoll;
@@ -44,12 +44,12 @@ namespace EventBot.Business.Commands.Raid
             this.getUserByIdQuery = getUserByIdQuery;
         }
 
-        public bool CanExecute(CallbackQuery message)
+        public override bool CanExecute(CallbackQuery message)
         {
             return this.isActivePoll.Execute(new DataAccess.Queries.PoGo.IsActivePollRequest { ChatId = this.GetChatId(message), MessageId = this.GetMessageId(message) });
         }
 
-        public async Task<AnswerResult> Execute(CallbackQuery message, string text, TelegramBotClient bot)
+        public async override Task<AnswerResult> ExecuteAsync(CallbackQuery message, string text, TelegramBotClient bot)
         {
             var messageId = this.GetMessageId(message);
             var chatId = this.GetChatId(message);
@@ -137,21 +137,6 @@ namespace EventBot.Business.Commands.Raid
             this.updateMembershipAccessCommand.Execute(new DataAccess.Commands.Raid.UpdateMembershipAccessRequest { GroupId = chatId, UserId = GetUserId(message) });
 
             return new AnswerResult();
-        }
-
-        private long GetChatId(CallbackQuery message)
-        {
-            return message.Message.Chat.Id;
-        }
-
-        private int GetMessageId(CallbackQuery message)
-        {
-            return message.Message.MessageId;
-        }
-
-        private int GetUserId(CallbackQuery message)
-        {
-            return message.From.Id;
         }
     }
 }

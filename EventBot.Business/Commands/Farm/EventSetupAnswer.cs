@@ -1,7 +1,6 @@
 ﻿using EventBot.Business.Helper;
 using EventBot.Business.Interfaces;
 using EventBot.DataAccess.Commands.Farm;
-using EventBot.DataAccess.Helper;
 using EventBot.DataAccess.Queries.Farm;
 using System;
 using System.Linq;
@@ -14,7 +13,7 @@ namespace EventBot.Business.Commands.Farm
     public interface IEventSetupAnswer : IAnswer
     { }
 
-    public class EventSetupAnswer : IEventSetupAnswer
+    public class EventSetupAnswer : Answer, IEventSetupAnswer
     {
         private readonly IIsActiveEventSetupQuery isActiveEventSetupQuery;
         private readonly IEventSetupQuery eventSetupQuery;
@@ -44,12 +43,12 @@ namespace EventBot.Business.Commands.Farm
             this.createEventCommand = createEventCommand;
         }
 
-        public bool CanExecute(CallbackQuery message)
+        public override bool CanExecute(CallbackQuery message)
         {
             return this.isActiveEventSetupQuery.Execute(new IsActiveEventSetupRequest { ChatId = this.GetChatId(message), MessageId = this.GetMessageId(message) });
         }
 
-        public async Task<AnswerResult> Execute(CallbackQuery message, string text, TelegramBotClient bot)
+        public override async Task<AnswerResult> ExecuteAsync(CallbackQuery message, string text, TelegramBotClient bot)
         {
             var messageId = this.GetMessageId(message);
             var chatId = this.GetChatId(message);
@@ -191,21 +190,6 @@ namespace EventBot.Business.Commands.Farm
             this.updateEventSetup.Execute(new UpdateEventSetupRequest { EventSetup = oldPoll });
 
             return new AnswerResult();
-        }
-
-        private long GetChatId(CallbackQuery message)
-        {
-            return message.Message.Chat.Id;
-        }
-
-        private int GetMessageId(CallbackQuery message)
-        {
-            return message.Message.MessageId;
-        }
-
-        private int GetUserId(CallbackQuery message)
-        {
-            return message.From.Id;
         }
     }
 }
