@@ -1,5 +1,6 @@
 using EventBot.Business.Helper;
 using EventBot.Business.Interfaces;
+using EventBot.Business.Queries;
 using EventBot.DataAccess.Commands.Raid;
 using EventBot.DataAccess.ModelsEx;
 using EventBot.DataAccess.Queries.Raid;
@@ -30,6 +31,7 @@ namespace EventBot.Business.Commands.Minun
         private readonly ISetTitleForManualRaidCommand setTitleForManualRaidCommand;
         private readonly ICreateManuelRaidCommand createManuelRaidCommand;
         private readonly IGetSpecialGymsForChatsQuery getSpecialGymsQuery;
+        private readonly IGetPogoConfigurationQuery getPogoConfigurationQuery;
         private readonly TelegramProxies.NimRaidBot nimRaidBot;
 
         public CreateEventCommand
@@ -51,6 +53,7 @@ namespace EventBot.Business.Commands.Minun
             ISetTitleForManualRaidCommand setTitleForManualRaidCommand,
             ICreateManuelRaidCommand createManuelRaidCommand,
             IGetSpecialGymsForChatsQuery getSpecialGymsQuery,
+            IGetPogoConfigurationQuery getPogoConfigurationQuery,
             TelegramProxies.NimRaidBot nimRaidBot
 
             )
@@ -68,7 +71,7 @@ namespace EventBot.Business.Commands.Minun
             this.setTitleForManualRaidCommand = setTitleForManualRaidCommand;
             this.createManuelRaidCommand = createManuelRaidCommand;
             this.getSpecialGymsQuery = getSpecialGymsQuery;
-
+            this.getPogoConfigurationQuery = getPogoConfigurationQuery;
             this.nimRaidBot = nimRaidBot;
 
             base.Steps.Add(0, this.Step0);
@@ -328,7 +331,9 @@ namespace EventBot.Business.Commands.Minun
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);
 
-            this.createManuelRaidCommand.Execute(new CreateManuelRaidRequest { UserId = userId });
+            var pogoConfiguration = this.getPogoConfigurationQuery.Execute(new GetPogoConfigurationRequest());
+
+            this.createManuelRaidCommand.Execute(new CreateManuelRaidRequest { UserId = userId, DurationInMinutes = pogoConfiguration.RaidDurationInMin });
 
             var current = this.getCurrentManualRaidQuery.Execute(new GetCurrentManualRaidRequest { UserId = userId });
 

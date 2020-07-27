@@ -24,6 +24,7 @@ namespace EventBot.DataAccess.Models
         public virtual DbSet<Locations> Locations { get; set; }
         public virtual DbSet<Memberships> Memberships { get; set; }
         public virtual DbSet<PogoChatPoke> PogoChatPoke { get; set; }
+        public virtual DbSet<PogoConfigurations> PogoConfigurations { get; set; }
         public virtual DbSet<PogoGamePokes> PogoGamePokes { get; set; }
         public virtual DbSet<PogoGamePokesAnswers> PogoGamePokesAnswers { get; set; }
         public virtual DbSet<PogoGamePokesMeta> PogoGamePokesMeta { get; set; }
@@ -277,6 +278,19 @@ namespace EventBot.DataAccess.Models
                     .HasColumnType("int(11)");
 
                 entity.Property(e => e.Show).HasColumnName("´SHOW´");
+            });
+
+            modelBuilder.Entity<PogoConfigurations>(entity =>
+            {
+                entity.ToTable("POGO_CONFIGURATIONS");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("ID")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.RaidDurationInMin)
+                    .HasColumnName("RAID_DURATION_IN_MIN")
+                    .HasColumnType("int(11)");
             });
 
             modelBuilder.Entity<PogoGamePokes>(entity =>

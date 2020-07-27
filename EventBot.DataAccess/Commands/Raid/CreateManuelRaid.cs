@@ -8,6 +8,7 @@ namespace EventBot.DataAccess.Commands.Raid
     public class CreateManuelRaidRequest
     {
         public long UserId;
+        public int DurationInMinutes;
     }
 
     public interface ICreateManuelRaidCommand : ICommand<CreateManuelRaidRequest>
@@ -32,7 +33,7 @@ namespace EventBot.DataAccess.Commands.Raid
 
                 if (userraid != null)
                 {
-                    var raid = new PogoRaids { ChatId = null, Finished = (userraid.Start ?? DateTime.UtcNow).AddMinutes(45), Start = (userraid.Start ?? DateTime.UtcNow), GymId = userraid.GymId ?? 0, Level = userraid.Level ?? 0, PokeId = userraid.PokeId ?? 0, OwnerId = userraid.UserId, Title = userraid.Title };
+                    var raid = new PogoRaids { ChatId = null, Finished = (userraid.Start ?? DateTime.UtcNow).AddMinutes(request.DurationInMinutes), Start = (userraid.Start ?? DateTime.UtcNow), GymId = userraid.GymId ?? 0, Level = userraid.Level ?? 0, PokeId = userraid.PokeId ?? 0, OwnerId = userraid.UserId, Title = userraid.Title };
                     db.PogoRaids.Add(raid);
                     db.SaveChanges();
 

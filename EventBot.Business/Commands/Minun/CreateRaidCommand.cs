@@ -1,4 +1,5 @@
 ﻿using EventBot.Business.Interfaces;
+using EventBot.Business.Queries;
 using EventBot.DataAccess.Commands.Raid;
 using EventBot.DataAccess.ModelsEx;
 using EventBot.DataAccess.Queries.Raid;
@@ -30,6 +31,7 @@ namespace EventBot.Business.Commands.Minun
         private readonly ISetPokeIdForManualRaidCommand setPokeIdForManualRaidCommand;
         private readonly ICreateManuelRaidCommand createManuelRaidCommand;
         private readonly IGetSpecialGymsForChatsQuery getSpecialGymsQuery;
+        private readonly IGetPogoConfigurationQuery getPogoConfigurationQuery;
         private readonly TelegramProxies.NimRaidBot nimRaidBot;
 
         public CreateRaidCommand
@@ -51,6 +53,7 @@ namespace EventBot.Business.Commands.Minun
             ISetPokeIdForManualRaidCommand setPokeIdForManualRaidCommand,
             ICreateManuelRaidCommand createManuelRaidCommand,
             IGetSpecialGymsForChatsQuery getSpecialGymsQuery,
+            IGetPogoConfigurationQuery getPogoConfigurationQuery,
             TelegramProxies.NimRaidBot nimRaidBot
 
             )
@@ -68,7 +71,7 @@ namespace EventBot.Business.Commands.Minun
             this.setPokeIdForManualRaidCommand = setPokeIdForManualRaidCommand;
             this.createManuelRaidCommand = createManuelRaidCommand;
             this.getSpecialGymsQuery = getSpecialGymsQuery;
-
+            this.getPogoConfigurationQuery = getPogoConfigurationQuery;
             this.nimRaidBot = nimRaidBot;
 
             base.Steps.Add(0, this.Step0);
@@ -341,7 +344,8 @@ namespace EventBot.Business.Commands.Minun
                 }
                 else
                 {
-                    start = start.AddMinutes(minuten - 45);
+                    var pogoConfigurations = this.getPogoConfigurationQuery.Execute(new GetPogoConfigurationRequest());
+                    start = start.AddMinutes(minuten - pogoConfigurations.RaidDurationInMin);
                 }
 
                 this.setNowForManualRaidCommand.Execute(new SetNowForManualRaidRequest { UserId = userId, Start = start });
@@ -394,7 +398,9 @@ namespace EventBot.Business.Commands.Minun
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);
 
-            this.createManuelRaidCommand.Execute(new CreateManuelRaidRequest { UserId = userId });
+            var pogoConfiguration = this.getPogoConfigurationQuery.Execute(new GetPogoConfigurationRequest());
+
+            this.createManuelRaidCommand.Execute(new CreateManuelRaidRequest { UserId = userId, DurationInMinutes = pogoConfiguration.RaidDurationInMin });
 
             var current = this.getCurrentManualRaidQuery.Execute(new GetCurrentManualRaidRequest { UserId = userId });
 

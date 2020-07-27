@@ -288,7 +288,8 @@ namespace EventBot
             container.Register<IQuery<IEnumerable<DataAccess.Models.PogoUser>>, Business.Queries.PoGo.ActiveUsersQuery>();
             container.Register<Business.Queries.IGetThrottleQuery, Business.Queries.GetThrottle>(Lifestyle.Singleton);
             container.Register<Business.Queries.IGetCurrentQuestsQuery, Business.Queries.GetCurrentQuests>(Lifestyle.Singleton);
-
+            container.Register<Business.Queries.IGetPogoConfigurationQuery, Business.Queries.GetPogoConfiguration>(Lifestyle.Singleton);
+            
             container.Register<DataAccess.Commands.IStatePopCommand, DataAccess.Commands.StatePop>();
             container.Register<DataAccess.Commands.IStatePushCommand, DataAccess.Commands.StatePush>();
             container.Register<DataAccess.Commands.IStateClearCommand, DataAccess.Commands.StateClear>();
@@ -376,6 +377,7 @@ namespace EventBot
             container.Register<DataAccess.Queries.PoGo.IActivePoll, DataAccess.Queries.PoGo.ActivePoll>();
             container.Register<DataAccess.Queries.PoGo.IPollVotesUsers, DataAccess.Queries.PoGo.PollVotes>();
             container.Register<DataAccess.Queries.PoGo.IGetAllChatsForArea, DataAccess.Queries.PoGo.GetAllChatsForArea>();
+            container.Register<DataAccess.Queries.PoGo.IGetPogoConfiguration, DataAccess.Queries.PoGo.GetPogoConfiguration>();
 
             container.Register<DataAccess.Queries.Raid.IGetCurrentChatSettingsQuery, DataAccess.Queries.Raid.GetCurrentChatSettings>();
             container.Register<DataAccess.Queries.Raid.IGetCurrentUserSettingsQuery, DataAccess.Queries.Raid.GetCurrentUserSettings>();
