@@ -250,9 +250,10 @@ namespace EventBot.Business.Tasks
             var state = this.lastStateQuery.Execute(message);
             if (state != null)
             {
-                var command = this.dispatcher.GetCommand(state.Command);
+                var command = this.dispatcher.GetStatefulCommand(state.Command);
+                if (command != null)
+                    await command.Execute2(message, message.Text, proxy, state.Step);
 
-                await this.RunCommand(command, message, message.Text, state.Step);
                 return;
             }
 

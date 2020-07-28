@@ -28,6 +28,11 @@ namespace EventBot.Business.Intrastructure
             return this.commands[key];
         }
 
+        public IStatefulCommand? GetStatefulCommand(string key)
+        {
+            return this.commands[key] as IStatefulCommand;
+        }
+
         public IAnswer GetAnswer(Telegram.Bot.Types.CallbackQuery callbackQuery)
         {
             foreach (var answer in answers)

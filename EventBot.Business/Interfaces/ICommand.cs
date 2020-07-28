@@ -41,6 +41,11 @@ namespace EventBot.Business.Interfaces
         Task<bool> Execute(Message message, string text, TelegramBotClient bot, int step);
     }
 
+    public interface IStatefulCommand : ICommand
+    {
+        Task Execute2(Message message, string text, TelegramBotClient bot, int step);
+    }
+
     public abstract class Command : ICommand
     {
         protected Regex SplitParameterRegEx {  get { return new Regex(@"""[^ ""]*"" | '[^'] * '|[^\s]+"); } }
@@ -82,7 +87,7 @@ namespace EventBot.Business.Interfaces
         //}
     }
 
-    public abstract class StatefulCommand : Command
+    public abstract class StatefulCommand : Command, IStatefulCommand
     {
         public override bool UsesStates {  get { return true; } }
 
@@ -121,6 +126,13 @@ namespace EventBot.Business.Interfaces
                     this.statePushCommand.Execute(new StatePushRequest(new State(message.Chat.Id, this.Key, 0)));
             }
 
+// TODO !!
+             await Execute2(message, text, bot, step);
+            return true;
+        } 
+
+        public async Task Execute2(Message message, string text, TelegramBotClient bot, int step)
+        {
             if (this.Steps.ContainsKey(step))
             {
                 var result = await this.Steps[step].Invoke(message, text, bot);
@@ -128,11 +140,7 @@ namespace EventBot.Business.Interfaces
                 // pop current state from stack if finished
                 if (result == true)
                     this.statePopCommand.Execute(new StatePopRequest(new State(message.Chat.Id, this.Key )));
-
-                return result;
             }
-
-            return false;
         }
     }
 }
