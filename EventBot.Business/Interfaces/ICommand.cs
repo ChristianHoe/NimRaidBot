@@ -22,39 +22,26 @@ namespace EventBot.Business.Interfaces
 
     public interface ICommand
     {
-        /// <summary>
-        /// Signals, if a command is not an one-liner and needs states support
-        /// </summary>
-        bool UsesStates { get; }
         string HelpText { get; }
         string Key { get; }
         ChatRestrictionType ChatRestriction { get; }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="text"></param>
-        /// <param name="bot"></param>
-        /// <param name="step"></param>
-        /// <returns>If needs state support True := finally finished => state support can be removed</returns>
-        Task<bool> Execute(Message message, string text, TelegramBotClient bot, int step);
+        Task ExecuteAsync(Message message, string text, TelegramBotClient bot);
     }
 
     public interface IStatefulCommand : ICommand
     {
-        Task Execute2(Message message, string text, TelegramBotClient bot, int step);
+        Task ExecuteStepAsync(Message message, string text, TelegramBotClient bot, int step);
     }
 
     public abstract class Command : ICommand
     {
         protected Regex SplitParameterRegEx {  get { return new Regex(@"""[^ ""]*"" | '[^'] * '|[^\s]+"); } }
-        public virtual bool UsesStates { get { return false; } }
         public virtual ChatRestrictionType ChatRestriction {  get { return ChatRestrictionType.None; } }
 
         public abstract string HelpText { get; }
         public abstract string Key { get; }
-        public abstract Task<bool> Execute(Message message, string text, TelegramBotClient bot, int step);
+        public abstract Task ExecuteAsync(Message message, string text, TelegramBotClient bot);
 
         protected long GetChatId(Message message)
         {
@@ -89,8 +76,6 @@ namespace EventBot.Business.Interfaces
 
     public abstract class StatefulCommand : Command, IStatefulCommand
     {
-        public override bool UsesStates {  get { return true; } }
-
         protected Dictionary<int, Func<Message, string, TelegramBotClient, Task<bool>>> Steps = new Dictionary<int, Func<Message, string, TelegramBotClient, Task<bool>>>();
 
         readonly protected IStateUpdateCommand stateUpdateCommand;
@@ -116,22 +101,17 @@ namespace EventBot.Business.Interfaces
             this.stateUpdateCommand.Execute(new StateUpdateRequest(new State(message.Chat.Id, this.Key, step)));
         }
 
-        public override async Task<bool> Execute(Message message, string text, TelegramBotClient bot, int step)
+        public override async Task ExecuteAsync(Message message, string text, TelegramBotClient bot)
         {
-            if (step == 0)
-            {
-                // push current state to stack if new
-                var lastState = this.statePeakQuery.Execute(message);
-                if ((lastState == null) || (lastState.Command != this.Key))
-                    this.statePushCommand.Execute(new StatePushRequest(new State(message.Chat.Id, this.Key, 0)));
-            }
+            // push current state to stack if new
+            var lastState = this.statePeakQuery.Execute(message);
+            if ((lastState == null) || (lastState.Command != this.Key))
+                this.statePushCommand.Execute(new StatePushRequest(new State(message.Chat.Id, this.Key, 0)));
 
-// TODO !!
-             await Execute2(message, text, bot, step);
-            return true;
+            await ExecuteStepAsync(message, text, bot, 0);
         } 
 
-        public async Task Execute2(Message message, string text, TelegramBotClient bot, int step)
+        public async Task ExecuteStepAsync(Message message, string text, TelegramBotClient bot, int step)
         {
             if (this.Steps.ContainsKey(step))
             {

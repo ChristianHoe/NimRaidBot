@@ -36,7 +36,7 @@ namespace EventBot.Business.Commands.Raid
         public override string HelpText => "Aktualisiert den Raidboss des zugehörigen Raids per Reply";
         public override string Key => "[RaidBossName]";
 
-        public override async Task<bool> Execute(Message message, string text, TelegramBotClient bot, int step)
+        public override async Task ExecuteAsync(Message message, string text, TelegramBotClient bot)
         {
             var chatId = base.GetChatId(message);
             var messageId = message.ReplyToMessage?.MessageId;
@@ -44,21 +44,21 @@ namespace EventBot.Business.Commands.Raid
             if (messageId == null)
             {
                 //await bot.SendTextMessageAsync(chatId, "Kein Reply gefunden.").ConfigureAwait(false);
-                return false;
+                return;
             }
             
             var poll = this.getActivePollByMessageId.Execute(new GetActivePollByMessageIdRequest { MessageId = messageId.Value, ChatId = chatId });
             if (poll == null)
             {
                 //await bot.SendTextMessageAsync(chatId, "Kein Poll gefunden.").ConfigureAwait(false);
-                return false;
+                return;
             }
 
             var raid = this.getRaidByIdQuery.Execute(new GetRaidByIdRequest { RaidId = poll.RaidId ?? 0 });
             if (raid == null)
             {
                 //await bot.SendTextMessageAsync(chatId, "Kein Raid gefunden.").ConfigureAwait(false);
-                return false;
+                return;
             }
 
             string poke = message.Text.Trim();
@@ -77,10 +77,10 @@ namespace EventBot.Business.Commands.Raid
                 {
                     // egal
                 }
-                return true;
+                return;
             }
 
-            return false;
+            return;
         }
     }
 }

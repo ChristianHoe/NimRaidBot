@@ -31,7 +31,7 @@ namespace EventBot.Business.Commands.PoGo
             get { return "/an"; }
         }
 
-        public override async Task<bool> Execute(Message message, string text, TelegramBotClient bot, int step)
+        public override async Task ExecuteAsync(Message message, string text, TelegramBotClient bot)
         {
             var userId = message.From.Id;
 
@@ -45,7 +45,7 @@ namespace EventBot.Business.Commands.PoGo
                 await bot.SendTextMessageAsync(message.Chat.Id, "Bitte warte auf Freischaltung").ConfigureAwait(false);
                 await Helper.Operator.SendMessage(bot, $"Nutzer {message.Chat.Id} wartet auf Freischaltung").ConfigureAwait(false);
             }
-            return true;
+            return;
         }
     }
 }

@@ -30,7 +30,7 @@ namespace EventBot.Business.Commands.PoGo
             get { return "/ignore"; }
         }
 
-        public override async Task<bool> Execute(Message message, string text, TelegramBotClient bot, int step)
+        public override async Task ExecuteAsync(Message message, string text, TelegramBotClient bot)
         {
             var userId = message.From.Id;
             int monsterId;
@@ -38,13 +38,13 @@ namespace EventBot.Business.Commands.PoGo
             if (!int.TryParse(text, out monsterId))
             {
                 await bot.SendTextMessageAsync(message.Chat.Id, "Unbekannte Id").ConfigureAwait(false);
-                return true;
+                return;
             }
 
             this.anCommand.Execute(new DataAccess.Commands.PoGo.IgnoreRequest { UserId = userId, MonsterId = monsterId });
 
             await bot.SendTextMessageAsync(message.Chat.Id, string.Format("{0} wird nun ignoriert", monsterId)).ConfigureAwait(false);
-            return true;
+            return;
         }
     }
 }

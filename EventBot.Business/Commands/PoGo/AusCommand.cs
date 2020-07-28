@@ -30,14 +30,14 @@ namespace EventBot.Business.Commands.PoGo
             get { return "/aus"; }
         }
 
-        public override async Task<bool> Execute(Message message, string text, TelegramBotClient bot, int step)
+        public override async Task ExecuteAsync(Message message, string text, TelegramBotClient bot)
         {
             var userId = message.From.Id;
 
             this.anCommand.Execute(new DataAccess.Commands.PoGo.AusRequest { UserId = userId });
 
             await bot.SendTextMessageAsync(message.Chat.Id, "Benachrichtigungen ausgeschaltet").ConfigureAwait(false);
-            return true;
+            return;
         }
     }
 }

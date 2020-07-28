@@ -28,7 +28,7 @@ namespace EventBot.Business.Commands.Raid
         public override string HelpText => "De-/Aktiviert die Benachrichtung zu einem Pokemon. Ein negativer IV entfernt die Benachrichtigung. /poke [id+] [iv*] [M|W*]";
         public override string Key => "/poke";
 
-        public override async Task<bool> Execute(Message message, string text, TelegramBotClient bot, int step)
+        public override async Task ExecuteAsync(Message message, string text, TelegramBotClient bot)
         {
             var chatId = base.GetChatId(message);
 
@@ -37,13 +37,13 @@ namespace EventBot.Business.Commands.Raid
             if (cmd.Length < 1 || 3 < cmd.Length)
             {
                 await bot.SendTextMessageAsync(chatId, "Zu viele/wenige Parameter.").ConfigureAwait(false);
-                return true;
+                return;
             }
 
             if (!int.TryParse(cmd[0], NumberStyles.Any, CultureInfo.InvariantCulture, out int pokeId))
             {
                 await bot.SendTextMessageAsync(chatId, "PokeId konnte nicht erkannt werden, bitte probiere es noch einmal.").ConfigureAwait(false);
-                return true;
+                return;
             }
 
             if (pokeId < 1)
@@ -55,7 +55,7 @@ namespace EventBot.Business.Commands.Raid
                 if (!int.TryParse(cmd[1], NumberStyles.Any, CultureInfo.InvariantCulture, out int tmpiv))
                 {
                     await bot.SendTextMessageAsync(chatId, "IV konnte nicht erkannt werden, bitte probiere es noch einmal.").ConfigureAwait(false);
-                    return true;
+                    return;
                 }
 
                 if (tmpiv < 0)
@@ -63,7 +63,7 @@ namespace EventBot.Business.Commands.Raid
                     this.removePokeCommand.Execute(new RemovePokeFromNotificationListRequest { ChatId = chatId, PokeId = pokeId });
                     await bot.SendTextMessageAsync(chatId, $"Benachrichtigungen für {pokeId} deaktiviert.").ConfigureAwait(false);
 
-                    return true;
+                    return;
                 }
 
                 if (tmpiv > 100)
@@ -90,7 +90,7 @@ namespace EventBot.Business.Commands.Raid
                 if (gender == null)
                 {
                     await bot.SendTextMessageAsync(chatId, "Geschlecht konnte nicht erkannt werden, bitte probiere es noch einmal.").ConfigureAwait(false);
-                    return true;
+                    return;
                 }
             }
 
@@ -98,7 +98,7 @@ namespace EventBot.Business.Commands.Raid
 
             await bot.SendTextMessageAsync(chatId, $"Benachrichtigungen für {pokeId} {iv} {gender} aktiviert.").ConfigureAwait(false);
 
-            return true;
+            return;
         }
     }
 }

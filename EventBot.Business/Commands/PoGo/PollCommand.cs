@@ -31,12 +31,12 @@ namespace EventBot.Business.Commands.PoGo
             get { return "/poll"; }
         }
 
-        public override async Task<bool> Execute(Message message, string text, TelegramBotClient bot, int step)
+        public override async Task ExecuteAsync(Message message, string text, TelegramBotClient bot)
         {
             if (string.IsNullOrWhiteSpace(text))
             {
                 await bot.SendTextMessageAsync(message.Chat.Id, "Keine Anzeigetext gefunden.").ConfigureAwait(false);
-                return true;
+                return;
             }
 
             var inlineKeyboard = new InlineKeyboardMarkup(new[] { new InlineKeyboardButton { Text = "0", CallbackData = "0" }, new InlineKeyboardButton { Text = "+1", CallbackData = "1" }, new InlineKeyboardButton { Text = "+2", CallbackData = "2"} } );
@@ -45,7 +45,7 @@ namespace EventBot.Business.Commands.PoGo
 
             this.newPollCommand.Execute(new DataAccess.Commands.PoGo.NewPollRequest { ChatId = msg.Chat.Id, MessageId = msg.MessageId });
 
-            return true;
+            return;
         }
     }
 }

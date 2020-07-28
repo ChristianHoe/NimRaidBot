@@ -29,7 +29,7 @@ namespace EventBot.Business.Commands.Raid
         public override string HelpText => "Liest den Ersteller eines Raids aus";
         public override string Key => "/owner";
 
-        public override async Task<bool> Execute(Message message, string text, TelegramBotClient bot, int step)
+        public override async Task ExecuteAsync(Message message, string text, TelegramBotClient bot)
         {
             var chatId = base.GetChatId(message);
             var messageId = message.ReplyToMessage?.MessageId;
@@ -37,33 +37,33 @@ namespace EventBot.Business.Commands.Raid
             if (messageId == null)
             {
                 await bot.SendTextMessageAsync(chatId, "Kein Reply gefunden.").ConfigureAwait(false);
-                return true;
+                return;
             }
             
             var poll = this.getActivePollByMessageId.Execute(new GetActivePollByMessageIdRequest { MessageId = messageId.Value, ChatId = chatId });
             if (poll == null)
             {
                 await bot.SendTextMessageAsync(chatId, "Kein Poll gefunden.").ConfigureAwait(false);
-                return true;
+                return;
             }
 
             var raid = this.getRaidByIdQuery.Execute(new GetRaidByIdRequest { RaidId = poll.RaidId ?? 0 });
             if (raid == null)
             {
                 await bot.SendTextMessageAsync(chatId, "Kein Raid gefunden.").ConfigureAwait(false);
-                return true;
+                return;
             }
 
             var user = this.getUserByIdQuery.Execute(new GetUserByIdRequest { UserId = raid.Owner ?? 0 });
             if (user == null)
             {
                 await bot.SendTextMessageAsync(chatId, "Nutzer nicht gefunden.").ConfigureAwait(false);
-                return true;
+                return;
             }
 
             await bot.SendTextMessageAsync(chatId, $"Ersteller: [{user.IngameName ?? user.FirstName}](tg://user?id={user.UserId})", parseMode: ParseMode.Markdown).ConfigureAwait(false);
 
-            return true;
+            return;
         }
     }
 }

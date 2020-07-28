@@ -37,7 +37,7 @@ namespace EventBot.Business.Commands.Raid
             get { return "/start"; }
         }
 
-        public override async Task<bool> Execute(Message message, string text, TelegramBotClient bot, int step)
+        public override async Task ExecuteAsync(Message message, string text, TelegramBotClient bot)
         {
             if (message.Chat.Type != Telegram.Bot.Types.Enums.ChatType.Private)
             {
@@ -60,7 +60,7 @@ namespace EventBot.Business.Commands.Raid
                 //await this.configureUserCommand.Execute(message, text, bot, 0);
             }
 
-            return true;
+            return;
         }
     }
 }

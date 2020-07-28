@@ -17,7 +17,7 @@ namespace EventBot.Business.Commands
 
     public class HelpCommand : Command, IHelpCommand
     {
-        private IReadOnlyCollection<ICommand> commands;
+        private IReadOnlyCollection<ICommand>? commands;
 
         public void RegisterAllCommands(IReadOnlyCollection<ICommand> commands)
         {
@@ -34,14 +34,14 @@ namespace EventBot.Business.Commands
             get { return "/help"; }
         }
 
-        public override async Task<bool> Execute(Message message, string text, TelegramBotClient bot, int step)
+        public override async Task ExecuteAsync(Message message, string text, TelegramBotClient bot)
         {
             var restrictionType = this.GetChatRestrictionType(message.Chat.Type);
 
-            var msg = string.Join(Environment.NewLine, this.commands.Where(x => x.ChatRestriction.HasFlag(restrictionType)).OrderBy(x => x.Key).Select(x => x.Key + Environment.NewLine + x.HelpText));
+            var msg = this.commands == null ? string.Empty : string.Join(Environment.NewLine, this.commands.Where(x => x.ChatRestriction.HasFlag(restrictionType)).OrderBy(x => x.Key).Select(x => x.Key + Environment.NewLine + x.HelpText));
 
             await bot.SendTextMessageAsync(message.Chat.Id, msg).ConfigureAwait(false);
-            return true;
+            return;
         }
 
         private ChatRestrictionType GetChatRestrictionType(ChatType chatType)

@@ -29,7 +29,7 @@ namespace EventBot.Business.Commands.Farm
         public override string Key => "/create";
         public override string HelpText => "Erzeugt einen neue Umfrage. /create";
 
-        public override async Task<bool> Execute(Message message, string text, TelegramBotClient bot, int step)
+        public override async Task ExecuteAsync(Message message, string text, TelegramBotClient bot)
         {
             var chatId = base.GetChatId(message);
 
@@ -38,7 +38,7 @@ namespace EventBot.Business.Commands.Farm
             var eventSetup = new EventSetups { ChatId = chatId, MessageId = msg.MessageId, TargetChatId = -1001372009436, Type = 2, Modified = true };
             updateEventSetupCommand.Execute(new UpdateEventSetupRequest { EventSetup = eventSetup });
 
-            return true;
+            return;
         }
     }
 }

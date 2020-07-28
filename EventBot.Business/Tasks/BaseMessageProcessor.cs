@@ -206,7 +206,7 @@ namespace EventBot.Business.Tasks
 
                 var command = this.dispatcher.GetCommand(commandText);
 
-                await this.RunCommand(command, message, msg, 0);
+                await command.ExecuteAsync(message, msg, proxy);
 
                 return;
             }
@@ -252,7 +252,7 @@ namespace EventBot.Business.Tasks
             {
                 var command = this.dispatcher.GetStatefulCommand(state.Command);
                 if (command != null)
-                    await command.Execute2(message, message.Text, proxy, state.Step);
+                    await command.ExecuteStepAsync(message, message.Text, proxy, state.Step);
 
                 return;
             }
@@ -262,10 +262,7 @@ namespace EventBot.Business.Tasks
             {
                 var command = this.dispatcher.GetCommand("[RaidBossName]");
 
-                var result = await this.RunCommand(command, message, message.Text, 0);
-
-                if (result)
-                    return;
+                await command.ExecuteAsync(message, message.Text, proxy);
             }
 
             //if (message.Entities == null || !message.Entities.Any(x => x.Type == MessageEntityType.BotCommand))
@@ -273,23 +270,6 @@ namespace EventBot.Business.Tasks
             //    await proxy.SendTextMessageAsync(message.Chat.Id, "Bitte benutzen Sie einen der Befehle, die Sie unter /help finden.").ConfigureAwait(false);
             //    return;
             //}
-        }
-
-        private async Task<bool> RunCommand(ICommand command, Message message, string text, int step)
-        {
-            var result = await command.Execute(message, text, proxy, step);
-            //if (result)
-            //{
-            //    var lastState = this.lastStateQuery.Execute(message);
-            //    if (lastState != null)
-            //    {
-            //        var cmd = this.dispatcher.GetCommand(lastState.Command);
-            //        var r = await this.RunCommand(cmd, message, string.Empty, lastState.Step);
-            //        return r;
-            //    }
-            //}
-
-            return result;
         }
     }
 }
