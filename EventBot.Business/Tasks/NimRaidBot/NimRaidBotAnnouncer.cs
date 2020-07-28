@@ -97,8 +97,8 @@ namespace EventBot.Business.NimRaidBot
         {
             try
             {
-                await UpdateEventPolls().ConfigureAwait(false);
-                await this.SendPokes().ConfigureAwait(false);
+                await this.UpdateEventPolls().ConfigureAwait(false);
+                await this.CreateEventPolls().ConfigureAwait(false);
 
             }
             catch (Exception ex)
@@ -144,7 +144,7 @@ namespace EventBot.Business.NimRaidBot
             return;
         }
 
-        private async Task SendPokes()
+        private async Task CreateEventPolls()
         {
             var raidToNotify = this.getNextNewRaidQuery.Execute(null);
             if (raidToNotify == null)
