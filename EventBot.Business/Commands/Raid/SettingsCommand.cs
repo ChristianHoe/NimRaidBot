@@ -85,7 +85,7 @@ namespace EventBot.Business.Commands.Raid
 
         public override ChatRestrictionType ChatRestriction => ChatRestrictionType.Group;
 
-        protected async Task<bool> Step0(Message message, string text, TelegramBotClient bot, int step)
+        protected async Task<bool> Step0(Message message, string text, TelegramBotClient bot)
         {
             var userId = message.From.Id;
             if (message.Chat.Type != Telegram.Bot.Types.Enums.ChatType.Private)
@@ -103,10 +103,10 @@ namespace EventBot.Business.Commands.Raid
             await bot.SendTextMessageAsync(message.Chat.Id, "Du kannst 'x' antworten, dann wird der ursprüngliche Wert beibehalten.").ConfigureAwait(false);
             await bot.SendTextMessageAsync(message.Chat.Id, "Begrenze bitte das Gebiet, in dem der Bot reagieren soll").ConfigureAwait(false);
 
-            return await this.Step1(message, text, bot, step);
+            return await this.Step1(message, text, bot);
         }
 
-        protected async Task<bool> Step1(Message message, string text, TelegramBotClient bot, int step)
+        protected async Task<bool> Step1(Message message, string text, TelegramBotClient bot)
         {
             var currentSettings = this.getCurrentChatSettingsQuery.Execute(new DataAccess.Queries.Raid.GetCurrentChatSettingsRequest { ChatId = message.Chat.Id });
 
@@ -118,7 +118,7 @@ namespace EventBot.Business.Commands.Raid
             return false;
         }
 
-        protected async Task<bool> Step2(Message message, string text, TelegramBotClient bot, int step)
+        protected async Task<bool> Step2(Message message, string text, TelegramBotClient bot)
         {
             if (!SkipCurrentStep(text))
             {
@@ -130,10 +130,10 @@ namespace EventBot.Business.Commands.Raid
 
                 this.setNordCommand.Execute(new DataAccess.Commands.Raid.SetNordRequest { ChatId = message.Chat.Id, Nord = north });
             }
-            return await this.Step3(message, text, bot, step);
+            return await this.Step3(message, text, bot);
         }
 
-        protected async Task<bool> Step3(Message message, string text, TelegramBotClient bot, int step)
+        protected async Task<bool> Step3(Message message, string text, TelegramBotClient bot)
         {
             var currentSettings = this.getCurrentChatSettingsQuery.Execute(new DataAccess.Queries.Raid.GetCurrentChatSettingsRequest { ChatId = message.Chat.Id });
             var east = _Helper.GetEast(currentSettings)?.ToString(CultureInfo.InvariantCulture) ?? "-";
@@ -144,7 +144,7 @@ namespace EventBot.Business.Commands.Raid
             return false;
         }
 
-        protected async Task<bool> Step4(Message message, string text, TelegramBotClient bot, int step)
+        protected async Task<bool> Step4(Message message, string text, TelegramBotClient bot)
         {
             if (!SkipCurrentStep(text))
             {
@@ -157,10 +157,10 @@ namespace EventBot.Business.Commands.Raid
                 this.setEastCommand.Execute(new DataAccess.Commands.Raid.SetEastRequest { ChatId = message.Chat.Id, East = east });
             }
 
-            return await this.Step5(message, text, bot, step);
+            return await this.Step5(message, text, bot);
         }
 
-        protected async Task<bool> Step5(Message message, string text, TelegramBotClient bot, int step)
+        protected async Task<bool> Step5(Message message, string text, TelegramBotClient bot)
         {
             var currentSettings = this.getCurrentChatSettingsQuery.Execute(new DataAccess.Queries.Raid.GetCurrentChatSettingsRequest { ChatId = message.Chat.Id });
             var south = _Helper.GetSouth(currentSettings)?.ToString(CultureInfo.InvariantCulture) ?? "-";
@@ -170,7 +170,7 @@ namespace EventBot.Business.Commands.Raid
             return false;
         }
 
-        protected async Task<bool> Step6(Message message, string text, TelegramBotClient bot, int step)
+        protected async Task<bool> Step6(Message message, string text, TelegramBotClient bot)
         {
             if (!SkipCurrentStep(text))
             {
@@ -182,10 +182,10 @@ namespace EventBot.Business.Commands.Raid
 
                 this.setSouthCommand.Execute(new DataAccess.Commands.Raid.SetSouthRequest { ChatId = message.Chat.Id, South = south });
             }
-            return await this.Step7(message, text, bot, step);
+            return await this.Step7(message, text, bot);
         }
 
-        protected async Task<bool> Step7(Message message, string text, TelegramBotClient bot, int step)
+        protected async Task<bool> Step7(Message message, string text, TelegramBotClient bot)
         {
             var currentSettings = this.getCurrentChatSettingsQuery.Execute(new DataAccess.Queries.Raid.GetCurrentChatSettingsRequest { ChatId = message.Chat.Id });
             var west = _Helper.GetWest(currentSettings)?.ToString(CultureInfo.InvariantCulture) ?? "-";
@@ -195,7 +195,7 @@ namespace EventBot.Business.Commands.Raid
             return false;
         }
 
-        protected async Task<bool> Step8(Message message, string text, TelegramBotClient bot, int step)
+        protected async Task<bool> Step8(Message message, string text, TelegramBotClient bot)
         {
             if (!SkipCurrentStep(text))
             {
@@ -208,10 +208,10 @@ namespace EventBot.Business.Commands.Raid
                 this.setWestCommand.Execute(new DataAccess.Commands.Raid.SetWestRequest { ChatId = message.Chat.Id, West = west });
             }
 
-            return await this.Step9(message, text, bot, step);
+            return await this.Step9(message, text, bot);
         }
 
-        protected async Task<bool> Step9(Message message, string text, TelegramBotClient bot, int step)
+        protected async Task<bool> Step9(Message message, string text, TelegramBotClient bot)
         {
             var currentSettings = this.getCurrentChatSettingsQuery.Execute(new DataAccess.Queries.Raid.GetCurrentChatSettingsRequest { ChatId = message.Chat.Id });
 
@@ -220,7 +220,7 @@ namespace EventBot.Business.Commands.Raid
             return false;
         }
 
-        protected async Task<bool> Step10(Message message, string text, TelegramBotClient bot, int step)
+        protected async Task<bool> Step10(Message message, string text, TelegramBotClient bot)
         {
             if (!SkipCurrentStep(text))
             {

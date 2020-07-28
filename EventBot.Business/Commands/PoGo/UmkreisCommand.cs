@@ -42,7 +42,7 @@ namespace EventBot.Business.Commands.PoGo
             get { return "/umkreis"; }
         }
 
-        protected async Task<bool> Step0(Message message, string text, TelegramBotClient bot, int step)
+        protected async Task<bool> Step0(Message message, string text, TelegramBotClient bot)
         {
             var userId = message.From.Id;
             await bot.SendTextMessageAsync(message.Chat.Id, "Wo bist du?", replyMarkup: new ReplyKeyboardMarkup(new[] { new KeyboardButton("Send Position") { RequestLocation = true } }, true, true)).ConfigureAwait(false);
@@ -51,7 +51,7 @@ namespace EventBot.Business.Commands.PoGo
             return false;
         }
 
-        protected async Task<bool> Step1(Message message, string text, TelegramBotClient bot, int step)
+        protected async Task<bool> Step1(Message message, string text, TelegramBotClient bot)
         {
             var userId = message.From.Id;
             if (message.Type != Telegram.Bot.Types.Enums.MessageType.Location)

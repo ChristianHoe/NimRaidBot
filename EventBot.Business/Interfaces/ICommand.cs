@@ -86,7 +86,7 @@ namespace EventBot.Business.Interfaces
     {
         public override bool UsesStates {  get { return true; } }
 
-        protected Dictionary<int, Func<Message, string, TelegramBotClient, int, Task<bool>>> Steps = new Dictionary<int, Func<Message, string, TelegramBotClient, int, Task<bool>>>();
+        protected Dictionary<int, Func<Message, string, TelegramBotClient, Task<bool>>> Steps = new Dictionary<int, Func<Message, string, TelegramBotClient, Task<bool>>>();
 
         readonly protected IStateUpdateCommand stateUpdateCommand;
         readonly protected IStatePopCommand statePopCommand;
@@ -123,7 +123,7 @@ namespace EventBot.Business.Interfaces
 
             if (this.Steps.ContainsKey(step))
             {
-                var result = await this.Steps[step].Invoke(message, text, bot, step);
+                var result = await this.Steps[step].Invoke(message, text, bot);
 
                 // pop current state from stack if finished
                 if (result == true)

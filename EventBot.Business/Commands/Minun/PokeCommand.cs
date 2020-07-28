@@ -41,7 +41,7 @@ namespace EventBot.Business.Commands.Minun
         public override string Key => "/poke";
         public override string HelpText => "Fragt die Eigenschaften eines Pokemon ab.";
 
-        protected async Task<bool> Step0(Message message, string text, TelegramBotClient bot, int step)
+        protected async Task<bool> Step0(Message message, string text, TelegramBotClient bot)
         {
             var chatId = GetChatId(message);
 

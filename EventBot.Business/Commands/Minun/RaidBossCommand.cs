@@ -46,7 +46,7 @@ namespace EventBot.Business.Commands.Minun
         public override string Key => "/raidboss";
         public override string HelpText => "Konfiguriert einen Marker, für welchen Raid-Boss du teilnehmen würdest.";
 
-        protected async Task<bool> Step0(Message message, string text, TelegramBotClient bot, int step)
+        protected async Task<bool> Step0(Message message, string text, TelegramBotClient bot)
         {
             var chatId = base.GetChatId(message);
 
@@ -74,7 +74,7 @@ namespace EventBot.Business.Commands.Minun
             return false;
         }
 
-        protected async Task<bool> Step1(Message message, string text, TelegramBotClient bot, int step)
+        protected async Task<bool> Step1(Message message, string text, TelegramBotClient bot)
         {
             if (!SkipCurrentStep(text))
             {
