@@ -13,7 +13,6 @@ namespace EventBot.Business.Tasks.NimPokeBot
 {
     public class QuestAnnouncer : IScheduledTask
     {
-        private readonly PichuProxy pichuProxy;
         private readonly TelegramBotClient proxy;
         private readonly TelegramBotClient raidBotProxy;
 
@@ -25,7 +24,6 @@ namespace EventBot.Business.Tasks.NimPokeBot
 
 
         public QuestAnnouncer(
-            PichuProxy pichuProxy,
             PogoTelegramProxy proxy,
             TelegramProxies.NimRaidBot raidBotProxy,
             DataAccess.Queries.Raid.IGetActivePogoGroups activeUsers,
@@ -35,7 +33,6 @@ namespace EventBot.Business.Tasks.NimPokeBot
             DataAccess.Queries.Raid.IGetQuestByStopIdQuery getQuestByStopIdQuery
             )
         {
-            this.pichuProxy = pichuProxy;
             this.proxy = proxy;
             this.raidBotProxy = raidBotProxy;
             this.activeUsers = activeUsers;
@@ -71,7 +68,7 @@ namespace EventBot.Business.Tasks.NimPokeBot
 
         private async Task SendQuests(CancellationToken cancellationToken)
         {
-            var questToNotify = this.getNextQuestToProcessQuery.Execute(null);
+            var questToNotify = this.getNextQuestToProcessQuery.Execute(new GetNextQuestToProcessRequest());
             if (questToNotify == null)
                 return;
 

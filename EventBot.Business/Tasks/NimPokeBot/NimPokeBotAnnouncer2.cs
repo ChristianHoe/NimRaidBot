@@ -14,7 +14,6 @@ namespace EventBot.Business.NimPokeBot
 {
     public class Announcer2 : IScheduledTask
     {
-        private readonly PichuProxy pichuProxy;
         private readonly TelegramBotClient proxy;
         private readonly TelegramBotClient raidBotProxy;
 
@@ -28,7 +27,6 @@ namespace EventBot.Business.NimPokeBot
         private readonly DataAccess.Queries.PoGo.IGetAllChatsForArea getAllChatsForArea;
 
         public Announcer2(
-            PichuProxy pichuProxy,
             PogoTelegramProxy proxy,
             TelegramProxies.NimRaidBot raidBotProxy,
             DataAccess.Queries.Raid.IGetActivePogoGroups activeUsers,
@@ -40,7 +38,6 @@ namespace EventBot.Business.NimPokeBot
             Queries.IGetThrottleQuery getThrottleQuery
             )
         {
-            this.pichuProxy = pichuProxy;
             this.proxy = proxy;
             this.raidBotProxy = raidBotProxy;
             this.activeUsers = activeUsers;

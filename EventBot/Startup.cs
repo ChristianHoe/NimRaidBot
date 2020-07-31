@@ -1,5 +1,4 @@
-﻿using EventBot.Business;
-using EventBot.Business.Commands;
+﻿using EventBot.Business.Commands;
 using EventBot.Business.Commands.Raid;
 using EventBot.Business.Helper;
 using EventBot.Business.Interfaces;
@@ -9,7 +8,6 @@ using EventBot.Scheduler;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
@@ -171,11 +169,6 @@ namespace EventBot
             // var Importer3Credentials = Configuration.GetValue<string>("MapCredentials:Map2");
             // container.Register(() => new Business.Tasks.NimGoMapBot.MapCredentials(Importer3Credentials));
 
-
-            var gmapKey = Configuration.GetValue<string>("GoogleApiKeys");
-            var AlexId = Configuration.GetValue<ulong>("DiscordWebhooks:Alex:Id");
-            var AlexToken = Configuration.GetValue<string>("DiscordWebhooks:Alex:Token");
-            container.Register(() => new Business.TelegramProxies.PichuProxy(AlexId, AlexToken, gmapKey));
 
             var operatorTelegramId = Configuration.GetValue<int>("Operator:TelegramId");
             Operator.TelegramId = operatorTelegramId;
@@ -381,6 +374,7 @@ namespace EventBot
 
             container.Register<DataAccess.Queries.Raid.IGetCurrentChatSettingsQuery, DataAccess.Queries.Raid.GetCurrentChatSettings>();
             container.Register<DataAccess.Queries.Raid.IGetCurrentUserSettingsQuery, DataAccess.Queries.Raid.GetCurrentUserSettings>();
+            container.Register<DataAccess.Queries.Raid.IGetActiveGymsByChatQuery, DataAccess.Queries.Raid.GetActiveGymsByChat>();
             container.Register<DataAccess.Queries.Raid.IGetGymsQuery, DataAccess.Queries.Raid.GetGyms>();
             container.Register<DataAccess.Queries.Raid.IGetAllRaidsQuery, DataAccess.Queries.Raid.GetAllRaids>();
             // container.Register<DataAccess.Queries.Raid.IGetRaidsQuery, DataAccess.Queries.Raid.GetRaids>();
