@@ -63,7 +63,7 @@ namespace EventBot.Business.Commands.Minun
             base.Steps.Add(13, this.Step13);
         }
 
-        protected async Task<bool> Step1(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step1(Message message, string text, TelegramBotClient bot)
         {
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);
@@ -73,7 +73,7 @@ namespace EventBot.Business.Commands.Minun
             if (chats.Count() == 0)
             {
                 await bot.SendTextMessageAsync(chatId, $"Für den Befehl musst du mindestens in einer Gruppe Mitglied sein.").ConfigureAwait(false);
-                return true;
+                return StateResult.Finished;
             }
 
             StringBuilder msg = new StringBuilder();
@@ -85,19 +85,17 @@ namespace EventBot.Business.Commands.Minun
             if (chats.Count() > 1)
             {
                 await bot.SendTextMessageAsync(chatId, $"Bitte wähle eine Gruppe\n\r{msg.ToString()}").ConfigureAwait(false);
-                base.NextState(message, 2);
+                return StateResult.AwaitUserAt(2);
             }
             else
             {
                 await bot.SendTextMessageAsync(chatId, $"Folgende Gruppe wird verwendet\n\r{msg.ToString()}").ConfigureAwait(false);
                 setChatForManualRaidCommand.Execute(new SetChatForManualRaidAndInitializeRequest { UserId = userId, ChatId = chats.First().ChatId });
-                base.NextState(message, 3);
+                return StateResult.AwaitUserAt(3);
             }
-
-            return false;
         }
 
-        protected async Task<bool> Step2(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step2(Message message, string text, TelegramBotClient bot)
         {
             if (!SkipCurrentStep(text))
             {
@@ -107,14 +105,14 @@ namespace EventBot.Business.Commands.Minun
                 if (!int.TryParse(text, NumberStyles.Any, CultureInfo.InvariantCulture, out int chat))
                 {
                     await bot.SendTextMessageAsync(chatId, "Es wurde keine Zahl ausgewählt, bitte probiere es noch einmal.").ConfigureAwait(false);
-                    return false;
+                    return StateResult.TryAgain;
                 }
 
                 var activeChatIds = this.getActiveChatsForUser.Execute(new GetActiveChatsForUserRequest { UserId = userId, BotId = nimRaidBot.BotId });
                 if (chat < 0 || activeChatIds.Count() <= chat)
                 {
                     await bot.SendTextMessageAsync(chatId, "Der ausgewählt Wert liegt nicht im Wertebereich, bitte probiere es noch einmal.").ConfigureAwait(false);
-                    return false;
+                    return StateResult.TryAgain;
                 }
 
                 this.setChatForManualRaidCommand.Execute(new SetChatForManualRaidAndInitializeRequest { UserId = userId, ChatId = activeChatIds.ElementAt(chat).ChatId });
@@ -123,7 +121,7 @@ namespace EventBot.Business.Commands.Minun
             return await this.Step3(message, text, bot);
         }
 
-        protected async Task<bool> Step3(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step3(Message message, string text, TelegramBotClient bot)
         {
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);
@@ -151,11 +149,10 @@ namespace EventBot.Business.Commands.Minun
 
             await bot.SendTextMessageAsync(chatId, msg.ToString());
 
-            base.NextState(message, 4);
-            return false;
+            return StateResult.AwaitUserAt(4);
         }
 
-        protected virtual async Task<bool> Step4(Message message, string text, TelegramBotClient bot)
+        protected virtual async Task<StateResult> Step4(Message message, string text, TelegramBotClient bot)
         {
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);
@@ -173,14 +170,14 @@ namespace EventBot.Business.Commands.Minun
                     if (names.Count() == 0)
                     {
                         await bot.SendTextMessageAsync(chatId, "Das Gym konnte nicht erkannt werden, bitte probiere es noch einmal.").ConfigureAwait(false);
-                        return false;
+                        return StateResult.TryAgain;
                     }
 
                     if (names.Count() > 1)
                     {
                         var msg = "Gym nicht eindeutig!" + Environment.NewLine + string.Join(Environment.NewLine, names.Select(x => $"Name: {x.Name}"));
                         await bot.SendTextMessageAsync(chatId, msg).ConfigureAwait(false);
-                        return false;
+                        return StateResult.TryAgain;
                     }
 
                     gymId = names.First().Id;
@@ -190,7 +187,7 @@ namespace EventBot.Business.Commands.Minun
                     if (gymIndex < 0 || gyms.Count() < gymIndex)
                     {
                         await bot.SendTextMessageAsync(chatId, "Das Gym konnte nicht erkannt werden, bitte probiere es noch einmal.").ConfigureAwait(false);
-                        return false;
+                        return StateResult.TryAgain;
                     }
                     
                     gymId = gyms.ElementAt(gymIndex).Id;
@@ -200,10 +197,10 @@ namespace EventBot.Business.Commands.Minun
                 this.setGymForManualRaidCommand.Execute(new SetGymForManualRaidRequest { UserId = userId, GymId = gymId });
             }
 
-            return true;
+            return StateResult.Finished;
         }
 
-        protected async Task<bool> Step13(Message message, string text, TelegramBotClient bot)        
+        protected async Task<StateResult> Step13(Message message, string text, TelegramBotClient bot)        
         {
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);
@@ -216,7 +213,7 @@ namespace EventBot.Business.Commands.Minun
 
             await bot.SendTextMessageAsync(chatId, $"Fertig. Aktualisierung per Befehl: /update_{current.RaidId}").ConfigureAwait(false);
 
-            return true;
+            return StateResult.Finished;
         }
 
         protected bool SkipCurrentStep(string text)

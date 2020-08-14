@@ -76,7 +76,46 @@ namespace EventBot.Business.Interfaces
 
     public abstract class StatefulCommand : Command, IStatefulCommand
     {
-        protected Dictionary<int, Func<Message, string, TelegramBotClient, Task<bool>>> Steps = new Dictionary<int, Func<Message, string, TelegramBotClient, Task<bool>>>();
+        public struct StateResult
+        {
+            private enum States
+            {
+                Finished,
+                Store,
+                DoNothing,
+                ContinueWith,
+            }
+
+            private States _state;
+
+            private StateResult(int next, States state)
+            {
+                Next = next;
+                _state = state;
+            }
+
+
+            public int Next { get; }
+            public bool Store => _state == States.Store;
+            public bool IsFinished => _state == States.Finished;
+
+
+            public static StateResult ContinueWith(int next)
+            {
+                return new StateResult(next, States.ContinueWith);
+            }
+
+            public static StateResult AwaitUserAt(int next)
+            {
+                return new StateResult(next, States.Store);
+            }
+
+            public static StateResult TryAgain { get; } = new StateResult(-1, States.DoNothing);
+
+            public static StateResult Finished { get; } = new StateResult(-1, States.Finished);
+        }
+
+        protected Dictionary<int, Func<Message, string, TelegramBotClient, Task<StateResult>>> Steps = new Dictionary<int, Func<Message, string, TelegramBotClient, Task<StateResult>>>();
 
         readonly protected IStateUpdateCommand stateUpdateCommand;
         readonly protected IStatePopCommand statePopCommand;
@@ -96,11 +135,6 @@ namespace EventBot.Business.Interfaces
             this.statePeakQuery = statePeakQuery;
         }
 
-        protected void NextState(Message message, int step)
-        {
-            this.stateUpdateCommand.Execute(new StateUpdateRequest(new State(message.Chat.Id, this.Key, step)));
-        }
-
         public override async Task ExecuteAsync(Message message, string text, TelegramBotClient bot)
         {
             // push current state to stack if new
@@ -118,8 +152,17 @@ namespace EventBot.Business.Interfaces
                 var result = await this.Steps[step].Invoke(message, text, bot);
 
                 // pop current state from stack if finished
-                if (result == true)
-                    this.statePopCommand.Execute(new StatePopRequest(new State(message.Chat.Id, this.Key )));
+                if (result.IsFinished)
+                {
+                    this.statePopCommand.Execute(new StatePopRequest(new State(message.Chat.Id, this.Key)));
+                    return;
+                }
+
+                if (result.Store)
+                {
+                    this.stateUpdateCommand.Execute(new StateUpdateRequest(new State(message.Chat.Id, this.Key, result.Next)));
+                    return;
+                }
             }
         }
     }

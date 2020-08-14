@@ -85,7 +85,7 @@ namespace EventBot.Business.Commands.Minun
 
         public override ChatRestrictionType ChatRestriction => ChatRestrictionType.Private;
 
-        protected async Task<bool> Step0(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step0(Message message, string text, TelegramBotClient bot)
         {
             var chatId = base.GetChatId(message);
 
@@ -106,7 +106,7 @@ namespace EventBot.Business.Commands.Minun
         // }
 
          
-        protected async Task<bool> Step2(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step2(Message message, string text, TelegramBotClient bot)
         {
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);
@@ -115,30 +115,28 @@ namespace EventBot.Business.Commands.Minun
             if (string.IsNullOrWhiteSpace(text))
             {
                 await bot.SendTextMessageAsync(chatId, "Bitte gib die Raid-Id an:").ConfigureAwait(false);
-                return false;
+                return StateResult.TryAgain;
             }
 
             if (!int.TryParse(text, NumberStyles.Any, CultureInfo.InvariantCulture, out int raidId))
             {
                 await bot.SendTextMessageAsync(chatId, "Es wurde keine gültige Raid-Id ausgewählt, bitte probiere es noch einmal.").ConfigureAwait(false);
-                return false;
+                return StateResult.TryAgain;
             }
 
             var raids = this.getActiveUserRaids.Execute(new GetActiveUserRaidsRequest { UserId = userId });
             if (raids?.Any(x => x == raidId) ?? false)
             {
                 await bot.SendTextMessageAsync(chatId, "Raid wurde nicht vom Nutzer erstellt oder ist abgelaufen. Raid-Id:").ConfigureAwait(false);
-                return false;
+                return StateResult.TryAgain;
             }
 
             this.setRaidIdToUpdateCommand.Execute(new SetRaidIdToUpdateRequest { UserId = userId, RaidId = raidId });
 
-            await this.Step3(message, text, bot);
-
-            return false; // await this.Step3(message, text, bot, step);
+            return await this.Step3(message, text, bot);
         }
 
-        protected async Task<bool> Step3(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step3(Message message, string text, TelegramBotClient bot)
         {
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);
@@ -153,12 +151,10 @@ namespace EventBot.Business.Commands.Minun
 
             await bot.SendTextMessageAsync(chatId, msg.ToString()).ConfigureAwait(false);
 
-            base.NextState(message, 4);
-
-            return false;      
+            return StateResult.AwaitUserAt(4);
         }
 
-        protected async Task<bool> Step4(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step4(Message message, string text, TelegramBotClient bot)
         {
             if (!SkipCurrentStep(text))
             {
@@ -168,13 +164,13 @@ namespace EventBot.Business.Commands.Minun
                 if (!int.TryParse(text, NumberStyles.Any, CultureInfo.InvariantCulture, out int actionId))
                 {
                     await bot.SendTextMessageAsync(chatId, "Es wurde keine Zahl ausgewählt, bitte probiere es noch einmal.").ConfigureAwait(false);
-                    return false;
+                    return StateResult.TryAgain;
                 }
 
                 if (actionId < 1 || 5 < actionId)
                 {
                     await bot.SendTextMessageAsync(chatId, "Es wurde keine gültige Zahl ausgewählt, bitte probiere es noch einmal.").ConfigureAwait(false);
-                    return false;            
+                    return StateResult.TryAgain;            
                 }
 
                 switch(actionId)
@@ -189,11 +185,11 @@ namespace EventBot.Business.Commands.Minun
                 // TODO:
             }
 
-            return false;
+            return StateResult.TryAgain;
         }
 
 
-        protected async Task<bool> Step5(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step5(Message message, string text, TelegramBotClient bot)
         {
             var userId = base.GetUserId(message);
 
@@ -203,7 +199,7 @@ namespace EventBot.Business.Commands.Minun
             var chats = this.getActivePogoGroups.Execute(new GetActivePogoGroupsRequest { BotIds = new long[] { this.nimRaidBot.BotId } });
             int numberOfCurrentActiveUsers = chats.Count(x => x.RaidLevel.HasValue);
             if (numberOfCurrentActiveUsers <= 0)
-                return true;
+                return StateResult.Finished;
 
             foreach(var chat in chats)
             {
@@ -226,17 +222,16 @@ namespace EventBot.Business.Commands.Minun
             return await this.StepFinished(message, text, bot);
         }
 
-        protected async Task<bool> Step6(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step6(Message message, string text, TelegramBotClient bot)
         {
             var chatId = base.GetChatId(message);
             await bot.SendTextMessageAsync(chatId, "Poke-Id:");
 
 
-            base.NextState(message, 7);
-            return false;
+            return StateResult.AwaitUserAt(7);
         }
 
-        protected async Task<bool> Step7(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step7(Message message, string text, TelegramBotClient bot)
         {
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);
@@ -246,13 +241,13 @@ namespace EventBot.Business.Commands.Minun
                 if (!int.TryParse(text, NumberStyles.Any, CultureInfo.InvariantCulture, out int pokeId))
                 {
                     await bot.SendTextMessageAsync(chatId, "Die Poke-Id konnte nicht erkannt werden, bitte probiere es noch einmal.").ConfigureAwait(false);
-                    return false;
+                    return StateResult.TryAgain;
                 }
 
                 if (pokeId < 0 || 2000 < pokeId)
                 {
                     await bot.SendTextMessageAsync(chatId, "Keine gültige Poke-Id, bitte probiere es noch einmal.").ConfigureAwait(false);
-                    return false;
+                    return StateResult.TryAgain;
                 }
 
                 var raidId = this.getCurrentManualRaidQuery.Execute(new GetCurrentManualRaidRequest { UserId = userId }).UpdRaidId;
@@ -266,14 +261,14 @@ namespace EventBot.Business.Commands.Minun
 
 
 
-        protected async Task<bool> StepFinished(Message message, string text, TelegramBotClient bot)        
+        protected async Task<StateResult> StepFinished(Message message, string text, TelegramBotClient bot)        
         {
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);
 
             await bot.SendTextMessageAsync(chatId, $"Fertig.").ConfigureAwait(false);
 
-            return true;
+            return StateResult.Finished;
         }
 
         private bool SkipCurrentStep(string text)

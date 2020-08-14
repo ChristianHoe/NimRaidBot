@@ -85,7 +85,7 @@ namespace EventBot.Business.Commands.Raid
 
         public override ChatRestrictionType ChatRestriction => ChatRestrictionType.Group;
 
-        protected async Task<bool> Step0(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step0(Message message, string text, TelegramBotClient bot)
         {
             var userId = message.From.Id;
             if (message.Chat.Type != Telegram.Bot.Types.Enums.ChatType.Private)
@@ -95,7 +95,7 @@ namespace EventBot.Business.Commands.Raid
                 if (!admins.Any(x => x.User.Id == userId))
                 {
                     await bot.SendTextMessageAsync(message.Chat.Id, "Keine Administratorrechte").ConfigureAwait(false);
-                    return true;
+                    return StateResult.Finished;
                 }
             }
 
@@ -106,7 +106,7 @@ namespace EventBot.Business.Commands.Raid
             return await this.Step1(message, text, bot);
         }
 
-        protected async Task<bool> Step1(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step1(Message message, string text, TelegramBotClient bot)
         {
             var currentSettings = this.getCurrentChatSettingsQuery.Execute(new DataAccess.Queries.Raid.GetCurrentChatSettingsRequest { ChatId = message.Chat.Id });
 
@@ -114,18 +114,17 @@ namespace EventBot.Business.Commands.Raid
             // TODO: leer -> alte koordinate zählt + Größenbegrenzung
 
             await bot.SendTextMessageAsync(message.Chat.Id, $"Aktueller Wert {north} \n\rKoordinate, die nach Norden begrenzt", replyMarkup: new ForceReplyMarkup());
-            base.NextState(message, 2);
-            return false;
+            return  StateResult.AwaitUserAt(2);
         }
 
-        protected async Task<bool> Step2(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step2(Message message, string text, TelegramBotClient bot)
         {
             if (!SkipCurrentStep(text))
             {
                 if (!decimal.TryParse(text, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal north))
                 {
                     await bot.SendTextMessageAsync(message.Chat.Id, "Koordinate, die nach Norden begrenzt konnte nicht erkannt werden, bitte probiere es noch einmal.", replyMarkup: new ForceReplyMarkup());
-                    return false;
+                    return StateResult.TryAgain;
                 }
 
                 this.setNordCommand.Execute(new DataAccess.Commands.Raid.SetNordRequest { ChatId = message.Chat.Id, Nord = north });
@@ -133,25 +132,24 @@ namespace EventBot.Business.Commands.Raid
             return await this.Step3(message, text, bot);
         }
 
-        protected async Task<bool> Step3(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step3(Message message, string text, TelegramBotClient bot)
         {
             var currentSettings = this.getCurrentChatSettingsQuery.Execute(new DataAccess.Queries.Raid.GetCurrentChatSettingsRequest { ChatId = message.Chat.Id });
             var east = _Helper.GetEast(currentSettings)?.ToString(CultureInfo.InvariantCulture) ?? "-";
 
             await bot.SendTextMessageAsync(message.Chat.Id, $"Aktueller Wert {east} \n\rKoordinate, die nach Osten begrenzt", replyMarkup: new ForceReplyMarkup());
 
-            base.NextState(message, 4);
-            return false;
+            return StateResult.AwaitUserAt(4);
         }
 
-        protected async Task<bool> Step4(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step4(Message message, string text, TelegramBotClient bot)
         {
             if (!SkipCurrentStep(text))
             {
                 if (!decimal.TryParse(text, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal east))
                 {
                     await bot.SendTextMessageAsync(message.Chat.Id, "Koordinate, die nach Osten begrenzt konnte nicht erkannt werden, bitte probiere es noch einmal.", replyMarkup: new ForceReplyMarkup());
-                    return false;
+                    return StateResult.TryAgain;
                 }
 
                 this.setEastCommand.Execute(new DataAccess.Commands.Raid.SetEastRequest { ChatId = message.Chat.Id, East = east });
@@ -160,24 +158,23 @@ namespace EventBot.Business.Commands.Raid
             return await this.Step5(message, text, bot);
         }
 
-        protected async Task<bool> Step5(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step5(Message message, string text, TelegramBotClient bot)
         {
             var currentSettings = this.getCurrentChatSettingsQuery.Execute(new DataAccess.Queries.Raid.GetCurrentChatSettingsRequest { ChatId = message.Chat.Id });
             var south = _Helper.GetSouth(currentSettings)?.ToString(CultureInfo.InvariantCulture) ?? "-";
 
             await bot.SendTextMessageAsync(message.Chat.Id, $"Aktueller Wert {south} \n\rKoordinate, die nach Süden begrenzt", replyMarkup: new ForceReplyMarkup());
-            base.NextState(message, 6);
-            return false;
+            return StateResult.AwaitUserAt(6);
         }
 
-        protected async Task<bool> Step6(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step6(Message message, string text, TelegramBotClient bot)
         {
             if (!SkipCurrentStep(text))
             {
                 if (!decimal.TryParse(text, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal south))
                 {
                     await bot.SendTextMessageAsync(message.Chat.Id, "Koordinate, die nach Süden begrenzt konnte nicht erkannt werden, bitte probiere es noch einmal.", replyMarkup: new ForceReplyMarkup());
-                    return false;
+                    return StateResult.TryAgain;
                 }
 
                 this.setSouthCommand.Execute(new DataAccess.Commands.Raid.SetSouthRequest { ChatId = message.Chat.Id, South = south });
@@ -185,24 +182,23 @@ namespace EventBot.Business.Commands.Raid
             return await this.Step7(message, text, bot);
         }
 
-        protected async Task<bool> Step7(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step7(Message message, string text, TelegramBotClient bot)
         {
             var currentSettings = this.getCurrentChatSettingsQuery.Execute(new DataAccess.Queries.Raid.GetCurrentChatSettingsRequest { ChatId = message.Chat.Id });
             var west = _Helper.GetWest(currentSettings)?.ToString(CultureInfo.InvariantCulture) ?? "-";
 
             await bot.SendTextMessageAsync(message.Chat.Id, $"Aktueller Wert {west} \n\rKoordinate, die nach Westen begrenzt", replyMarkup: new ForceReplyMarkup());
-            base.NextState(message, 8);
-            return false;
+            return StateResult.AwaitUserAt(8);
         }
-
-        protected async Task<bool> Step8(Message message, string text, TelegramBotClient bot)
+ 
+        protected async Task<StateResult> Step8(Message message, string text, TelegramBotClient bot)
         {
             if (!SkipCurrentStep(text))
             {
                 if (!decimal.TryParse(text, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal west))
                 {
                     await bot.SendTextMessageAsync(message.Chat.Id, "Koordinate, die nach Westen begrenzt konnte nicht erkannt werden, bitte probiere es noch einmal.", replyMarkup: new ForceReplyMarkup());
-                    return false;
+                    return StateResult.TryAgain;
                 }
 
                 this.setWestCommand.Execute(new DataAccess.Commands.Raid.SetWestRequest { ChatId = message.Chat.Id, West = west });
@@ -211,29 +207,28 @@ namespace EventBot.Business.Commands.Raid
             return await this.Step9(message, text, bot);
         }
 
-        protected async Task<bool> Step9(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step9(Message message, string text, TelegramBotClient bot)
         {
             var currentSettings = this.getCurrentChatSettingsQuery.Execute(new DataAccess.Queries.Raid.GetCurrentChatSettingsRequest { ChatId = message.Chat.Id });
 
             await bot.SendTextMessageAsync(message.Chat.Id, $"Aktueller Wert {currentSettings?.RaidLevel ?? 1} \n\rMinimum Raid-Level", replyMarkup: new ForceReplyMarkup());
-            base.NextState(message, 10);
-            return false;
+            return StateResult.AwaitUserAt(10);
         }
 
-        protected async Task<bool> Step10(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step10(Message message, string text, TelegramBotClient bot)
         {
             if (!SkipCurrentStep(text))
             {
                 if (!int.TryParse(text, out int level))
                 {
                     await bot.SendTextMessageAsync(message.Chat.Id, "Raid Level konnte nicht erkannt werden. Probiere es bitte noch einmal", replyMarkup: new ForceReplyMarkup());
-                    return false;
+                    return StateResult.TryAgain;
                 }
 
                 if (level < 0 || 5 < level)
                 {
                     await bot.SendTextMessageAsync(message.Chat.Id, "Kein gültiges Raidlevel. Probiere es bitte noch einmal", replyMarkup: new ForceReplyMarkup());
-                    return false;
+                    return StateResult.TryAgain;
                 }
 
                 this.setRaidLevelCommand.Execute(new DataAccess.Commands.Raid.SetMinRaidLevelRequest { ChatId = message.Chat.Id, RaidLevel = level });
@@ -247,7 +242,7 @@ namespace EventBot.Business.Commands.Raid
 
             await Helper.Operator.SendMessage(bot, $"{message.Chat.Id} wartet auf Freischaltung.").ConfigureAwait(false);
 
-            return true;
+            return StateResult.Finished;
         }
 
         private bool SkipCurrentStep(string text)

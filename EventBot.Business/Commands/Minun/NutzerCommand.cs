@@ -63,7 +63,7 @@ namespace EventBot.Business.Commands.Minun
         public override string Key => "/nutzer";
         public override string HelpText => "Startet Nutzereinrichtung";
 
-        protected async Task<bool> Step0(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step0(Message message, string text, TelegramBotClient bot)
         {
             var chatId = base.GetChatId(message);
 
@@ -73,7 +73,7 @@ namespace EventBot.Business.Commands.Minun
             return await this.Step1(message, text, bot);
         }
 
-        protected async Task<bool> Step1(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step1(Message message, string text, TelegramBotClient bot)
         {
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);
@@ -83,11 +83,10 @@ namespace EventBot.Business.Commands.Minun
             var name = currentSettings?.IngameName ?? "";
 
             await bot.SendTextMessageAsync(chatId, $"Trainername: {name}");
-            base.NextState(message, 2);
-            return false;
+            return StateResult.AwaitUserAt(2);
         }
 
-        protected async Task<bool> Step2(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step2(Message message, string text, TelegramBotClient bot)
         {
             if (!SkipCurrentStep(text))
             {
@@ -99,7 +98,7 @@ namespace EventBot.Business.Commands.Minun
             return await this.Step3(message, text, bot);
         }
 
-        protected async Task<bool> Step3(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step3(Message message, string text, TelegramBotClient bot)
         {
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);
@@ -109,11 +108,10 @@ namespace EventBot.Business.Commands.Minun
 
             await bot.SendTextMessageAsync(chatId, $"Team: {team} \n\r(1-Blau, 2-Rot, 3-Gelb)");
 
-            base.NextState(message, 4);
-            return false;
+            return StateResult.AwaitUserAt(4);
         }
 
-        protected async Task<bool> Step4(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step4(Message message, string text, TelegramBotClient bot)
         {
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);
@@ -123,13 +121,13 @@ namespace EventBot.Business.Commands.Minun
                 if (!int.TryParse(text, NumberStyles.Any, CultureInfo.InvariantCulture, out int team))
                 {
                     await bot.SendTextMessageAsync(chatId, "Das Team konnte nicht erkannt werden, bitte probiere es noch einmal.");
-                    return false;
+                    return StateResult.TryAgain;
                 }
 
                 if (team < 1 || 3 < team)
                 {
                     await bot.SendTextMessageAsync(chatId, "Das Team konnte nicht erkannt werden, bitte probiere es noch einmal.");
-                    return false;
+                    return StateResult.TryAgain;
                 }
 
                 this.setUserTeamCommand.Execute(new DataAccess.Commands.Raid.SetUserTeamRequest { UserId = userId, Team = (TeamType)team });
@@ -138,7 +136,7 @@ namespace EventBot.Business.Commands.Minun
             return await this.Step5(message, text, bot);
         }
 
-        protected async Task<bool> Step5(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step5(Message message, string text, TelegramBotClient bot)
         {
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);
@@ -148,11 +146,10 @@ namespace EventBot.Business.Commands.Minun
             var level = currentSettings.Level?.ToString() ?? "";
 
             await bot.SendTextMessageAsync(chatId, $"Level: {level}");
-            base.NextState(message, 6);
-            return false;
+            return StateResult.AwaitUserAt(6);
         }
 
-        protected async Task<bool> Step6(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step6(Message message, string text, TelegramBotClient bot)
         {
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);
@@ -162,13 +159,13 @@ namespace EventBot.Business.Commands.Minun
                 if (!int.TryParse(text, NumberStyles.Any, CultureInfo.InvariantCulture, out int level))
                 {
                     await bot.SendTextMessageAsync(chatId, "Das Level konnte nicht erkannt werden, bitte probiere es noch einmal.");
-                    return false;
+                    return StateResult.TryAgain;
                 }
 
                 if (level < 1 || 40 < level)
                 {
                     await bot.SendTextMessageAsync(chatId, "Das Level konnte nicht erkannt werden, bitte probiere es noch einmal.");
-                    return false;
+                    return StateResult.TryAgain;
                 }
 
                 this.setUserLevelCommand.Execute(new DataAccess.Commands.Raid.SetUserLevelRequest { UserId = userId, Level = level });
@@ -176,7 +173,7 @@ namespace EventBot.Business.Commands.Minun
 
             await bot.SendTextMessageAsync(chatId, "Konfiguration abgeschlossen");
 
-            return true;
+            return StateResult.Finished;
         }
 
         private bool SkipCurrentStep(string text)

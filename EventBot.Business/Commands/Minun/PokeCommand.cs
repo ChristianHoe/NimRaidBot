@@ -41,7 +41,7 @@ namespace EventBot.Business.Commands.Minun
         public override string Key => "/poke";
         public override string HelpText => "Fragt die Eigenschaften eines Pokemon ab.";
 
-        protected async Task<bool> Step0(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step0(Message message, string text, TelegramBotClient bot)
         {
             var chatId = GetChatId(message);
 
@@ -51,14 +51,14 @@ namespace EventBot.Business.Commands.Minun
                 if (names.Count() == 0)
                 {
                     await bot.SendTextMessageAsync(chatId, "Pokemon nicht erkannt! Poke-Id:").ConfigureAwait(false);
-                    return false;
+                    return StateResult.TryAgain;
                 }
 
                 if (names.Count() > 1)
                 {
                     var msg = "Pokemon nicht eindeutig!" + string.Join(Environment.NewLine, names.Select(x => $"Id: {x.Key:D3} Name: {x.Value}"));
                     await bot.SendTextMessageAsync(chatId, msg).ConfigureAwait(false);
-                    return false;
+                    return StateResult.TryAgain;
                 }
 
                 pokeId = names.First().Key;
@@ -68,7 +68,7 @@ namespace EventBot.Business.Commands.Minun
             if (!baseValues.TryGetValue(pokeId, out var baseValue))
             {
                 await bot.SendTextMessageAsync(chatId, "Unbekannte Poke-Id! Poke-Id:").ConfigureAwait(false);
-                return false;
+                return StateResult.TryAgain;
             }
 
             var min15 = CalcuateCp(15, baseValue, 10, 10, 10);
@@ -114,7 +114,7 @@ namespace EventBot.Business.Commands.Minun
             txt.AppendLine($">2x: {string.Join(", ", x5_1.Select(x => x.Key))}");
 
             await bot.SendTextMessageAsync(chatId, txt.ToString(), Telegram.Bot.Types.Enums.ParseMode.Markdown).ConfigureAwait(false);
-            return true;
+            return StateResult.Finished;
         }
 
         private int CalcuateCp(int level, BaseValue baseValue, int ivAttack, int ivDefense, int ivStamina)

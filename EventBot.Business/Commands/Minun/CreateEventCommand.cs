@@ -81,7 +81,7 @@ namespace EventBot.Business.Commands.Minun
         public override string Key => "/event";
         public override ChatRestrictionType ChatRestriction => ChatRestrictionType.Private;
 
-        protected async Task<bool> Step0(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step0(Message message, string text, TelegramBotClient bot)
         {
             var chatId = base.GetChatId(message);
 
@@ -90,15 +90,15 @@ namespace EventBot.Business.Commands.Minun
             return await this.Step1(message, text, bot);
         }
 
-        protected override async Task<bool> Step4(Message message, string text, TelegramBotClient bot)
+        protected override async Task<StateResult> Step4(Message message, string text, TelegramBotClient bot)
         {
-            if (!await base.Step4(message, text, bot))
-                return false;
+            if (!(await base.Step4(message, text, bot)).IsFinished)
+                return StateResult.TryAgain;
 
             return await this.Step5(message, text, bot);
         }
 
-        protected async Task<bool> Step5(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step5(Message message, string text, TelegramBotClient bot)
         {
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);
@@ -109,7 +109,7 @@ namespace EventBot.Business.Commands.Minun
             return await this.Step6(message, text, bot);
         }
 
-        protected async Task<bool> Step6(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step6(Message message, string text, TelegramBotClient bot)
         {
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);
@@ -117,22 +117,19 @@ namespace EventBot.Business.Commands.Minun
             // configure begin date
             this.setTimeModeForManualRaidCommand.Execute(new SetTimeModeForManualRaidRequest { UserId = userId, TimeMode = 1 });
 
-            await this.Step7(message, text, bot);
-            return false;
+            return await this.Step7(message, text, bot);
         }
 
 
-        protected async Task<bool> Step7(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step7(Message message, string text, TelegramBotClient bot)
         {
             var chatId = base.GetChatId(message);
             await bot.SendTextMessageAsync(chatId, "Titel (Max 40):").ConfigureAwait(false);
 
-
-            base.NextState(message, 8);
-            return false;
+            return StateResult.AwaitUserAt(8);
         }
 
-        protected async Task<bool> Step8(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step8(Message message, string text, TelegramBotClient bot)
         {
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);
@@ -143,7 +140,7 @@ namespace EventBot.Business.Commands.Minun
                 if (text.Length > 40)
                 {
                     await bot.SendTextMessageAsync(chatId, "Titel ist zu lang!").ConfigureAwait(false);
-                    return false;
+                    return StateResult.TryAgain;
                 }
 
                 this.setTitleForManualRaidCommand.Execute(new SetTitleForManualRaidRequest { UserId = userId, Title = text });
@@ -152,19 +149,18 @@ namespace EventBot.Business.Commands.Minun
             return await this.Step9(message, text, bot);
         }
 
-        protected async Task<bool> Step9(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step9(Message message, string text, TelegramBotClient bot)
         {
             var chatId = base.GetChatId(message);
             await bot.SendTextMessageAsync(chatId, "Termin (yyyy.mm.dd hh:mm):").ConfigureAwait(false);
 
 
-            base.NextState(message, 10);
-            return false;
+            return StateResult.AwaitUserAt(10);
         }
 
         TimeZoneInfo timezone = TimeZoneInfo.FindSystemTimeZoneById(TimeZoneIds.Local);
 
-        protected async Task<bool> Step10(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step10(Message message, string text, TelegramBotClient bot)
         {
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);
@@ -174,13 +170,13 @@ namespace EventBot.Business.Commands.Minun
                 if (!DateTime.TryParseExact(text, "yyyy/MM/dd HH:mm", new CultureInfo("de-de"), DateTimeStyles.None, out DateTime date))
                 {
                     await bot.SendTextMessageAsync(chatId, "Datum konnte nicht erkannt werden, bitte probiere es noch einmal.").ConfigureAwait(false);
-                    return false;
+                    return StateResult.TryAgain;
                 }
 
                 if (date < DateTime.Now)
                 {
                     await bot.SendTextMessageAsync(chatId, "Das Startdatum liegt in der Vergangenheit, bitte probiere es noch einmal.").ConfigureAwait(false);
-                    return false;
+                    return StateResult.TryAgain;
                 }
                 
                 var x = TimeZoneInfo.ConvertTimeToUtc(date, timezone);

@@ -56,7 +56,7 @@ namespace EventBot.Business.Commands.Raid
         public override ChatRestrictionType ChatRestriction => ChatRestrictionType.Group;
 
 
-        protected async Task<bool> Step0(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step0(Message message, string text, TelegramBotClient bot)
         {
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);
@@ -83,11 +83,10 @@ namespace EventBot.Business.Commands.Raid
 
             await bot.SendTextMessageAsync(chatId, msg.ToString());
 
-            base.NextState(message, 1);
-            return false;
+            return StateResult.AwaitUserAt(1);
         }
 
-        protected async Task<bool> Step1(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step1(Message message, string text, TelegramBotClient bot)
         {
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);
@@ -97,7 +96,7 @@ namespace EventBot.Business.Commands.Raid
                 if (!int.TryParse(text, NumberStyles.Any, CultureInfo.InvariantCulture, out int gymIndex))
                 {
                     await bot.SendTextMessageAsync(chatId, "Das Gym konnte nicht erkannt werden, bitte probiere es noch einmal.").ConfigureAwait(false);
-                    return false;
+                    return StateResult.TryAgain;
                 }
 
                 var currentChatSettings = this.getCurrentChatSettingsQuery.Execute(new GetCurrentChatSettingsRequest { ChatId = chatId });
@@ -106,7 +105,7 @@ namespace EventBot.Business.Commands.Raid
                 if (gymIndex < 0 || gyms.Count() < gymIndex)
                 {
                     await bot.SendTextMessageAsync(chatId, "Das Gym konnte nicht erkannt werden, bitte probiere es noch einmal.").ConfigureAwait(false);
-                    return false;
+                    return StateResult.TryAgain;
                 }
 
 
@@ -126,7 +125,7 @@ namespace EventBot.Business.Commands.Raid
                 }
             }
 
-            return true;
+            return StateResult.Finished;
         }
 
 

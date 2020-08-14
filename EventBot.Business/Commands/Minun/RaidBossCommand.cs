@@ -46,7 +46,7 @@ namespace EventBot.Business.Commands.Minun
         public override string Key => "/raidboss";
         public override string HelpText => "Konfiguriert einen Marker, für welchen Raid-Boss du teilnehmen würdest.";
 
-        protected async Task<bool> Step0(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step0(Message message, string text, TelegramBotClient bot)
         {
             var chatId = base.GetChatId(message);
 
@@ -70,11 +70,10 @@ namespace EventBot.Business.Commands.Minun
 
             await bot.SendTextMessageAsync(chatId, msg.ToString()).ConfigureAwait(false);
 
-            this.NextState(message, 1);
-            return false;
+            return StateResult.AwaitUserAt(1);
         }
 
-        protected async Task<bool> Step1(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step1(Message message, string text, TelegramBotClient bot)
         {
             if (!SkipCurrentStep(text))
             {
@@ -83,7 +82,7 @@ namespace EventBot.Business.Commands.Minun
                 if (!int.TryParse(text, NumberStyles.Any, CultureInfo.InvariantCulture, out int pokeId))
                 {
                     await bot.SendTextMessageAsync(chatId, "Die Poke-Id konnte nicht erkannt werden, bitte probiere es noch einmal.");
-                    return false;
+                    return StateResult.TryAgain;
                 }
 
                 var currentBosses = this.getRaidBossPreferencesQuery.Execute(new GetRaidBossPreferencesRequest { ChatId = chatId });
@@ -99,7 +98,7 @@ namespace EventBot.Business.Commands.Minun
                 }
             }
 
-            return true;
+            return StateResult.Finished;
         }
 
         private bool SkipCurrentStep(string text)

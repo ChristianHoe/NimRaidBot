@@ -84,34 +84,49 @@ namespace EventBot.Business.Commands.Minun
         public override string Key => "/raid";
         public override ChatRestrictionType ChatRestriction => ChatRestrictionType.Private;
 
-        protected async Task<bool> Step0(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step0(Message message, string text, TelegramBotClient bot)
         {
             var chatId = base.GetChatId(message);
 
             await bot.SendTextMessageAsync(chatId, "Anlegen eines Raids").ConfigureAwait(false);
 
+            string[] parameters = text?.Split(',') ?? new string[0];
+
+            // if (parameters.Length > 0)
+            //     return await this.StepBatch(message, parameters, bot);
+
+
             return await this.Step1(message, text, bot);
         }
 
-        protected override async Task<bool> Step4(Message message, string text, TelegramBotClient bot)
+        // protected async Task<StateResult> StepBatch(Message message, string[] parameters, TelegramBotClient bot)
+        // {
+        //     var count = parameters.Length;
+        //     var result2 = await Step2(message, parameters[0], bot);
+        //     if (result2 != 2 )
+
+
+        //     return 0;
+
+        // }
+
+        protected override async Task<StateResult> Step4(Message message, string text, TelegramBotClient bot)
         {
-            if (!await base.Step4(message, text, bot))
-                return false;
+            if (!(await base.Step4(message, text, bot)).IsFinished)
+                return StateResult.TryAgain;
 
             return await this.Step9(message, text, bot);
         }
 
-        protected async Task<bool> Step9(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step9(Message message, string text, TelegramBotClient bot)
         {
             var chatId = base.GetChatId(message);
             await bot.SendTextMessageAsync(chatId, "Raidlevel");
 
-
-            base.NextState(message, 10);
-            return false;
+            return StateResult.AwaitUserAt(10);
         }
 
-        protected async Task<bool> Step10(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step10(Message message, string text, TelegramBotClient bot)
         {
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);
@@ -121,13 +136,13 @@ namespace EventBot.Business.Commands.Minun
                 if (!int.TryParse(text, NumberStyles.Any, CultureInfo.InvariantCulture, out int raidLevel))
                 {
                     await bot.SendTextMessageAsync(chatId, "Das Raidlevel konnte nicht erkannt werden, bitte probiere es noch einmal.").ConfigureAwait(false);
-                    return false;
+                    return StateResult.TryAgain;
                 }
 
                 if (raidLevel < 0 || 5 < raidLevel)
                 {
                     await bot.SendTextMessageAsync(chatId, "Raidlevel liegen außerhalb des gültigen Bereichs (0 - 5), bitte probiere es noch einmal.").ConfigureAwait(false);
-                    return false;
+                    return StateResult.TryAgain;
                 }
 
                 this.setRaidLevelForManualRaidCommand.Execute(new SetRaidLevelForManualRaidRequest { UserId = userId, Level = raidLevel });
@@ -136,16 +151,15 @@ namespace EventBot.Business.Commands.Minun
             return await this.Step5(message, text, bot);
         }
 
-        protected async Task<bool> Step5(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step5(Message message, string text, TelegramBotClient bot)
         {
             var chatId = base.GetChatId(message);
             await bot.SendTextMessageAsync(chatId, "Wähle: 1 - Zeit bis zum Start, 2 - Zeit bis zum Ende").ConfigureAwait(false);
 
-            base.NextState(message, 6);
-            return false;
+            return StateResult.AwaitUserAt(6);
         }
 
-        protected async Task<bool> Step6(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step6(Message message, string text, TelegramBotClient bot)
         {
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);
@@ -155,34 +169,31 @@ namespace EventBot.Business.Commands.Minun
                 if (!int.TryParse(text, NumberStyles.Any, CultureInfo.InvariantCulture, out int timeMode))
                 {
                     await bot.SendTextMessageAsync(chatId, "Die Zeitwahl konnte nicht erkannt werden, bitte probiere es noch einmal.").ConfigureAwait(false);
-                    return false;
+                    return StateResult.TryAgain;
                 }
 
                 if (timeMode < 1 || 2 < timeMode)
                 {
                     await bot.SendTextMessageAsync(chatId, "Die Zeitwahl konnte nicht erkannt werden, bitte probiere es noch einmal.").ConfigureAwait(false);
-                    return false;
+                    return StateResult.TryAgain;
                 }
 
 
                 this.setTimeModeForManualRaidCommand.Execute(new SetTimeModeForManualRaidRequest { UserId = userId, TimeMode = timeMode });
             }
 
-            await this.Step7(message, text, bot);
-            return false;
+            return await this.Step7(message, text, bot);
         }
 
-        protected async Task<bool> Step7(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step7(Message message, string text, TelegramBotClient bot)
         {
             var chatId = base.GetChatId(message);
             await bot.SendTextMessageAsync(chatId, "Minuten bis zum Start/Ende").ConfigureAwait(false);
 
-
-            base.NextState(message, 8);
-            return false;
+            return StateResult.AwaitUserAt(8);
         }
 
-        protected async Task<bool> Step8(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step8(Message message, string text, TelegramBotClient bot)
         {
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);
@@ -192,13 +203,13 @@ namespace EventBot.Business.Commands.Minun
                 if (!int.TryParse(text, NumberStyles.Any, CultureInfo.InvariantCulture, out int minuten))
                 {
                     await bot.SendTextMessageAsync(chatId, "Die Minuten konnte nicht erkannt werden, bitte probiere es noch einmal.").ConfigureAwait(false);
-                    return false;
+                    return StateResult.TryAgain;
                 }
 
                 if (minuten < 0 || 60 < minuten)
                 {
                     await bot.SendTextMessageAsync(chatId, "Die Minuten liegen außerhalb des gültigen Bereichs (0 - 60), bitte probiere es noch einmal.").ConfigureAwait(false);
-                    return false;
+                    return StateResult.TryAgain;
                 }
 
                 var current = this.getCurrentManualRaidQuery.Execute(new GetCurrentManualRaidRequest { UserId = userId });
@@ -224,17 +235,16 @@ namespace EventBot.Business.Commands.Minun
             return await this.Step13(message, text, bot);
         }
 
-        protected async Task<bool> Step11(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step11(Message message, string text, TelegramBotClient bot)
         {
             var chatId = base.GetChatId(message);
             await bot.SendTextMessageAsync(chatId, "Poke-Id:");
 
 
-            base.NextState(message, 12);
-            return false;
+            return StateResult.AwaitUserAt(12);
         }
 
-        protected async Task<bool> Step12(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step12(Message message, string text, TelegramBotClient bot)
         {
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);
@@ -244,13 +254,13 @@ namespace EventBot.Business.Commands.Minun
                 if (!int.TryParse(text, NumberStyles.Any, CultureInfo.InvariantCulture, out int pokeId))
                 {
                     await bot.SendTextMessageAsync(chatId, "Die Poke-Id konnte nicht erkannt werden, bitte probiere es noch einmal.").ConfigureAwait(false);
-                    return false;
+                    return StateResult.TryAgain;
                 }
 
                 if (pokeId < 0 || 2000 < pokeId)
                 {
                     await bot.SendTextMessageAsync(chatId, "Keine gültige Poke-Id, bitte probiere es noch einmal.").ConfigureAwait(false);
-                    return false;
+                    return StateResult.TryAgain;
                 }
 
                 this.setPokeIdForManualRaidCommand.Execute(new SetPokeIdForManualRaidRequest { UserId = userId, PokeId = pokeId });
