@@ -86,7 +86,7 @@ namespace EventBot
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            InitializeContainer();
+            InitializeContainer(Configuration, container);
 
             //services.AddSingleton<IControllerActivator>(
             //    new SimpleInjectorControllerActivator(container));
@@ -128,7 +128,7 @@ namespace EventBot
             container.Verify();
         }
 
-        private void InitializeContainer()
+        public static void InitializeContainer(IConfiguration Configuration, Container container)
         {
             // Add application presentation components:
             //container.RegisterMvcControllers(app);
