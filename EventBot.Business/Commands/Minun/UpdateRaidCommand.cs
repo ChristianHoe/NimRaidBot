@@ -85,13 +85,13 @@ namespace EventBot.Business.Commands.Minun
 
         public override ChatRestrictionType ChatRestriction => ChatRestrictionType.Private;
 
-        protected async Task<StateResult> Step0(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step0(Message message, string text, TelegramBotClient bot, bool batchMode)
         {
             var chatId = base.GetChatId(message);
 
             //await bot.SendTextMessageAsync(chatId, "Aktualisieren eines Raids.").ConfigureAwait(false);
 
-            return await this.Step2(message, text, bot);
+            return await this.Step2(message, text, bot, batchMode);
         }
 
         // protected async Task<bool> Step1(Message message, string text, TelegramBotClient bot, int step)
@@ -106,7 +106,7 @@ namespace EventBot.Business.Commands.Minun
         // }
 
          
-        protected async Task<StateResult> Step2(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step2(Message message, string text, TelegramBotClient bot, bool batchMode)
         {
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);
@@ -133,10 +133,10 @@ namespace EventBot.Business.Commands.Minun
 
             this.setRaidIdToUpdateCommand.Execute(new SetRaidIdToUpdateRequest { UserId = userId, RaidId = raidId });
 
-            return await this.Step3(message, text, bot);
+            return await this.Step3(message, text, bot, batchMode);
         }
 
-        protected async Task<StateResult> Step3(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step3(Message message, string text, TelegramBotClient bot, bool batchMode)
         {
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);
@@ -154,7 +154,7 @@ namespace EventBot.Business.Commands.Minun
             return StateResult.AwaitUserAt(4);
         }
 
-        protected async Task<StateResult> Step4(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step4(Message message, string text, TelegramBotClient bot, bool batchMode)
         {
             if (!SkipCurrentStep(text))
             {
@@ -176,9 +176,9 @@ namespace EventBot.Business.Commands.Minun
                 switch(actionId)
                 {
                     case 1: 
-                        return await this.Step5(message, text, bot);
+                        return await this.Step5(message, text, bot, batchMode);
                     case 2:
-                        return await this.Step6(message, text, bot);
+                        return await this.Step6(message, text, bot, batchMode);
 
                 }
 
@@ -189,7 +189,7 @@ namespace EventBot.Business.Commands.Minun
         }
 
 
-        protected async Task<StateResult> Step5(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step5(Message message, string text, TelegramBotClient bot, bool batchMode)
         {
             var userId = base.GetUserId(message);
 
@@ -219,10 +219,10 @@ namespace EventBot.Business.Commands.Minun
                 }
             }
 
-            return await this.StepFinished(message, text, bot);
+            return await this.StepFinished(message, text, bot, batchMode);
         }
 
-        protected async Task<StateResult> Step6(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step6(Message message, string text, TelegramBotClient bot, bool batchMode)
         {
             var chatId = base.GetChatId(message);
             await bot.SendTextMessageAsync(chatId, "Poke-Id:");
@@ -231,7 +231,7 @@ namespace EventBot.Business.Commands.Minun
             return StateResult.AwaitUserAt(7);
         }
 
-        protected async Task<StateResult> Step7(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step7(Message message, string text, TelegramBotClient bot, bool batchMode)
         {
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);
@@ -256,12 +256,12 @@ namespace EventBot.Business.Commands.Minun
                 this.setPokeIdForRaidCommand.Execute(new SetPokeIdForRaidRequest { RaidId = raidId, PokeId = pokeId });
             }
 
-            return await this.StepFinished(message, text, bot);
+            return await this.StepFinished(message, text, bot, batchMode);
         }
 
 
 
-        protected async Task<StateResult> StepFinished(Message message, string text, TelegramBotClient bot)        
+        protected async Task<StateResult> StepFinished(Message message, string text, TelegramBotClient bot, bool batchMode)        
         {
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);

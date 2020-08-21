@@ -63,17 +63,17 @@ namespace EventBot.Business.Commands.Minun
         public override string Key => "/nutzer";
         public override string HelpText => "Startet Nutzereinrichtung";
 
-        protected async Task<StateResult> Step0(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step0(Message message, string text, TelegramBotClient bot, bool batchMode)
         {
             var chatId = base.GetChatId(message);
 
             await bot.SendTextMessageAsync(chatId, "Willkommen bei der Einrichtung des Bots").ConfigureAwait(false);
             await bot.SendTextMessageAsync(chatId, "Du kannst 'x' antworten, dann wird der ursprüngliche Wert beibehalten.").ConfigureAwait(false);
 
-            return await this.Step1(message, text, bot);
+            return await this.Step1(message, text, bot, batchMode);
         }
 
-        protected async Task<StateResult> Step1(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step1(Message message, string text, TelegramBotClient bot, bool batchMode)
         {
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);
@@ -86,7 +86,7 @@ namespace EventBot.Business.Commands.Minun
             return StateResult.AwaitUserAt(2);
         }
 
-        protected async Task<StateResult> Step2(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step2(Message message, string text, TelegramBotClient bot, bool batchMode)
         {
             if (!SkipCurrentStep(text))
             {
@@ -95,10 +95,10 @@ namespace EventBot.Business.Commands.Minun
                 this.setUserNameCommand.Execute(new DataAccess.Commands.Raid.SetUserNameRequest { UserId = userId, Name = text });
             }
 
-            return await this.Step3(message, text, bot);
+            return await this.Step3(message, text, bot, batchMode);
         }
 
-        protected async Task<StateResult> Step3(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step3(Message message, string text, TelegramBotClient bot, bool batchMode)
         {
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);
@@ -111,7 +111,7 @@ namespace EventBot.Business.Commands.Minun
             return StateResult.AwaitUserAt(4);
         }
 
-        protected async Task<StateResult> Step4(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step4(Message message, string text, TelegramBotClient bot, bool batchMode)
         {
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);
@@ -133,10 +133,10 @@ namespace EventBot.Business.Commands.Minun
                 this.setUserTeamCommand.Execute(new DataAccess.Commands.Raid.SetUserTeamRequest { UserId = userId, Team = (TeamType)team });
             }
 
-            return await this.Step5(message, text, bot);
+            return await this.Step5(message, text, bot, batchMode);
         }
 
-        protected async Task<StateResult> Step5(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step5(Message message, string text, TelegramBotClient bot, bool batchMode)
         {
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);
@@ -149,7 +149,7 @@ namespace EventBot.Business.Commands.Minun
             return StateResult.AwaitUserAt(6);
         }
 
-        protected async Task<StateResult> Step6(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step6(Message message, string text, TelegramBotClient bot, bool batchMode)
         {
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);

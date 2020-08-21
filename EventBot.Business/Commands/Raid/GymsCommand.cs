@@ -56,7 +56,7 @@ namespace EventBot.Business.Commands.Raid
         public override ChatRestrictionType ChatRestriction => ChatRestrictionType.Group;
 
 
-        protected async Task<StateResult> Step0(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step0(Message message, string text, TelegramBotClient bot, bool batchMode)
         {
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);
@@ -86,7 +86,7 @@ namespace EventBot.Business.Commands.Raid
             return StateResult.AwaitUserAt(1);
         }
 
-        protected async Task<StateResult> Step1(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step1(Message message, string text, TelegramBotClient bot, bool batchMode)
         {
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);

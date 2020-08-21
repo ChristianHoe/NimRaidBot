@@ -16,7 +16,7 @@ namespace EventBot.Business.Queries
         public int Step;
     }
 
-    public class StatePeakQuery : IQuery<State>
+    public class StatePeakQuery : IQuery<State?>
     {
         IQueryCurrentState query;
 
@@ -25,7 +25,7 @@ namespace EventBot.Business.Queries
             this.query = query;
         }
 
-        public State Execute(Message message)
+        public State? Execute(Message message)
         {
             var result = this.query.Execute(new QueryCurrentStateRequest { ChatId = message.Chat.Id });
             if (result == null)

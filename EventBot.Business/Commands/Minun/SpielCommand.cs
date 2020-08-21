@@ -50,12 +50,12 @@ namespace EventBot.Business.Commands.Minun
 
         public override string HelpText => "Teste dein Wissen über die passenden Pokemon-Counter";
 
-        protected async Task<StateResult> Step0(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step0(Message message, string text, TelegramBotClient bot, bool batchMode)
         {
             var chatId = base.GetChatId(message);
 
             // FOR DEBUG
-            return await this.Step1(message, text, bot);
+            return await this.Step1(message, text, bot, batchMode);
 
             var msg = new StringBuilder("Schwierigkeitsgrad:");
             msg.AppendLine();
@@ -68,7 +68,7 @@ namespace EventBot.Business.Commands.Minun
             return StateResult.AwaitUserAt(1);
         }
 
-        protected async Task<StateResult> Step1(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step1(Message message, string text, TelegramBotClient bot, bool batchMode)
         {
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);

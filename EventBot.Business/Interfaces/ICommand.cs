@@ -98,6 +98,7 @@ namespace EventBot.Business.Interfaces
             public int Next { get; }
             public bool Store => _state == States.Store;
             public bool IsFinished => _state == States.Finished;
+            public bool IsTryAgain => _state == States.DoNothing;
 
 
             public static StateResult ContinueWith(int next)
@@ -115,7 +116,9 @@ namespace EventBot.Business.Interfaces
             public static StateResult Finished { get; } = new StateResult(-1, States.Finished);
         }
 
-        protected Dictionary<int, Func<Message, string, TelegramBotClient, Task<StateResult>>> Steps = new Dictionary<int, Func<Message, string, TelegramBotClient, Task<StateResult>>>();
+        protected delegate Task<StateResult> ExecuteStep(Message message, string text, TelegramBotClient bot, bool batchMode = false);
+
+        protected Dictionary<int, ExecuteStep> Steps = new Dictionary<int, ExecuteStep>();
 
         readonly protected IStateUpdateCommand stateUpdateCommand;
         readonly protected IStatePopCommand statePopCommand;
@@ -142,28 +145,79 @@ namespace EventBot.Business.Interfaces
             if ((lastState == null) || (lastState.Command != this.Key))
                 this.statePushCommand.Execute(new StatePushRequest(new State(message.Chat.Id, this.Key, 0)));
 
+            if (!string.IsNullOrWhiteSpace(text))
+            {
+                var result = await this.StepBatch(message, text, bot);
+                UpdateState(message, result);
+                return;
+            }
+
             await ExecuteStepAsync(message, text, bot, 0);
         } 
+
+        protected async Task<StateResult> StepBatch(Message message, string text, TelegramBotClient bot)
+        {
+            int stepIdx = 0;
+            int parameterIdx = 0;
+            int lastStepIdx = 0;
+            string lastParameter = text;
+            string parameter = text;
+
+            string[] parameters = text?.Split(',') ?? new string[0];
+            int count = parameters.Length;
+           
+            while (true)
+            {
+                var batchMode = parameterIdx != count;
+
+                var stepResult = await this.Steps[stepIdx].Invoke(message, parameter, bot, batchMode);
+                if (stepResult.IsFinished)
+                    return stepResult;
+
+                if (stepResult.Store)
+                {
+                    if (parameterIdx >= count)
+                        return stepResult;
+
+                    lastParameter = parameter;
+                    parameter = parameters[parameterIdx];
+                    parameterIdx++;
+                    
+                    lastStepIdx = stepIdx;
+                    stepIdx = stepResult.Next;
+                }
+
+                if (stepResult.IsTryAgain)
+                    return await this.Steps[lastStepIdx].Invoke(message, lastParameter, bot, false);
+            }
+
+            return StateResult.TryAgain;
+        }
 
         public async Task ExecuteStepAsync(Message message, string text, TelegramBotClient bot, int step)
         {
             if (this.Steps.ContainsKey(step))
             {
-                var result = await this.Steps[step].Invoke(message, text, bot);
-
-                // pop current state from stack if finished
-                if (result.IsFinished)
-                {
-                    this.statePopCommand.Execute(new StatePopRequest(new State(message.Chat.Id, this.Key)));
-                    return;
-                }
-
-                if (result.Store)
-                {
-                    this.stateUpdateCommand.Execute(new StateUpdateRequest(new State(message.Chat.Id, this.Key, result.Next)));
-                    return;
-                }
+                var result = await this.Steps[step].Invoke(message, text, bot, false);
+                UpdateState(message, result);
             }
         }
+
+        private void UpdateState(Message message, StateResult result)
+        {
+            // pop current state from stack if finished
+            if (result.IsFinished)
+            {
+                this.statePopCommand.Execute(new StatePopRequest(new State(message.Chat.Id, this.Key)));
+                return;
+            }
+
+            if (result.Store)
+            {
+                this.stateUpdateCommand.Execute(new StateUpdateRequest(new State(message.Chat.Id, this.Key, result.Next)));
+                return;
+            }
+        }
+
     }
 }

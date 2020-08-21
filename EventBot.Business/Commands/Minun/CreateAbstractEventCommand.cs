@@ -63,7 +63,7 @@ namespace EventBot.Business.Commands.Minun
             base.Steps.Add(13, this.Step13);
         }
 
-        protected async Task<StateResult> Step1(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step1(Message message, string text, TelegramBotClient bot, bool batchMode)
         {
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);
@@ -84,18 +84,22 @@ namespace EventBot.Business.Commands.Minun
 
             if (chats.Count() > 1)
             {
-                await bot.SendTextMessageAsync(chatId, $"Bitte wähle eine Gruppe\n\r{msg.ToString()}").ConfigureAwait(false);
+                if (!batchMode)
+                    await bot.SendTextMessageAsync(chatId, $"Bitte wähle eine Gruppe\n\r{msg.ToString()}").ConfigureAwait(false);
+                
                 return StateResult.AwaitUserAt(2);
             }
             else
             {
-                await bot.SendTextMessageAsync(chatId, $"Folgende Gruppe wird verwendet\n\r{msg.ToString()}").ConfigureAwait(false);
+                if (!batchMode)
+                    await bot.SendTextMessageAsync(chatId, $"Folgende Gruppe wird verwendet\n\r{msg.ToString()}").ConfigureAwait(false);
+                
                 setChatForManualRaidCommand.Execute(new SetChatForManualRaidAndInitializeRequest { UserId = userId, ChatId = chats.First().ChatId });
-                return StateResult.AwaitUserAt(3);
+                return await this.Step3(message, text, bot, batchMode);
             }
         }
 
-        protected async Task<StateResult> Step2(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step2(Message message, string text, TelegramBotClient bot, bool batchMode)
         {
             if (!SkipCurrentStep(text))
             {
@@ -118,41 +122,44 @@ namespace EventBot.Business.Commands.Minun
                 this.setChatForManualRaidCommand.Execute(new SetChatForManualRaidAndInitializeRequest { UserId = userId, ChatId = activeChatIds.ElementAt(chat).ChatId });
             }
 
-            return await this.Step3(message, text, bot);
+            return await this.Step3(message, text, bot, batchMode);
         }
 
-        protected async Task<StateResult> Step3(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step3(Message message, string text, TelegramBotClient bot, bool batchMode)
         {
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);
 
-            var raid = this.getCurrentManualRaidQuery.Execute(new GetCurrentManualRaidRequest { UserId = userId } );
-            var gyms = this.getActiveGymsByChatQuery.Execute(new GetActiveGymsByChatRequest { ChatId = raid.ChatId ?? 0 });
-            var special = this.getSpecialGymsQuery.Execute(new GetSpecialGymsForChatsRequest { ChatIds = new[] { raid.ChatId ?? 0 } });
-
-            StringBuilder msg = new StringBuilder();
-
-            int i = 0;
-            foreach (var gym in gyms)
+            if (!batchMode)
             {
-                var gymName = special.FirstOrDefault(x => x.GymId == gym.Id && x.Type == (int)GymType.AlternativeName)?.Data ?? gym.Name;
-                var line = $"{i} - {gymName}";
-                if (line.Length + msg.Length > 4096)
+                var raid = this.getCurrentManualRaidQuery.Execute(new GetCurrentManualRaidRequest { UserId = userId } );
+                var gyms = this.getActiveGymsByChatQuery.Execute(new GetActiveGymsByChatRequest { ChatId = raid.ChatId ?? 0 });
+                var special = this.getSpecialGymsQuery.Execute(new GetSpecialGymsForChatsRequest { ChatIds = new[] { raid.ChatId ?? 0 } });
+
+                StringBuilder msg = new StringBuilder();
+
+                int i = 0;
+                foreach (var gym in gyms)
                 {
-                    await bot.SendTextMessageAsync(chatId, msg.ToString());
-                    msg.Clear();
+                    var gymName = special.FirstOrDefault(x => x.GymId == gym.Id && x.Type == (int)GymType.AlternativeName)?.Data ?? gym.Name;
+                    var line = $"{i} - {gymName}";
+                    if (line.Length + msg.Length > 4096)
+                    {
+                        await bot.SendTextMessageAsync(chatId, msg.ToString());
+                        msg.Clear();
+                    }
+
+                    msg.AppendLine(line);
+                    i++;
                 }
 
-                msg.AppendLine(line);
-                i++;
+                await bot.SendTextMessageAsync(chatId, msg.ToString());
             }
-
-            await bot.SendTextMessageAsync(chatId, msg.ToString());
 
             return StateResult.AwaitUserAt(4);
         }
 
-        protected virtual async Task<StateResult> Step4(Message message, string text, TelegramBotClient bot)
+        protected virtual async Task<StateResult> Step4(Message message, string text, TelegramBotClient bot, bool batchMode)
         {
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);
@@ -200,7 +207,7 @@ namespace EventBot.Business.Commands.Minun
             return StateResult.Finished;
         }
 
-        protected async Task<StateResult> Step13(Message message, string text, TelegramBotClient bot)        
+        protected async Task<StateResult> Step13(Message message, string text, TelegramBotClient bot, bool batchMode)        
         {
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);
