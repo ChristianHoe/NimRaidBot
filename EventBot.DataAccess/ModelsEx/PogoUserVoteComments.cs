@@ -6,6 +6,7 @@ namespace EventBot.DataAccess.ModelsEx
     public enum PogoUserVoteComments
     {
         None = 0,
-        Remote = 1
+        Remote = 1,
+        LikeInvite = 2
     }
 }

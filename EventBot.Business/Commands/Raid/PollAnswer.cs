@@ -83,6 +83,8 @@ namespace EventBot.Business.Commands.Raid
                     defaultAttendee = user.GroupMembers ?? 1;
             }
 
+            var comments = oldVote?.Comment;
+
             var attendee = oldVote == null || oldVote.Attendee == 0 ? defaultAttendee : oldVote.Attendee;
             if (answer[0] == "a")
             {
@@ -102,6 +104,9 @@ namespace EventBot.Business.Commands.Raid
 
                 if (attendee < 0)
                     attendee = 0;
+
+                if (attendee == 0)
+                    RemoveLikesInvite(ref comments);
             }
 
             var time = oldVote == null ? "" : oldVote.Time;
@@ -112,9 +117,11 @@ namespace EventBot.Business.Commands.Raid
                     newTime = "";
 
                 time = newTime;
+
+                if (LikesInvite(comments))
+                    SwitchInviteToRemote(ref comments);
             }
 
-            var comments = oldVote?.Comment;
             if (answer[0] == "c")
             {
                 if (comments == null)
@@ -122,6 +129,9 @@ namespace EventBot.Business.Commands.Raid
 
                 if (answer[1] == "r")
                     comments ^= PogoUserVoteComments.Remote;
+
+                if (answer[1] == "i")
+                    comments ^= PogoUserVoteComments.LikeInvite;
              }
 
             // no need adding a no-attend
@@ -137,6 +147,32 @@ namespace EventBot.Business.Commands.Raid
             this.updateMembershipAccessCommand.Execute(new DataAccess.Commands.Raid.UpdateMembershipAccessRequest { GroupId = chatId, UserId = GetUserId(message) });
 
             return new AnswerResult();
+        }
+
+
+        private void RemoveLikesInvite(ref PogoUserVoteComments? c)
+        {
+            if (c == null)
+                return;
+
+            c &= ~PogoUserVoteComments.LikeInvite;
+        }
+
+        private bool LikesInvite(PogoUserVoteComments? c)
+        {
+            if (c == null)
+                return false;
+            
+            return (c & PogoUserVoteComments.LikeInvite) != 0;
+        }
+
+        private void SwitchInviteToRemote(ref PogoUserVoteComments? c)
+        {
+            if (c == null)
+                return;
+
+            c &= ~PogoUserVoteComments.LikeInvite;
+            c |= PogoUserVoteComments.Remote;
         }
     }
 }

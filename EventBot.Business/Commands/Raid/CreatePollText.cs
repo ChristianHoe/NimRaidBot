@@ -1,4 +1,4 @@
-﻿using EventBot.Business.Helper;
+using EventBot.Business.Helper;
 using EventBot.DataAccess.Models;
 using EventBot.DataAccess.ModelsEx;
 using EventBot.DataAccess.Queries.Base;
@@ -55,6 +55,7 @@ namespace EventBot.Business.Commands.Raid
         const string THUMBS_UP = "\U0001F44D";
         const string CROSS_MARK = "\u274C";
         const string SATELLITE = "\U0001F6F0";
+        const string ADMISSION_TICKET = "\U0001F39F";
 
         const string NON_BREAK_SPACE = "\u00A0";
 
@@ -162,14 +163,29 @@ namespace EventBot.Business.Commands.Raid
 
             text.AppendLine($"[{gymName}](https://maps.google.com/?q={raid.Latitude.ToString(CultureInfo.InvariantCulture)},{raid.Longitude.ToString(CultureInfo.InvariantCulture)})");
 
-            if (request.Votes.Where(x => x.Attendee != 0).Count() == 0)
+            var invitesNeeded = request.Votes.Where(x => LikesInvite(x.Comment)).ToList();
+            if (invitesNeeded.Count > 0)
+            {
+                text.AppendLine();
+                text.Append("Einladung gewünscht:");
+                foreach(var user in invitesNeeded)
+                {
+                    text.AppendLine();
+                    AppendUser(text, user, request.RaidPreferences);
+                }
+
+                text.AppendLine();
+            }
+            
+
+            if (request.Votes.Where(x => x.Attendee != 0 && !LikesInvite(x.Comment)).Count() == 0)
             {
                 //text.AppendLine();
                 text.Append("Bisher keine Zusagen");
             }
             else
             {
-                var z = votes.Where(x => x.Attendee != 0).GroupBy(x => x.Time, (key, g) => new { Time = key, Users = g.ToList() }).OrderBy(x => x.Time);
+                var z = votes.Where(x => x.Attendee != 0 && !LikesInvite(x.Comment)).GroupBy(x => x.Time, (key, g) => new { Time = key, Users = g.ToList() }).OrderBy(x => x.Time);
                 foreach (var y in z)
                 {
                     text.AppendLine();
@@ -188,21 +204,8 @@ namespace EventBot.Business.Commands.Raid
                         if (a.Attendee != 0)
                         {
                             text.AppendLine();
-                            if (a.Comment.HasValue)
-                            {
-                                if (a.Comment == PogoUserVoteComments.Remote)
-                                    text.Append($"{SATELLITE} ");
-                            }
-                            
-                            text.Append(" " + GetRaidBossSymbolsForUser(a.UserId, request.RaidPreferences));
-                            text.Append($" [{a.IngameName ?? a.FirstName}](tg://user?id={a.UserId})");
-                            if (a.Level.HasValue)
-                                text.Append($" ({a.Level.Value})");
-                            if (a.Team.HasValue)
-                                text.Append($" {this.GetTeamColor(a.Team)}");
 
-                            if (a.Attendee != 1)
-                                text.Append($" +{a.Attendee-1}");
+                            AppendUser(text, a, request.RaidPreferences);
                         }
                     }
                 }
@@ -210,7 +213,8 @@ namespace EventBot.Business.Commands.Raid
 
             var startFrames = CreateStartTimes(start, request.TimeOffsets, 5).Select(x => x.ToString("HH:mm")).ToArray();
             var keyBoardStartFrames = new InlineKeyboardButton[] {
-                  new InlineKeyboardButton { Text = startFrames[0], CallbackData = $"t|{startFrames[0]}" }
+                 new InlineKeyboardButton { Text = THUMBS_UP, CallbackData = "t|"}
+                , new InlineKeyboardButton { Text = startFrames[0], CallbackData = $"t|{startFrames[0]}" }
                 , new InlineKeyboardButton { Text = startFrames[1], CallbackData = $"t|{startFrames[1]}" }
                 , new InlineKeyboardButton { Text = startFrames[2], CallbackData = $"t|{startFrames[2]}" }
                 , new InlineKeyboardButton { Text = startFrames[3], CallbackData = $"t|{startFrames[3]}" }
@@ -226,16 +230,41 @@ namespace EventBot.Business.Commands.Raid
 
             var keyBoardNumberOfPersons = new[] { 
                   new InlineKeyboardButton { Text = SATELLITE, CallbackData = "c|r" }
-                , new InlineKeyboardButton { Text = THUMBS_UP, CallbackData = "t|"}
+                //, new InlineKeyboardButton { Text = THUMBS_UP, CallbackData = "t|"}
                 , new InlineKeyboardButton { Text = "-1", CallbackData = "a|-1" }
-                //, new InlineKeyboardButton { Text = "0", CallbackData = "a|0" }
+                , new InlineKeyboardButton { Text = "0", CallbackData = "a|0" }
                 , new InlineKeyboardButton { Text = "+1", CallbackData = "a|1" }
+                , new InlineKeyboardButton { Text = ADMISSION_TICKET, CallbackData = "c|i"}
                 };
 
             //var inlineKeyboard = new InlineKeyboardMarkup(new InlineKeyboardButton[3][] { keyBoardStartFrames, extendedKeyBoardStartFrames, keyBoardNumberOfPersons });
             var inlineKeyboard = new InlineKeyboardMarkup(new InlineKeyboardButton[2][] { keyBoardStartFrames, keyBoardNumberOfPersons });
 
             return new RaidPollResponse { Text = text.ToString(), InlineKeyboardMarkup = inlineKeyboard, ParseMode = ParseMode.Markdown };
+        }
+
+        private bool LikesInvite(PogoUserVoteComments? c)
+        {
+            return c.HasValue && (c.Value & PogoUserVoteComments.LikeInvite) != 0;
+        }
+
+        private void AppendUser(StringBuilder text, PollVoteResponse a, IEnumerable<PogoRaidPreference> raidPreference)
+        {
+            if (a.Comment.HasValue)
+            {
+                if (a.Comment == PogoUserVoteComments.Remote)
+                    text.Append($"{SATELLITE} ");
+            }
+            
+            text.Append(" " + GetRaidBossSymbolsForUser(a.UserId, raidPreference));
+            text.Append($" [{a.IngameName ?? a.FirstName}](tg://user?id={a.UserId})");
+            if (a.Level.HasValue)
+                text.Append($" ({a.Level.Value})");
+            if (a.Team.HasValue)
+                text.Append($" {this.GetTeamColor(a.Team)}");
+
+            if (a.Attendee != 1)
+                text.Append($" +{a.Attendee-1}");
         }
 
         private DateTime[] CreateStartTimes(DateTime date, IEnumerable<int> offsets, int roundToMinute)
