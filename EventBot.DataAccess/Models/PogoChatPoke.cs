@@ -7,8 +7,7 @@ namespace EventBot.DataAccess.Models
     {
         public long ChatId { get; set; }
         public int PokeId { get; set; }
-        public bool Show { get; set; }
-        public string? Gender { get; set; }
+        public char? Gender { get; set; }
         public int? Iv { get; set; }
     }
 }

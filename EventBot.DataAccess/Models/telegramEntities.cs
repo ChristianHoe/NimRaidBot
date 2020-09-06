@@ -275,8 +275,6 @@ namespace EventBot.DataAccess.Models
                 entity.Property(e => e.Iv)
                     .HasColumnName("IV")
                     .HasColumnType("int(11)");
-
-                entity.Property(e => e.Show).HasColumnName("´SHOW´");
             });
 
             modelBuilder.Entity<PogoConfigurations>(entity =>

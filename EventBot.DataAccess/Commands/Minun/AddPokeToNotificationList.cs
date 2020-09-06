@@ -10,7 +10,6 @@ namespace EventBot.DataAccess.Commands.Minun
         public int PokeId;
         public char? Gender;
         public int? IV;
-        public bool Show;
     }
 
     public interface IAddPokeToNotificationListCommand : ICommand<AddPokeToNotificationListRequest>
@@ -39,9 +38,8 @@ namespace EventBot.DataAccess.Commands.Minun
                     {
                         PokeId = request.PokeId,
                         ChatId = request.ChatId,
-                        Gender = request.Gender?.ToString(),
+                        Gender = request.Gender,
                         Iv = request.IV,
-                        Show = request.Show
                     };
 
                     db.PogoChatPoke.Add(add);
