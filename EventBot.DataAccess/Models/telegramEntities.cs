@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -29,7 +29,6 @@ namespace EventBot.DataAccess.Models
         public virtual DbSet<PogoGamePokesAnswers> PogoGamePokesAnswers { get; set; }
         public virtual DbSet<PogoGamePokesMeta> PogoGamePokesMeta { get; set; }
         public virtual DbSet<PogoGyms> PogoGyms { get; set; }
-        public virtual DbSet<PogoIgnore> PogoIgnore { get; set; }
         public virtual DbSet<PogoPokes> PogoPokes { get; set; }
         public virtual DbSet<PogoPokesMeta> PogoPokesMeta { get; set; }
         public virtual DbSet<PogoQuests> PogoQuests { get; set; }
@@ -432,22 +431,6 @@ namespace EventBot.DataAccess.Models
                     .HasColumnType("varchar(200)")
                     .HasCharSet("utf8")
                     .HasCollation("utf8_general_ci");
-            });
-
-            modelBuilder.Entity<PogoIgnore>(entity =>
-            {
-                entity.HasKey(e => new { e.UserId, e.MonsterId })
-                    .HasName("PRIMARY");
-
-                entity.ToTable("POGO_IGNORE");
-
-                entity.Property(e => e.UserId)
-                    .HasColumnName("USER_ID")
-                    .HasColumnType("bigint(20)");
-
-                entity.Property(e => e.MonsterId)
-                    .HasColumnName("MONSTER_ID")
-                    .HasColumnType("int(11)");
             });
 
             modelBuilder.Entity<PogoPokes>(entity =>

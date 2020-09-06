@@ -13,8 +13,6 @@ namespace EventBot.Business.Intrastructure
         public PoGoDispatcher(
             IAnCommand anCommand,
             IAusCommand ausCommand,
-            IIgnoreCommand ignoreCommand,
-            IUnignoreCommand unignoreCommand,
             //ISetRaidLevelCommand setRaidLevelCommand,
             IUmkreisCommand umkreisCommand,
             IPollCommand raidPollCommand,
@@ -23,9 +21,6 @@ namespace EventBot.Business.Intrastructure
         {
             this.commands.Add(anCommand);
             this.commands.Add(ausCommand);
-
-            this.commands.Add(ignoreCommand);
-            this.commands.Add(unignoreCommand);
 
             //this.commands.Add(setRaidLevelCommand);
             this.commands.Add(umkreisCommand);

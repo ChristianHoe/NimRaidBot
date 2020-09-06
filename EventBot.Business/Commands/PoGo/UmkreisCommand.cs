@@ -15,10 +15,8 @@ namespace EventBot.Business.Commands.PoGo
 
     public class UmkreisCommand : StatefulCommand, IUmkreisCommand
     {
-        readonly DataAccess.Commands.PoGo.IIgnoreCommand anCommand;
 
         public UmkreisCommand(
-            DataAccess.Commands.PoGo.IIgnoreCommand anCommand,
             DataAccess.Commands.IStateUpdateCommand stateUpdateCommand,
             DataAccess.Commands.IStatePopCommand statePopCommand,
             DataAccess.Commands.IStatePushCommand statePushCommand,
@@ -26,8 +24,6 @@ namespace EventBot.Business.Commands.PoGo
             )
             : base(stateUpdateCommand, statePushCommand, statePopCommand, statePeakQuery)
         {
-            this.anCommand = anCommand;
-
             base.Steps.Add(0, this.Step0);
             base.Steps.Add(1, this.Step1);
         }

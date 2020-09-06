@@ -179,8 +179,8 @@ namespace EventBot
                 // typeof( EventBot.Business.Tasks.NimGoMapBot.RocketMapImporter<EventBot.Business.Tasks.NimGoMapBot.Configurations.Importer3>),
 
                 //typeof(Business.NimGoMapBot.Importer3)
-                 typeof(Business.Tasks.MinunBot.MessageProcessor),
-                // typeof(Business.Tasks.MinunBot.MinumBotGameAnnouncer)
+                // typeof(Business.NimRaidBot.MessageProcessor),
+                 typeof(Business.Tasks.MinunBot.MessageProcessor)
                 //typeof(Business.Tasks.NimPokeBot.QuestAnnouncer)
                 //,
                 //typeof(Business.NimRaidBot.Announcer)
@@ -235,8 +235,6 @@ namespace EventBot
 
             container.Register<Business.Commands.PoGo.IAnCommand, Business.Commands.PoGo.AnCommand>();
             container.Register<Business.Commands.PoGo.IAusCommand, Business.Commands.PoGo.AusCommand>();
-            container.Register<Business.Commands.PoGo.IIgnoreCommand, Business.Commands.PoGo.IgnoreCommand>();
-            container.Register<Business.Commands.PoGo.IUnignoreCommand, Business.Commands.PoGo.UnignoreCommand>();
             //container.Register<Business.Commands.PoGo.ISetRaidLevelCommand, Business.Commands.PoGo.SetRaidLevelCommand>();
             container.Register<Business.Commands.PoGo.IUmkreisCommand, Business.Commands.PoGo.UmkreisCommand>();
             container.Register<Business.Commands.PoGo.IPollCommand, Business.Commands.PoGo.PollCommand>();
@@ -290,8 +288,6 @@ namespace EventBot
 
             container.Register<DataAccess.Commands.PoGo.IAnCommand, DataAccess.Commands.PoGo.An>();
             container.Register<DataAccess.Commands.PoGo.IAusCommand, DataAccess.Commands.PoGo.Aus>();
-            container.Register<DataAccess.Commands.PoGo.IIgnoreCommand, DataAccess.Commands.PoGo.Ignore>();
-            container.Register<DataAccess.Commands.PoGo.IUnignoreCommand, DataAccess.Commands.PoGo.Unignore>();
             //container.Register<DataAccess.Commands.PoGo.IRaidLevelCommand, DataAccess.Commands.PoGo.RaidLevel>();
             container.Register<DataAccess.Commands.PoGo.INewPollCommand, DataAccess.Commands.PoGo.NewPoll>();
             container.Register<DataAccess.Commands.PoGo.IPollVoteUpdateCommand, DataAccess.Commands.PoGo.PollVoteUpdate>();
@@ -365,7 +361,6 @@ namespace EventBot
             container.Register<DataAccess.Queries.Base.INumberOfBotsInChatQuery, DataAccess.Queries.Base.NumberOfBotsInChat>();
  
             container.Register<DataAccess.Queries.PoGo.IActiveUsers, DataAccess.Queries.PoGo.ActiveUsers>();
-            container.Register<DataAccess.Queries.PoGo.IIgnoredMonsterByUser, DataAccess.Queries.PoGo.IgnoredMonsterByUser>();
             container.Register<DataAccess.Queries.PoGo.IIsActivePoll, DataAccess.Queries.PoGo.IsActivePoll>();
             container.Register<DataAccess.Queries.PoGo.IActivePoll, DataAccess.Queries.PoGo.ActivePoll>();
             container.Register<DataAccess.Queries.PoGo.IPollVotesUsers, DataAccess.Queries.PoGo.PollVotes>();
