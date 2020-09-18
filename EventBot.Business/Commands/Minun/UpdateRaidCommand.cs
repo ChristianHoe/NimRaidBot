@@ -1,3 +1,4 @@
+using System;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -68,7 +69,7 @@ namespace EventBot.Business.Commands.Minun
             this.nimRaidBot = nimRaidBot;
 
             base.Steps.Add(0, Step0);
-            //base.Steps.Add(1, Step1);
+            base.Steps.Add(1, Step1);
             base.Steps.Add(2, Step2);   
             base.Steps.Add(3, Step3);
             base.Steps.Add(4, Step4);
@@ -91,32 +92,25 @@ namespace EventBot.Business.Commands.Minun
 
             //await bot.SendTextMessageAsync(chatId, "Aktualisieren eines Raids.").ConfigureAwait(false);
 
-            return await this.Step2(message, text, bot, batchMode);
+            return await this.Step1(message, text, bot, batchMode);
         }
 
-        // protected async Task<bool> Step1(Message message, string text, TelegramBotClient bot, int step)
-        // {
-        //     var userId = base.GetUserId(message);
-        //     var chatId = base.GetChatId(message);
+        protected async Task<StateResult> Step1(Message message, string text, TelegramBotClient bot, bool batchMode)
+        {
+            var userId = base.GetUserId(message);
+            var chatId = base.GetChatId(message);
 
-        //     await bot.SendTextMessageAsync(chatId, "Bitte gib die Raid-Id an:.").ConfigureAwait(false);
+            if (!batchMode)
+                await bot.SendTextMessageAsync(chatId, "Bitte gib die Raid-Id an:.").ConfigureAwait(false);
 
-        //     base.NextState(message, 2);
-        //     return false;
-        // }
+            return StateResult.AwaitUserAt(2);
+        }
 
          
         protected async Task<StateResult> Step2(Message message, string text, TelegramBotClient bot, bool batchMode)
         {
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);
-
-
-            if (string.IsNullOrWhiteSpace(text))
-            {
-                await bot.SendTextMessageAsync(chatId, "Bitte gib die Raid-Id an:").ConfigureAwait(false);
-                return StateResult.TryAgain;
-            }
 
             if (!int.TryParse(text, NumberStyles.Any, CultureInfo.InvariantCulture, out int raidId))
             {
@@ -238,7 +232,11 @@ namespace EventBot.Business.Commands.Minun
 
             if (!SkipCurrentStep(text))
             {
-                if (!int.TryParse(text, NumberStyles.Any, CultureInfo.InvariantCulture, out int pokeId))
+                string[] input = message.Text.Split(" ", StringSplitOptions.RemoveEmptyEntries);
+                string poke = input.Length >= 1 ? input[0].Trim() : string.Empty;
+                char? form = input.Length >= 2 ? (char?)input[1][0] : null;
+
+                if (!int.TryParse(poke, NumberStyles.Any, CultureInfo.InvariantCulture, out int pokeId))
                 {
                     await bot.SendTextMessageAsync(chatId, "Die Poke-Id konnte nicht erkannt werden, bitte probiere es noch einmal.").ConfigureAwait(false);
                     return StateResult.TryAgain;
@@ -253,7 +251,7 @@ namespace EventBot.Business.Commands.Minun
                 var raidId = this.getCurrentManualRaidQuery.Execute(new GetCurrentManualRaidRequest { UserId = userId }).UpdRaidId;
 
 
-                this.setPokeIdForRaidCommand.Execute(new SetPokeIdForRaidRequest { RaidId = raidId, PokeId = pokeId });
+                this.setPokeIdForRaidCommand.Execute(new SetPokeIdForRaidRequest { RaidId = raidId, PokeId = pokeId, PokeForm = form });
             }
 
             return await this.StepFinished(message, text, bot, batchMode);

@@ -87,7 +87,7 @@ namespace EventBot.Business.NimPokeBot
 
             while (!cancellationToken.IsCancellationRequested)
             {
-                queue.TryDequeue(out PogoPokes poke);
+                queue.TryDequeue(out PogoPokes? poke);
                 if (poke == null)
                 {
                     await Task.Delay(TimeSpan.FromMilliseconds(100)).ConfigureAwait(false);
@@ -130,9 +130,9 @@ namespace EventBot.Business.NimPokeBot
                                 if (!poke.Iv.HasValue)
                                     continue;
 
-                                if (!string.IsNullOrEmpty(toNotify.Gender))
+                                if (toNotify.Gender != null)
                                 {
-                                    if (toNotify.Gender == "m" && poke.Gender.HasValue && poke.Gender == 1)
+                                    if (toNotify.Gender == 'm' && poke.Gender.HasValue && poke.Gender == 1)
                                     {
                                         if (poke.Iv < toNotify.Iv)
                                             continue;
@@ -143,7 +143,7 @@ namespace EventBot.Business.NimPokeBot
                                             continue;
                                     }
 
-                                    if (toNotify.Gender == "w" && poke.Gender.HasValue && poke.Gender == 2)
+                                    if (toNotify.Gender == 'w' && poke.Gender.HasValue && poke.Gender == 2)
                                     {
                                         if (poke.Iv < toNotify.Iv)
                                             continue;
@@ -162,15 +162,15 @@ namespace EventBot.Business.NimPokeBot
                             }
                             else
                             {
-                                if (string.IsNullOrEmpty(toNotify.Gender))
+                                if (toNotify.Gender != null)
                                 {
-                                    if (toNotify.Gender == "m" && (poke.Gender == 2 || poke.Gender == 0))
+                                    if (toNotify.Gender == 'm' && (poke.Gender == 2 || poke.Gender == 0))
                                     {
                                         if (!group.MinPokeLevel.HasValue || !poke.Iv.HasValue || poke.Iv < group.MinPokeLevel)
                                             continue;
                                     }
 
-                                    if (toNotify.Gender == "w" && (poke.Gender == 1 || poke.Gender == 0))
+                                    if (toNotify.Gender == 'w' && (poke.Gender == 1 || poke.Gender == 0))
                                     {
                                         if (!group.MinPokeLevel.HasValue || !poke.Iv.HasValue || poke.Iv < group.MinPokeLevel)
                                             continue;

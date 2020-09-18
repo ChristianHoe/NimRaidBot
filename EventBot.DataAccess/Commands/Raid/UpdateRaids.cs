@@ -34,6 +34,7 @@ namespace EventBot.DataAccess.Commands.Raid
                     {
                         current.PokeId = raid.PokeId;
                         current.Move2 = raid.Move2;
+                        current.PokeForm = raid.PokeForm;
                     }
                 }
 

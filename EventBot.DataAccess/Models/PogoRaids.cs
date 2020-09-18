@@ -15,5 +15,6 @@ namespace EventBot.DataAccess.Models
         public int? Move2 { get; set; }
         public long? OwnerId { get; set; }
         public string? Title { get; set; }
+        public char? PokeForm { get; set; }
     }
 }

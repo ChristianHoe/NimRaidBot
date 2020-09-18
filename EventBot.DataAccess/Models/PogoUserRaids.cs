@@ -15,5 +15,6 @@ namespace EventBot.DataAccess.Models
         public int? RaidId { get; set; }
         public int UpdRaidId { get; set; }
         public string? Title { get; set; }
+        public char? PokeForm { get; set; }
     }
 }

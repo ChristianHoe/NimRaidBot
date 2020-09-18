@@ -1,4 +1,4 @@
-using EventBot.Business.Helper;
+﻿using EventBot.Business.Helper;
 using EventBot.DataAccess.Models;
 using EventBot.DataAccess.ModelsEx;
 using EventBot.DataAccess.Queries.Base;
@@ -50,6 +50,7 @@ namespace EventBot.Business.Commands.Raid
         const string THREE = "\u0033\u20E3";
         const string FOUR = "\u0034\u20E3";
         const string FIVE = "\u0035\u20E3";
+        const string M = "\U0001F1F2";
         const string DISALLOWED = "\u1F6AB";
 
         const string THUMBS_UP = "\U0001F44D";
@@ -139,7 +140,7 @@ namespace EventBot.Business.Commands.Raid
                 if (raid.PokeId == 0)
                     text.Append(" ?");
                 else
-                    text.Append($" {pokeNames[raid.PokeId].Trim()}{this.GetMoveTypeSymbols(raid.MoveId)}");
+                    text.Append($" {pokeNames[raid.PokeId].Trim()}{this.GetForm(raid.PokeForm)}{this.GetMoveTypeSymbols(raid.MoveId)}");
             }
             else
             {
@@ -319,6 +320,8 @@ namespace EventBot.Business.Commands.Raid
                     return FOUR;
                 case 5:
                     return FIVE;
+                case 6:
+                    return M;
                 default:
                     return DISALLOWED;
             }
@@ -383,6 +386,14 @@ namespace EventBot.Business.Commands.Raid
                 default:
                     return string.Empty;
             }
+        }
+
+        private string GetForm(char? form)
+        {
+            if (form == null)
+                return string.Empty;
+
+            return " " + form;
         }
 
         private string GetMoveTypeSymbols(int? moveId)

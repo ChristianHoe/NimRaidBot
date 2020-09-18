@@ -7,6 +7,7 @@ namespace EventBot.DataAccess.Commands.Raid
     {
         public long RaidId;
         public int PokeId;
+        public char? PokeForm;
     }
 
     public interface ISetPokeIdForRaidCommand : ICommand<SetPokeIdForRaidRequest>
@@ -32,6 +33,7 @@ namespace EventBot.DataAccess.Commands.Raid
                 if (result != null)
                 {
                     result.PokeId = request.PokeId;
+                    result.PokeForm = request.PokeForm;
                     db.SaveChanges();
                 }
             }

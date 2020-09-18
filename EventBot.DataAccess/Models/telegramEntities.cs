@@ -695,6 +695,12 @@ namespace EventBot.DataAccess.Models
                     .HasColumnName("OWNER_ID")
                     .HasColumnType("bigint(20)");
 
+                entity.Property(e => e.PokeForm)
+                    .HasColumnName("POKE_FORM")
+                    .HasColumnType("varchar(1)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
+
                 entity.Property(e => e.PokeId)
                     .HasColumnName("POKE_ID")
                     .HasColumnType("int(11)");
@@ -932,6 +938,12 @@ namespace EventBot.DataAccess.Models
                 entity.Property(e => e.Level)
                     .HasColumnName("LEVEL")
                     .HasColumnType("int(11)");
+
+                entity.Property(e => e.PokeForm)
+                    .HasColumnName("POKE_FORM")
+                    .HasColumnType("varchar(1)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.PokeId)
                     .HasColumnName("POKE_ID")

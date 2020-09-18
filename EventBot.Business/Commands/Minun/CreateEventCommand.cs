@@ -103,8 +103,8 @@ namespace EventBot.Business.Commands.Minun
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);
 
-            // set raid level = 6 (can not be blocked at the moment)    
-            this.setRaidLevelForManualRaidCommand.Execute(new SetRaidLevelForManualRaidRequest { UserId = userId, Level = 6 });
+            // set raid level = 7 (can not be blocked at the moment)    
+            this.setRaidLevelForManualRaidCommand.Execute(new SetRaidLevelForManualRaidRequest { UserId = userId, Level = 7 });
 
             return await this.Step6(message, text, bot, batchMode);
         }

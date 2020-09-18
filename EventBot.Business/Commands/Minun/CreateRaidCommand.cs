@@ -125,9 +125,9 @@ namespace EventBot.Business.Commands.Minun
                     return StateResult.TryAgain;
                 }
 
-                if (raidLevel < 0 || 5 < raidLevel)
+                if (raidLevel < 0 || 6 < raidLevel)
                 {
-                    await bot.SendTextMessageAsync(chatId, "Raidlevel liegen außerhalb des gültigen Bereichs (0 - 5), bitte probiere es noch einmal.").ConfigureAwait(false);
+                    await bot.SendTextMessageAsync(chatId, "Raidlevel liegen außerhalb des gültigen Bereichs (0 - 5 + 6 für Mega), bitte probiere es noch einmal.").ConfigureAwait(false);
                     return StateResult.TryAgain;
                 }
 
@@ -245,7 +245,11 @@ namespace EventBot.Business.Commands.Minun
 
             if (!SkipCurrentStep(text))
             {
-                if (!int.TryParse(text, NumberStyles.Any, CultureInfo.InvariantCulture, out int pokeId))
+                var input = text.Split(" ", StringSplitOptions.RemoveEmptyEntries);
+                var poke = input.Length >= 1 ? input[0] : string.Empty;
+                var form = input.Length >= 2 ? input[1][0] : (char?)null;
+
+                if (!int.TryParse(poke, NumberStyles.Any, CultureInfo.InvariantCulture, out int pokeId))
                 {
                     await bot.SendTextMessageAsync(chatId, "Die Poke-Id konnte nicht erkannt werden, bitte probiere es noch einmal.").ConfigureAwait(false);
                     return StateResult.TryAgain;
@@ -257,7 +261,7 @@ namespace EventBot.Business.Commands.Minun
                     return StateResult.TryAgain;
                 }
 
-                this.setPokeIdForManualRaidCommand.Execute(new SetPokeIdForManualRaidRequest { UserId = userId, PokeId = pokeId });
+                this.setPokeIdForManualRaidCommand.Execute(new SetPokeIdForManualRaidRequest { UserId = userId, PokeId = pokeId, PokeForm = form });
             }
 
             return await this.Step13(message, text, bot, batchMode);

@@ -8,6 +8,7 @@ namespace EventBot.DataAccess.Queries.Raid
         public decimal Latitude;
         public decimal Longitude;
         public int PokeId;
+        public char? PokeForm;
         public string GymName;
         public int GymId;
         public DateTime Start;
@@ -16,6 +17,6 @@ namespace EventBot.DataAccess.Queries.Raid
         public long? ChatId;
         public int? MoveId;
         public long? Owner;
-        public string Title;
+        public string? Title;
     }
 }

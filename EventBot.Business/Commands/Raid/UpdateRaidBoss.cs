@@ -61,14 +61,18 @@ namespace EventBot.Business.Commands.Raid
                 return;
             }
 
-            string poke = message.Text.Trim();
+            string[] input = message.Text.Split(" ", StringSplitOptions.RemoveEmptyEntries);
+            string poke = input.Length >= 1 ? input[0].Trim() : string.Empty;
+            char? form = input.Length >= 2 ? (char?)input[1][0] : null;
+
             // raidboss
             var text1 = EventBot.Models.GoMap.Helper.PokeNames.Where(x => string.Compare(x.Value, poke, comparisonType: StringComparison.InvariantCultureIgnoreCase) == 0);
 
 
             if (text1.Count() == 1)
             {
-                this.updateRaidsCommand.Execute(new UpdateRaidsRequest { Raids = new [] { new PogoRaids { Id = raid.Id, PokeId = text1.First().Key }} });
+                this.updateRaidsCommand.Execute(new UpdateRaidsRequest { Raids = new [] { new PogoRaids { Id = raid.Id, PokeId = text1.First().Key, PokeForm = form }} });
+                
                 try
                 {
                     await bot.DeleteMessageAsync(chatId, base.GetMessageId(message));
