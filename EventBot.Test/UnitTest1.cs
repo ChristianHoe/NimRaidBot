@@ -16,36 +16,36 @@ namespace EventBot.Test
         [TestMethod]
         public async Task TestMethod1()
         {
-            var configuration = new ConfigurationBuilder()
-                    .SetBasePath(Directory.GetCurrentDirectory())
-                    .AddJsonFile("hosting.json", optional: false)
-                    .AddJsonFile("appsettings.json", optional: true)
-                    .Build();
+//             var configuration = new ConfigurationBuilder()
+//                     .SetBasePath(Directory.GetCurrentDirectory())
+//                     .AddJsonFile("hosting.json", optional: false)
+//                     .AddJsonFile("appsettings.json", optional: true)
+//                     .Build();
 
-            var container = new SimpleInjector.Container();
-            container.Options.DefaultLifestyle = SimpleInjector.Lifestyle.Singleton;
-            Startup.InitializeContainer(configuration, container);
+//             var container = new SimpleInjector.Container();
+//             container.Options.DefaultLifestyle = SimpleInjector.Lifestyle.Singleton;
+//             Startup.InitializeContainer(configuration, container);
 
-try
-{
-            container.Verify();
+// try
+// {
+//             container.Verify();
                         
-            var sut2 = container.GetInstance<IPokeCommand>();
-            var bot = container.GetInstance<MinunBot>();
-            var message = new Telegram.Bot.Types.Message();
-            message.Chat = new Telegram.Bot.Types.Chat();
-            message.Chat.Id = (long)Operator.TelegramId;
-            message.From = new Telegram.Bot.Types.User();
-            message.From.Id = (int)Operator.TelegramId;
+//             var sut2 = container.GetInstance<IPokeCommand>();
+//             var bot = container.GetInstance<MinunBot>();
+//             var message = new Telegram.Bot.Types.Message();
+//             message.Chat = new Telegram.Bot.Types.Chat();
+//             message.Chat.Id = (long)Operator.TelegramId;
+//             message.From = new Telegram.Bot.Types.User();
+//             message.From.Id = (int)Operator.TelegramId;
             
-            await sut2.ExecuteAsync(message, "", bot);
+//             await sut2.ExecuteAsync(message, "", bot);
 
-            return;
-}
-catch (Exception ex)
-{
+//             return;
+// }
+// catch (Exception ex)
+// {
 
-}
+// }
 
 
         }
