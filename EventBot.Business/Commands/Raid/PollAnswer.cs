@@ -85,7 +85,7 @@ namespace EventBot.Business.Commands.Raid
 
             var comments = oldVote?.Comment;
 
-            var attendee = oldVote == null || oldVote.Attendee == 0 ? defaultAttendee : oldVote.Attendee;
+            var attendee = oldVote?.Attendee ?? 0;
             if (answer[0] == "a")
             {
                 if (!int.TryParse(answer[1], out int attendeeDifference))
@@ -97,16 +97,31 @@ namespace EventBot.Business.Commands.Raid
                 if (attendeeDifference > 10)
                     attendeeDifference = 10;
 
-                if (attendeeDifference == 0) // := cancel attendee
+                if (attendeeDifference == 0 ) // := cancel attendee
+                {
                     attendee = 0;
+                }
                 else
-                    attendee = attendee + attendeeDifference;
+                {
+                    if (attendeeDifference > 0 && attendee == 0)
+                    {
+                        attendee = attendeeDifference + defaultAttendee;
+                    }
+                    else
+                    {
+                        attendee += attendeeDifference;
+                    }
+                }
 
                 if (attendee < 0)
                     attendee = 0;
 
                 if (attendee == 0)
                     RemoveLikesInvite(ref comments);
+            }
+            else if (attendee == 0)
+            {
+                attendee = defaultAttendee;
             }
 
             var time = oldVote == null ? "" : oldVote.Time;
@@ -132,7 +147,7 @@ namespace EventBot.Business.Commands.Raid
 
                 if (answer[1] == "i")
                     comments ^= PogoUserVoteComments.LikeInvite;
-             }
+            }
 
             // no need adding a no-attend
             if (oldVote == null && attendee == 0)
