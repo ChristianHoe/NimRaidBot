@@ -18,7 +18,7 @@ jobs:
       with:
         dotnet-version: 3.1.301
     - name: Install dependencies
-      run: dotnet restore
+      run: dotnet restore ./EventBot/EventBot.csproj
     - name: Build
       run: dotnet build ./EventBot/EventBot.csproj --configuration Release --no-restore
     - name: Test
