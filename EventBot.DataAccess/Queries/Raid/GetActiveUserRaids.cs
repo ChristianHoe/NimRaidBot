@@ -29,7 +29,7 @@ namespace EventBot.DataAccess.Queries.Raid
         {
             using (var db = databaseFactory.CreateNew())
             {
-                return db.PogoRaids.Where(x => x.OwnerId == request.UserId  && x.Finished <= DateTime.UtcNow.AddMinutes(30)).Select(x => x.Id).ToArray();
+                return db.PogoRaids.Where(x => x.OwnerId == request.UserId  && x.Finished <= DateTime.UtcNow.AddMinutes(5)).Select(x => x.Id).ToArray();
             }
         }
     }
