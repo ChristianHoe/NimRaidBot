@@ -70,6 +70,11 @@ namespace EventBot.Business.Commands.Raid
 
         const string CIRCLE = "\u26AA";
 
+        const string LEAFS = "\U0001F343";
+        const string CHILI = "\U0001F336";
+        const string DROPLETS = "\U0001F4A6";
+        const string DOVE = "\U0001F54A";
+
         const string HAMSTER = "\U0001F439";
         const string WHALE = "\U0001F433";
         const string SNAKE = "\U0001F40D";
@@ -339,6 +344,22 @@ namespace EventBot.Business.Commands.Raid
         {
             switch(pokeId)
             {
+                case 1:
+                case 2:
+                case 3:
+                    return LEAFS;
+                case 4:
+                case 5:
+                case 6:
+                    return CHILI;
+                case 7:
+                case 8:
+                case 9:
+                    return DROPLETS;
+                case 16:
+                case 17:
+                case 18:
+                    return DOVE; 
                 case 144: // Arktos
                     return BLUE_HEART;
                 case 145: // Zapdos
