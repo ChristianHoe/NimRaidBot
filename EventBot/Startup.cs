@@ -10,12 +10,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using SimpleInjector;
-using System;
 using System.Collections.Generic;
-using System.IO;
 
 namespace EventBot
 {
@@ -179,11 +176,12 @@ namespace EventBot
                 // typeof( EventBot.Business.Tasks.NimGoMapBot.RocketMapImporter<EventBot.Business.Tasks.NimGoMapBot.Configurations.Importer3>),
 
                 //typeof(Business.NimGoMapBot.Importer3)
-                // typeof(Business.NimRaidBot.MessageProcessor),
-                 typeof(Business.Tasks.MinunBot.MessageProcessor)
+                 typeof(Business.NimRaidBot.MessageProcessor)
+                , typeof(Business.Tasks.MinunBot.MessageProcessor)
                 //typeof(Business.Tasks.NimPokeBot.QuestAnnouncer)
                 //,
-                //typeof(Business.NimRaidBot.Announcer)
+                //typeof(Business.Tasks.NimFarmBot.MetaCleaner)
+                , typeof(Business.NimRaidBot.Announcer)
                 //typeof(Business.Tasks.NimRaidBot.NimRaidBotInactiveUserRemover)
                 });
 #endif
@@ -266,6 +264,7 @@ namespace EventBot
             container.Register<Business.Commands.Minun.ISpielCommand, Business.Commands.Minun.SpielCommand>();
             container.Register<Business.Commands.Minun.ISpielAnswer, Business.Commands.Minun.SpielAnswer>();
             container.Register<Business.Commands.Minun.IGamePokeCreateText, Business.Commands.Minun.GamePokeCreateText>();
+            container.Register<Business.Commands.Minun.IGymsCommand, Business.Commands.Minun.GymsCommand>();
 
             container.Register<Business.Commands.Farm.ICreatePollCommand, Business.Commands.Farm.CreatePollCommand>();
             container.Register<Business.Commands.Farm.IPollAnswer, Business.Commands.Farm.PollAnswer>();
@@ -337,6 +336,9 @@ namespace EventBot
             container.Register<DataAccess.Commands.Pokes.IUpdatePokesCommand, DataAccess.Commands.Pokes.UpdatePokesCommand>();
             container.Register<DataAccess.Commands.Pokes.IRemoveNotificationsByIdsCommand, DataAccess.Commands.Pokes.RemoveNotificationsByIdsCommand>();
             container.Register<DataAccess.Commands.Pokes.IAddPokeNotificationCommand, DataAccess.Commands.Pokes.AddPokeNotificationCommand>();
+
+            container.Register<DataAccess.Commands.Location.IAddNotifyLocationCommand, DataAccess.Commands.Location.AddNotifyLocationCommand>();
+            container.Register<DataAccess.Commands.Location.IRemoveNotifyLocationCommand, DataAccess.Commands.Location.RemoveNotifyLocationCommand>();
 
             container.Register<DataAccess.Commands.Minun.IEnableNotificationsCommand, DataAccess.Commands.Minun.EnableNotifications>();
             container.Register<DataAccess.Commands.Minun.IDisableNotificationsCommand, DataAccess.Commands.Minun.DisableNotifications>();
@@ -411,6 +413,10 @@ namespace EventBot
             container.Register<DataAccess.Queries.Pokes.IMarkAsProcessingQuery, DataAccess.Queries.Pokes.MarkAsProcessing>();
             container.Register<DataAccess.Queries.Pokes.IMarkAsProcessedQuery, DataAccess.Queries.Pokes.MarkAsProcessed>();
             container.Register<DataAccess.Queries.Pokes.IGetPokeByIdQuery, DataAccess.Queries.Pokes.GetPokeById>();
+
+            container.Register<DataAccess.Queries.Location.IGetCurrentNotificationsQuery, DataAccess.Queries.Location.GetCurrentNotifications>();
+            container.Register<DataAccess.Queries.Location.IGetNotifyLocationsByChatIdQuery, DataAccess.Queries.Location.GetNotifyLocationsByChatId>();
+            container.Register<DataAccess.Queries.Location.IGetActiveGymsForChatQuery, DataAccess.Queries.Location.GetActiveGymsForChat>();
 
             container.Register<DataAccess.Queries.Scan.IGetActiveAreas, DataAccess.Queries.Scan.GetActiveAreas>();
             container.Register<DataAccess.Queries.Scan.IGetPokesByAreaId, DataAccess.Queries.Scan.GetPokesByAreaId>();

@@ -1,6 +1,9 @@
 ﻿using EventBot.Business.Helper;
 using EventBot.Business.Tasks;
+using EventBot.Business.TelegramProxies;
+using EventBot.DataAccess.Commands.Minun;
 using EventBot.DataAccess.ModelsEx;
+using EventBot.DataAccess.Queries.Location;
 using EventBot.DataAccess.Queries.Minun;
 using EventBot.DataAccess.Queries.Raid;
 using System;
@@ -8,13 +11,14 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Telegram.Bot;
+using Telegram.Bot.Exceptions;
 
 namespace EventBot.Business.NimRaidBot
 {
     public class Announcer : IScheduledTask
     {
         readonly private TelegramBotClient proxy;
-
+        private readonly MinunBot minunBot;
         private readonly IGetNextNewRaidQuery getNextNewRaidQuery;
         private readonly IMarkEventAsProcessedQuery markAsProcessedQuery;
         private readonly IMarkEventAsProcessingQuery markAsProcessingQuery;
@@ -34,13 +38,15 @@ namespace EventBot.Business.NimRaidBot
         private readonly IGetRaidByIdQuery getRaidByIdQuery;
 
         private readonly IGetRaidBossPreferencesAllQuery getRaidBossPreferencesQuery;
-
+        private readonly IGetCurrentNotificationsQuery getCurrentNotificationsQuery;
+        private readonly IDeactiveMinunUserCommand deactiveMinunUserCommand;
         private readonly DataAccess.Queries.Pokes.IGetPokesForChatQuery getPokesForChatQuery;
 
         private readonly DataAccess.Queries.Raid.IGetRaidTimeOffsetsQuery getRaidTimeOffsetsQuery;
 
         public Announcer(
             TelegramProxies.NimRaidBot proxy,
+            TelegramProxies.MinunBot minunBot,
             IGetNextNewRaidQuery getNextNewRaidQuery,
             IMarkEventAsProcessedQuery markAsProcessedQuery,
             IMarkEventAsProcessingQuery markAsProcessingQuery,
@@ -59,11 +65,13 @@ namespace EventBot.Business.NimRaidBot
             IMarkPollAsProcessingQuery markPollAsProcessingQuery,
             IGetRaidByIdQuery getRaidByIdQuery,
             DataAccess.Queries.Pokes.IGetPokesForChatQuery getPokesForChatQuery,
-            IGetRaidBossPreferencesAllQuery getRaidBossPreferencesQuery
+            IGetRaidBossPreferencesAllQuery getRaidBossPreferencesQuery,
+            DataAccess.Queries.Location.IGetCurrentNotificationsQuery getCurrentNotificationsQuery,
+            IDeactiveMinunUserCommand deactiveMinunUserCommand
             )
         {
             this.proxy = proxy;
-
+            this.minunBot = minunBot;
             this.getNextNewRaidQuery = getNextNewRaidQuery;
             this.markAsProcessedQuery = markAsProcessedQuery;
             this.markAsProcessingQuery = markAsProcessingQuery;
@@ -86,6 +94,8 @@ namespace EventBot.Business.NimRaidBot
             this.getSpecialGymsForChatsQuery = getSpecialGymsForChatsQuery;
             this.getPokesForChatQuery = getPokesForChatQuery;
             this.getRaidBossPreferencesQuery = getRaidBossPreferencesQuery;
+            this.getCurrentNotificationsQuery = getCurrentNotificationsQuery;
+            this.deactiveMinunUserCommand = deactiveMinunUserCommand;
         }
 
         public string Name { get { return "NimRaidBot.Announcer"; } }
@@ -154,6 +164,8 @@ namespace EventBot.Business.NimRaidBot
             if (!canProcess)
                 return;
 
+            var locationsToNotify = getCurrentNotificationsQuery.Execute(new GetCurrentNotificationsRequest { Threshold = DateTime.UtcNow.AddDays(-7), LocationId = raidToNotify.GymId });
+
             var chats = this.activeUsers.Execute(new GetActivePogoGroupsRequest { BotIds = new long[] { this.proxy.BotId } });
             int numberOfCurrentActiveUsers = chats.Count(x => x.RaidLevel.HasValue);
             if (numberOfCurrentActiveUsers <= 0)
@@ -206,6 +218,22 @@ namespace EventBot.Business.NimRaidBot
                 {
                     await Operator.SendMessage(this.proxy, string.Format("NimRaidBot: Es ist ein Fehler für Gruppe {1} aufgetreten: {0}", ex.Message, chat.ChatId));
                 }
+            }
+
+            string msg = $"{raidToNotify.GymName} {raidToNotify.Level} {raidToNotify.Start}";
+            foreach (var notification in locationsToNotify.Where(x => x.BotId == minunBot.BotId))
+            {
+                try
+                {
+                    await minunBot.SendTextMessageAsync(notification.ChatId, msg).ConfigureAwait(false);
+                }
+                catch (ApiRequestException ex)
+                {
+                    if (ex.ErrorCode == 403) // blocked by user
+                        this.deactiveMinunUserCommand.Execute(new DeactiveMinunUserRequest { UserId = notification.ChatId, BotId = notification.BotId });
+                    else
+                        await Operator.SendMessage(this.proxy, string.Format("NimRaidBot: Es ist ein Fehler für Gruppe {1} aufgetreten: {0}", ex.Message, notification.ChatId));
+                 }
             }
 
             var isProcessed = this.markAsProcessedQuery.Execute(new MarkEventAsProcessedRequest { Id = raidToNotify.Id });

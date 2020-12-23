@@ -17,6 +17,7 @@ namespace EventBot.Business.Intrastructure
             IPokeCommand pokeCommand,
             IModifyRaidCommand modifyRaidCommand,
             ISpielCommand spielCommand,
+            IGymsCommand gymsCommand,
 
             Commands.IHelpCommand helpCommand,
             Commands.ICancelCommand cancelCommand,
@@ -34,6 +35,7 @@ namespace EventBot.Business.Intrastructure
             this.commands.Add(pokeCommand);
             this.commands.Add(modifyRaidCommand);
             this.commands.Add(spielCommand);
+            this.commands.Add(gymsCommand);
 
             this.commands.Add(helpCommand);
             this.commands.Add(cancelCommand);

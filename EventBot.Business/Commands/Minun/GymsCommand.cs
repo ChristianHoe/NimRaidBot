@@ -1,4 +1,13 @@
 ﻿using EventBot.Business.Interfaces;
+using EventBot.Business.Queries;
+using EventBot.Business.TelegramProxies;
+using EventBot.DataAccess.Commands;
+using EventBot.DataAccess.Commands.Location;
+using EventBot.DataAccess.Models;
+using EventBot.DataAccess.Queries.Location;
+using EventBot.DataAccess.Queries.Raid;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Types;
@@ -8,51 +17,96 @@ namespace EventBot.Business.Commands.Minun
     public interface IGymsCommand : ICommand
     { }
 
-    public class GymsCommand : Command, IGymsCommand
+    public class GymsCommand : StatefulCommand, IGymsCommand
     {
-        //private readonly IGetCurrentPokeSettings getCurrentPokeSettings;
-        //private readonly TelegramProxies.NimPokeBot chatBot;
+        private readonly MinunBot minunBot;
+        private readonly TelegramProxies.NimRaidBot nimRaidBot;
+        private readonly IGetActiveChatsForUser getActiveChatsForUser;
+        private readonly IGetNotifyLocationsByChatIdQuery getNotifyLocationsByChatIdQuery;
+        private readonly IGetSpecialGymsForChatsQuery getSpecialGymsForChatsQuery;
+        private readonly IGetGymsByChatQuery getGymsByChatQuery;
+        private readonly IGetActiveGymsForChatQuery getActiveGymsForChatQuery;
+        private readonly IRemoveNotifyLocationCommand removeNotifyLocationCommand;
+        private readonly IAddNotifyLocationCommand addNotifyLocationCommand;
 
         public GymsCommand(
-            //IGetCurrentPokeSettings getCurrentPokeSettings,
-            //TelegramProxies.NimPokeBot chatBot
-            )
+            MinunBot minunBot,
+            TelegramProxies.NimRaidBot nimRaidBot,
+            IGetActiveChatsForUser getActiveChatsForUser,
+            IGetNotifyLocationsByChatIdQuery getNotifyLocationsByChatIdQuery,
+            IGetSpecialGymsForChatsQuery getSpecialGymsForChatsQuery,
+            IGetGymsByChatQuery getGymsByChatQuery,
+            IGetActiveGymsForChatQuery getActiveGymsForChatQuery,
+            IRemoveNotifyLocationCommand removeNotifyLocationCommand,
+            IAddNotifyLocationCommand addNotifyLocationCommand,
+            IStateUpdateCommand stateUpdateCommand, 
+            IStatePushCommand statePushCommand, 
+            IStatePopCommand statePopCommand, 
+            StatePeakQuery statePeakQuery)
+        : base(stateUpdateCommand, statePushCommand, statePopCommand, statePeakQuery)
         {
-        //    this.getCurrentPokeSettings = getCurrentPokeSettings;
-        //    this.chatBot = chatBot;
+            base.Steps.Add(0, Step0);
+            base.Steps.Add(1, Step1);
+            this.minunBot = minunBot;
+            this.nimRaidBot = nimRaidBot;
+            this.getActiveChatsForUser = getActiveChatsForUser;
+            this.getNotifyLocationsByChatIdQuery = getNotifyLocationsByChatIdQuery;
+            this.getSpecialGymsForChatsQuery = getSpecialGymsForChatsQuery;
+            this.getGymsByChatQuery = getGymsByChatQuery;
+            this.getActiveGymsForChatQuery = getActiveGymsForChatQuery;
+            this.removeNotifyLocationCommand = removeNotifyLocationCommand;
+            this.addNotifyLocationCommand = addNotifyLocationCommand;
         }
 
         public override string Key => "/gyms";
         public override string HelpText => "De-/Aktiviert die Benachrichtigung für einzelne Gyms";
 
-        public override async Task ExecuteAsync(Message message, string text, TelegramBotClient bot)
+        protected async Task<StateResult> Step0(Message message, string text, TelegramBotClient bot, bool batchMode)
         {
-            // TODO:
-            //var z = this.getCurrentPokeSettings.Execute(new GetCurrentPokeSettingsRequest { UserId = base.GetUserId(message) });
+            if (!batchMode)
+            {
+                var chatId = base.GetChatId(message);
+                var notifications = this.getNotifyLocationsByChatIdQuery.Execute(new GetNotifyLocationsByChatIdRequest { ChatIds = new[] { chatId } });
+                var gyms = GetCurrentGyms(chatId);
 
+                await Helper.Business.SendGymList(gyms, notifications, chatId, bot);
+            }
 
-            //StringBuilder res = new StringBuilder();
-            //var y = z.GroupBy(x => x.ChatId);
-            //foreach (var group in y)
-            //{
-            //    try
-            //    {
-            //        // der bot muss die Gruppe kennen
-            //        var chat = await chatBot.GetChatAsync(group.Key).ConfigureAwait(false);
+            return StateResult.ContinueWith(1);
+        }
 
-            //        var pokesAsText = group.Select(x => x.Selected ? x.PokeId + "*" : x.PokeId.ToString());
-            //        res.AppendLine($"{chat.Title}");
-            //        res.AppendLine($"{string.Join(", ", pokesAsText)}");
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        await Operator.SendMessage(bot, $"/pokes für Gruppe {group.Key} fehlgeschlagen.", ex).ConfigureAwait(false);
-            //    }
-            //}
+        private IEnumerable<PogoGyms> GetCurrentGyms(long chatId)
+        {
+            var chats = this.getActiveChatsForUser.Execute(new GetActiveChatsForUserRequest { BotId = nimRaidBot.BotId, UserId = chatId });
+            var gyms = this.getActiveGymsForChatQuery.Execute(new GetActiveGymsForChatRequest { ChatIds = chats.Select(x => x.ChatId) });
 
-            //await bot.SendTextMessageAsync(GetChatId(message), res.ToString()).ConfigureAwait(false);
+            return gyms;
+        }
 
-            return;
+        protected async Task<StateResult> Step1(Message message, string text, TelegramBotClient bot, bool batchMode)
+        {
+            var chatId = base.GetChatId(message);
+            var gyms = GetCurrentGyms(chatId);
+
+            var gymId = await Helper.Business.GetGymId(text, gyms, chatId, bot);
+            if (gymId == null)
+                return StateResult.TryAgain;
+
+            var notifications = this.getNotifyLocationsByChatIdQuery.Execute(new GetNotifyLocationsByChatIdRequest { ChatIds = new[] { chatId } });
+
+            var gym = gyms.SingleOrDefault(x => x.Id == gymId.Value);
+            if (notifications.Any(x => x.LocationId == gymId))
+            {
+                this.removeNotifyLocationCommand.Execute(new RemoveNotifyLocationRequest { ChatId = chatId, LocationId = gymId.Value });
+                await bot.SendTextMessageAsync(chatId, $"{gym.Name} entfernt.").ConfigureAwait(false);
+            }
+            else
+            {
+                this.addNotifyLocationCommand.Execute(new AddNotifyLocationRequest { ChatId = chatId, LocationId = gymId.Value });
+                await bot.SendTextMessageAsync(chatId, $"{gym.Name} hinzugefügt.").ConfigureAwait(false);
+            }
+            
+            return StateResult.Finished;
         }
     }
 }

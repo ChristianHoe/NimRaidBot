@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -23,6 +23,7 @@ namespace EventBot.DataAccess.Models
         public virtual DbSet<IngrEventsMeta> IngrEventsMeta { get; set; }
         public virtual DbSet<Locations> Locations { get; set; }
         public virtual DbSet<Memberships> Memberships { get; set; }
+        public virtual DbSet<NotifyLocation> NotifyLocation { get; set; }
         public virtual DbSet<PogoChatPoke> PogoChatPoke { get; set; }
         public virtual DbSet<PogoConfigurations> PogoConfigurations { get; set; }
         public virtual DbSet<PogoGamePokes> PogoGamePokes { get; set; }
@@ -248,6 +249,22 @@ namespace EventBot.DataAccess.Models
 
                 entity.Property(e => e.SecurityLevel)
                     .HasColumnName("SECURITY_LEVEL")
+                    .HasColumnType("int(11)");
+            });
+
+            modelBuilder.Entity<NotifyLocation>(entity =>
+            {
+                entity.HasKey(e => new { e.ChatId, e.LocationId })
+                    .HasName("PRIMARY");
+
+                entity.ToTable("NOTIFY_LOCATION");
+
+                entity.Property(e => e.ChatId)
+                    .HasColumnName("CHAT_ID")
+                    .HasColumnType("bigint(20)");
+
+                entity.Property(e => e.LocationId)
+                    .HasColumnName("LOCATION_ID")
                     .HasColumnType("int(11)");
             });
 
