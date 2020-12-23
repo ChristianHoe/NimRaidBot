@@ -13,7 +13,7 @@ namespace EventBot.DataAccess.Database
             //this.connectionString = connectionString;
 
             DbContextOptionsBuilder<telegramEntities> options = new DbContextOptionsBuilder<telegramEntities>();
-            options.UseMySql(connectionString);
+            options.UseMySql(connectionString, new MariaDbServerVersion(new System.Version(5,5, 60)));
 
             this.dbContextOptions = options.Options;
         }

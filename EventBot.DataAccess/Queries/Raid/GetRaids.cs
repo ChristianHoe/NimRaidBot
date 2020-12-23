@@ -1,6 +1,5 @@
 ﻿using EventBot.DataAccess.Database;
 using Microsoft.EntityFrameworkCore;
-using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;

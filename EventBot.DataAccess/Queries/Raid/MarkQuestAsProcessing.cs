@@ -1,6 +1,6 @@
 using EventBot.DataAccess.Database;
 using Microsoft.EntityFrameworkCore;
-using MySql.Data.MySqlClient;
+using MySqlConnector;
 
 namespace EventBot.DataAccess.Queries.Raid
 {
