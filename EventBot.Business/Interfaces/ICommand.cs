@@ -170,7 +170,7 @@ namespace EventBot.Business.Interfaces
             {
                 var batchMode = parameterIdx != count;
 
-                var stepResult = await this.Steps[stepIdx].Invoke(message, parameter, bot, batchMode);
+                var stepResult = await this.Steps[stepIdx].Invoke(message, parameter.Trim(), bot, batchMode);
                 if (stepResult.IsFinished)
                     return stepResult;
 
@@ -188,7 +188,7 @@ namespace EventBot.Business.Interfaces
                 }
 
                 if (stepResult.IsTryAgain)
-                    return await this.Steps[lastStepIdx].Invoke(message, lastParameter, bot, false);
+                    return await this.Steps[lastStepIdx].Invoke(message, lastParameter.Trim(), bot, false);
             }
 
             return StateResult.TryAgain;
