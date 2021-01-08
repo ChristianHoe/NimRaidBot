@@ -5,10 +5,9 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Minun
 {
-    public class GetRaidBossPreferencesRequest
-    {
-        public long ChatId;
-    }
+    public record GetRaidBossPreferencesRequest(
+        long ChatId
+    );
 
     public interface IGetRaidBossPreferencesQuery : IQuery<GetRaidBossPreferencesRequest, IEnumerable<PogoRaidPreference>>
     {

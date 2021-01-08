@@ -41,7 +41,7 @@ namespace EventBot.Business.Tasks.MinunBot
             {
                 var now = DateTime.UtcNow;
 
-                var games = this.getCurrentGamesQuery.Execute(new GetCurrentGamesRequest { Until = now.AddSeconds(-20)});
+                var games = this.getCurrentGamesQuery.Execute(new GetCurrentGamesRequest(Until: now.AddSeconds(-20)));
 
 
                 foreach(var game in games)
@@ -50,8 +50,8 @@ namespace EventBot.Business.Tasks.MinunBot
                     {
                         if (game.Finish.AddSeconds(-5) < now || game.Finish.AddSeconds(-25) > now)
                         {
-                        var answers = this.getGameAnswersQuery.Execute(new GetGameAnswersRequest { ChatId = game.ChatId, MessageId = game.MessageId}).ToArray();
-                        var response = this.gamePokeCreateText.Execute(new GamePokeCreateTextRequest { Game = game, Now = now, Votes = answers });
+                        var answers = this.getGameAnswersQuery.Execute(new GetGameAnswersRequest(ChatId: game.ChatId, MessageId: game.MessageId)).ToArray();
+                        var response = this.gamePokeCreateText.Execute(new GamePokeCreateTextRequest(Now: now, Game: game, Votes: answers));
                                 
                         await proxy.EditMessageTextAsync(game.ChatId, game.MessageId, response.Text, parseMode: response.ParseMode, replyMarkup: response.InlineKeyboardMarkup, disableWebPagePreview: true).ConfigureAwait(false);
                         }

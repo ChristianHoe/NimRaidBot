@@ -104,7 +104,7 @@ namespace EventBot.Business.Commands.Minun
             var chatId = base.GetChatId(message);
 
             // set raid level = 7 (can not be blocked at the moment)    
-            this.setRaidLevelForManualRaidCommand.Execute(new SetRaidLevelForManualRaidRequest { UserId = userId, Level = 7 });
+            this.setRaidLevelForManualRaidCommand.Execute(new SetRaidLevelForManualRaidRequest(UserId: userId, Level: 7));
 
             return await this.Step6(message, text, bot, batchMode);
         }
@@ -115,7 +115,7 @@ namespace EventBot.Business.Commands.Minun
             var chatId = base.GetChatId(message);
 
             // configure begin date
-            this.setTimeModeForManualRaidCommand.Execute(new SetTimeModeForManualRaidRequest { UserId = userId, TimeMode = 1 });
+            this.setTimeModeForManualRaidCommand.Execute(new SetTimeModeForManualRaidRequest(UserId: userId, TimeMode: 1 ));
 
             return await this.Step7(message, text, bot, batchMode);
         }
@@ -143,7 +143,7 @@ namespace EventBot.Business.Commands.Minun
                     return StateResult.TryAgain;
                 }
 
-                this.setTitleForManualRaidCommand.Execute(new SetTitleForManualRaidRequest { UserId = userId, Title = text });
+                this.setTitleForManualRaidCommand.Execute(new SetTitleForManualRaidRequest(UserId: userId, Title: text));
             }   
 
             return await this.Step9(message, text, bot, batchMode);
@@ -180,7 +180,7 @@ namespace EventBot.Business.Commands.Minun
                 }
                 
                 var x = TimeZoneInfo.ConvertTimeToUtc(date, timezone);
-                this.setNowForManualRaidCommand.Execute(new SetNowForManualRaidRequest { UserId = userId, Start = x });
+                this.setNowForManualRaidCommand.Execute(new SetNowForManualRaidRequest(UserId: userId, Start: x));
             }   
 
             return await this.Step13(message, text, bot, batchMode);

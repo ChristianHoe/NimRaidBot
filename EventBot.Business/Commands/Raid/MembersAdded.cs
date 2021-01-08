@@ -20,7 +20,7 @@ namespace EventBot.Business.Commands.Raid
         public override async Task WelcomeUserAsync(TelegramBotClient proxy, long chatId, string name)
         {
             // Ask user to configure user settings for raid polls
-            var currentSettings = getCurrentChatSettingsQuery.Execute(new GetCurrentChatSettingsRequest { ChatId = chatId });
+            var currentSettings = getCurrentChatSettingsQuery.Execute(new GetCurrentChatSettingsRequest(ChatId: chatId));
             if (currentSettings?.RaidLevel != null)
                 await proxy.SendTextMessageAsync(chatId, $"Hi {name}! Bitte wende dich an @MinunBot für weitere Einstellungen.").ConfigureAwait(false);
         }

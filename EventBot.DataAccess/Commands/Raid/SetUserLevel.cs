@@ -3,11 +3,10 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public class SetUserLevelRequest
-    {
-        public long UserId;
-        public int Level;
-    }
+    public record SetUserLevelRequest(
+        long UserId,
+        int Level
+    );
 
     public interface ISetUserLevelCommand : ICommand<SetUserLevelRequest>
     {

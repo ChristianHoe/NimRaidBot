@@ -5,24 +5,22 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.PoGo
 {
-    public class PollVotesRequest
-    {
-        public long ChatId;
-        public long MessageId;
-    }
+    public record PollVotesRequest(
+        long ChatId,
+        long MessageId
+    );
 
-    public class PollVoteResponse
-    {
-        public long UserId;
-        public string? FirstName;
-        public string? IngameName;
-        public string? IngressName;
-        public int? Level;
-        public Commands.Raid.TeamType? Team;
-        public int Attendee;
-        public string? Time;
-        public PogoUserVoteComments? Comment;
-    }
+    public record PollVoteResponse(
+        long UserId,
+        string? FirstName,
+        string? IngameName,
+        string? IngressName,
+        int? Level,
+        Commands.Raid.TeamType? Team,
+        int Attendee,
+        string? Time,
+        PogoUserVoteComments? Comment
+    );
 
 
     public interface IPollVotesUsers : IQuery<PollVotesRequest, IEnumerable<PollVoteResponse>>
@@ -53,7 +51,7 @@ namespace EventBot.DataAccess.Queries.PoGo
                         db.PogoUser,
                         v => v.UserId,
                         u => u.UserId,
-                        (v, u) => new PollVoteResponse { UserId = u.UserId, FirstName = u.FirstName, IngameName = u.IngameName, IngressName = u.IngressName, Level = u.Level, Team = (Commands.Raid.TeamType?)u.Team, Attendee = v.Attendee, Time = v.Time, Comment = (PogoUserVoteComments?)v.Comment }
+                        (v, u) => new PollVoteResponse(u.UserId, u.FirstName, u.IngameName, u.IngressName, u.Level, (Commands.Raid.TeamType?)u.Team, v.Attendee, v.Time, (PogoUserVoteComments?)v.Comment )
                         ).ToList();
                 }
 

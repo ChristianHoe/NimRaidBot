@@ -1,15 +1,12 @@
 using EventBot.DataAccess.Database;
-using EventBot.DataAccess.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Raid
 {
-    public class GetActiveUserRaidsRequest
-    {
-        public long UserId;
-    }
+    public record GetActiveUserRaidsRequest(
+        long UserId
+    );
 
     public interface IGetActiveUserRaids : IQuery<GetActiveUserRaidsRequest, int[]>
     {

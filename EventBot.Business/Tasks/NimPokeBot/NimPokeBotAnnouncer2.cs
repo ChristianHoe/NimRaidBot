@@ -77,7 +77,7 @@ namespace EventBot.Business.NimPokeBot
             TimeZoneInfo timezone = TimeZoneInfo.FindSystemTimeZoneById(TimeZoneIds.Local);
 
 
-            var chats = this.activeUsers.Execute(new GetActivePogoGroupsRequest { BotIds = new long[] { this.proxy.BotId, this.raidBotProxy.BotId } });
+            var chats = this.activeUsers.Execute(new GetActivePogoGroupsRequest(BotIds: new long[] { this.proxy.BotId, this.raidBotProxy.BotId } ));
             int numberOfCurrentActiveUsers = chats.Count();
             if (numberOfCurrentActiveUsers <= 0)
                 return;
@@ -115,7 +115,7 @@ namespace EventBot.Business.NimPokeBot
 
                         //var poke = this.getPokeQueueQuery.Execute(new Queries.GetPokeQueueRequest { MapId = group.map })
 
-                        var selectedPokes = this.getPokesForChatQuery.Execute(new DataAccess.Queries.Pokes.GetPokesForChatRequest { ChatId = group.ChatId });
+                        var selectedPokes = this.getPokesForChatQuery.Execute(new DataAccess.Queries.Pokes.GetPokesForChatRequest(ChatId: group.ChatId));
                         var toNotify = selectedPokes.SingleOrDefault(x => x.PokeId == poke.PokeId);
 
                         if (toNotify == null)
@@ -209,7 +209,7 @@ namespace EventBot.Business.NimPokeBot
                     this.addPokeNotificationCommand.Execute(new DataAccess.Commands.Pokes.AddPokeNotificationRequest { Notifications = newNotifications });
                 }
 
-                var isProcessed = this.markAsProcessedQuery.Execute(new DataAccess.Queries.Pokes.MarkAsProcessedRequest { Id = poke.Id });
+                var isProcessed = this.markAsProcessedQuery.Execute(new DataAccess.Queries.Pokes.MarkAsProcessedRequest(Id: poke.Id));
 
                 if (!isProcessed)
                 {

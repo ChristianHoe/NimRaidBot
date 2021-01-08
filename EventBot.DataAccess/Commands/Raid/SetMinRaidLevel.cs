@@ -3,11 +3,10 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public class SetMinRaidLevelRequest
-    {
-        public long ChatId;
-        public int? RaidLevel;
-    }
+    public record SetMinRaidLevelRequest(
+        long ChatId,
+        int? RaidLevel
+    );
 
     public interface ISetMinRaidLevelCommand : ICommand<SetMinRaidLevelRequest>
     {

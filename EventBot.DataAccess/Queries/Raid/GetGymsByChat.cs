@@ -5,10 +5,9 @@ using EventBot.DataAccess.Database;
 
 namespace EventBot.DataAccess.Queries.Raid
 {
-    public class GetGymsByChatRequest
-    {
-        public PogoRaidUsers Chat;
-    }
+    public record GetGymsByChatRequest(
+        PogoRaidUsers Chat
+    );
 
     public interface IGetGymsByChatQuery : IQuery<GetGymsByChatRequest, IEnumerable<PogoGyms>>
     {

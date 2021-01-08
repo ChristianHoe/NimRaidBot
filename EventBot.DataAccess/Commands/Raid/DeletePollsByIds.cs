@@ -3,10 +3,9 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public class DeletePollsByIdsRequest
-    {
-        public int[] Ids;
-    }
+    public record DeletePollsByIdsRequest(
+        int[] Ids
+    );
 
     public interface IDeletePollsByIdsCommand : ICommand<DeletePollsByIdsRequest>
     {

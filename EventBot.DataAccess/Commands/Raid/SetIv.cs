@@ -3,11 +3,10 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public class SetIvRequest
-    {
-        public long ChatId;
-        public int Iv;
-    }
+    public record SetIvRequest(
+        long ChatId,
+        int Iv
+    );
 
     public interface ISetIvCommand : ICommand<SetIvRequest>
     {

@@ -5,10 +5,8 @@ using EventBot.DataAccess.ModelsEx;
 
 namespace EventBot.DataAccess.Queries.Raid
 {
-    public class GetQuestsRequest
-    {
-        public long StopId;
-    }
+    public record GetQuestsRequest(
+    );
 
     public interface IGetQuestsQuery : IQuery<GetQuestsRequest, IList<Quest>>
     {

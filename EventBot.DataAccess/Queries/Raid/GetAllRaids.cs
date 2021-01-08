@@ -6,10 +6,9 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Raid
 {
-    public class GetAllRaidsRequest
-    {
-        public DateTime Date;
-    }
+    public record GetAllRaidsRequest(
+        DateTime Date
+    );
 
     public interface IGetAllRaidsQuery : IQuery<GetAllRaidsRequest, IEnumerable<PogoRaids>>
     {

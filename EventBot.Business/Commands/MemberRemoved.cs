@@ -32,7 +32,7 @@ namespace EventBot.Business.Commands
             if (message.LeftChatMember.Id == botId)
             {
                 this.removeBotCommand.Execute(new BotRemoveRequest { ChatId = message.Chat.Id, BotId = botId });
-                var botsCount = this.numberOfBotsInChatQuery.Execute(new NumberOfBotsInChatRequest { ChatId = message.Chat.Id });
+                var botsCount = this.numberOfBotsInChatQuery.Execute(new NumberOfBotsInChatRequest(ChatId: message.Chat.Id));
 
                 if (botsCount == 0)
                     this.userChannelRelationRemoveAllCommand.Execute(new UserChannelRelationRemoveAllRequest { ChatId = message.Chat.Id });

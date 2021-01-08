@@ -48,7 +48,7 @@ namespace EventBot.Business.Commands.Farm
             var chatId = this.GetChatId(message);
             var userId = this.GetUserId(message);
 
-            this.addUserCommand.Execute(new DataAccess.Commands.Raid.AddUserRequest { UserId = userId, FirstName = message.From.FirstName });
+            this.addUserCommand.Execute(new DataAccess.Commands.Raid.AddUserRequest(UserId: userId, FirstName: message.From.FirstName));
 
             var answer = text.Split('|');
             if (answer == null || answer.Count() != 2)
@@ -64,7 +64,7 @@ namespace EventBot.Business.Commands.Farm
                 return new AnswerResult();
             }
 
-            var voteRequest = new DataAccess.Queries.Raid.GetUserVoteRequest { ChatId = chatId, MessageId = messageId, UserId = userId, Poll = poll };
+            var voteRequest = new DataAccess.Queries.Raid.GetUserVoteRequest(ChatId: chatId, MessageId: messageId, UserId: userId, Poll: poll);
 
             var oldVote = this.getUserVoteQuery.Execute(voteRequest);
 

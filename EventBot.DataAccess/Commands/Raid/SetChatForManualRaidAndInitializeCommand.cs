@@ -4,11 +4,10 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public class SetChatForManualRaidAndInitializeRequest
-    {
-        public long UserId;
-        public long ChatId;
-    }
+    public record SetChatForManualRaidAndInitializeRequest(
+        long UserId,
+        long ChatId
+    );
 
     public interface ISetChatForManualRaidAndInitializeCommand : ICommand<SetChatForManualRaidAndInitializeRequest>
     {

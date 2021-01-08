@@ -6,10 +6,9 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Pokes
 {
-    public class GetCurrentPokesRequest
-    {
-        public int MapId;
-    }
+    public record GetCurrentPokesRequest(
+        int MapId
+    );
 
     public interface IGetCurrentPokesQuery : IQuery<GetCurrentPokesRequest, IEnumerable<PogoPokes>>
     {

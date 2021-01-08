@@ -5,10 +5,9 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Minun
 {
-    public class GetActiveUsersRequest
-    {
-        public long BotId;
-    }
+    public record GetActiveUsersRequest(
+        long BotId
+    );
 
     public interface IGetActiveUsers : IQuery<GetActiveUsersRequest, IEnumerable<PogoUser>>
     {

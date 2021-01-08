@@ -4,10 +4,9 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Raid
 {
-    public class GetCurrentManualRaidRequest
-    {
-        public long UserId;
-    }
+    public record GetCurrentManualRaidRequest(
+        long UserId
+    );
 
     public interface IGetCurrentManualRaidQuery : IQuery<GetCurrentManualRaidRequest, PogoUserRaids>
     {

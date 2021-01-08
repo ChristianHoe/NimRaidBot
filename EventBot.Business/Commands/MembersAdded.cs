@@ -40,10 +40,10 @@ namespace EventBot.Business.Commands
             {
                 if (member.Id == botId)
                 {
-                    var currentSettings = this.getCurrentChatSettingsQuery.Execute(new GetCurrentChatSettingsRequest { ChatId = chatId });
+                    var currentSettings = this.getCurrentChatSettingsQuery.Execute(new GetCurrentChatSettingsRequest(ChatId: chatId));
                     if (currentSettings == null)
                     {
-                        this.addChatCommand.Execute(new AddChatRequest { ChatId = chatId, Name = message.Chat.Title });
+                        this.addChatCommand.Execute(new AddChatRequest(ChatId: chatId, Name: message.Chat.Title));
                     }
 
                     this.addBotCommand.Execute(new BotAddRequest { ChatId = chatId, BotId = botId });

@@ -1,5 +1,4 @@
 ﻿using EventBot.DataAccess.Database;
-using EventBot.DataAccess.Models;
 using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Raid
@@ -11,11 +10,10 @@ namespace EventBot.DataAccess.Commands.Raid
         Gelb = 3
     }
 
-    public class SetUserTeamRequest
-    {
-        public long UserId;
-        public TeamType Team;
-    }
+    public record SetUserTeamRequest(
+        long UserId,
+        TeamType Team
+    );
 
     public interface ISetUserTeamCommand : ICommand<SetUserTeamRequest>
     {

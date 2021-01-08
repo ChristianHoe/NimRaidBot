@@ -6,10 +6,9 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Minun
 {
-    public class GetCurrentGamesRequest
-    {
-        public DateTime Until;
-    }
+    public record GetCurrentGamesRequest(
+        DateTime Until
+    );
 
     public interface IGetCurrentGamesQuery : IQuery<GetCurrentGamesRequest, IEnumerable<PogoGamePokes>>
     {

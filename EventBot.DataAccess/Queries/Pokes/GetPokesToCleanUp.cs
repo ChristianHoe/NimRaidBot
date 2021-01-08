@@ -6,11 +6,10 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Pokes
 {
-    public class GetPokesToCleanUpRequest
-    {
-        public long ChatId;
-        public DateTime ExpiredBefore;
-    }
+    public record GetPokesToCleanUpRequest(
+        long ChatId,
+        DateTime ExpiredBefore
+    );
 
     public interface IGetPokesToCleanUpQuery : IQuery<GetPokesToCleanUpRequest, IEnumerable<PogoRelPokesChats>>
     {

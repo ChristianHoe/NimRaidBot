@@ -3,11 +3,10 @@ using EventBot.DataAccess.Database;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public class RemoveMembershipByUserIdsRequest
-    {
-        public long GroupId;
-        public long[] UserIds;
-    }
+    public record RemoveMembershipByUserIdsRequest(
+        long GroupId,
+        long[] UserIds
+    );
 
     public interface IRemoveMembershipByUserIdsCommand : ICommand<RemoveMembershipByUserIdsRequest>
     {

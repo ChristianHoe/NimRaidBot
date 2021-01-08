@@ -51,7 +51,7 @@ namespace EventBot.Business.Commands.Minun
             var chatId = base.GetChatId(message);
 
             StringBuilder msg = new StringBuilder("Du hast für folgende Bosse Marker gesetzt:");
-            var currentBosses = this.getRaidBossPreferencesQuery.Execute(new GetRaidBossPreferencesRequest { ChatId = chatId });
+            var currentBosses = this.getRaidBossPreferencesQuery.Execute(new GetRaidBossPreferencesRequest(ChatId: chatId));
             msg.AppendLine();
             if (currentBosses.Count() == 0)
             {
@@ -85,7 +85,7 @@ namespace EventBot.Business.Commands.Minun
                     return StateResult.TryAgain;
                 }
 
-                var currentBosses = this.getRaidBossPreferencesQuery.Execute(new GetRaidBossPreferencesRequest { ChatId = chatId });
+                var currentBosses = this.getRaidBossPreferencesQuery.Execute(new GetRaidBossPreferencesRequest(ChatId: chatId));
                 if (currentBosses.Any(x => x.PokeId == pokeId))
                 {
                     this.preferencedBossRemoveCommand.Execute(new PreferencedBossRemoveRequest { ChatId = chatId, PokeId = pokeId });

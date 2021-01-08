@@ -118,14 +118,14 @@ namespace EventBot.Business.Commands.Minun
                 return StateResult.TryAgain;
             }
 
-            var raids = this.getActiveUserRaids.Execute(new GetActiveUserRaidsRequest { UserId = userId });
+            var raids = this.getActiveUserRaids.Execute(new GetActiveUserRaidsRequest(UserId: userId));
             if (raids?.Any(x => x == raidId) ?? false)
             {
                 await bot.SendTextMessageAsync(chatId, "Raid wurde nicht vom Nutzer erstellt oder ist abgelaufen. Raid-Id:").ConfigureAwait(false);
                 return StateResult.TryAgain;
             }
 
-            this.setRaidIdToUpdateCommand.Execute(new SetRaidIdToUpdateRequest { UserId = userId, RaidId = raidId });
+            this.setRaidIdToUpdateCommand.Execute(new SetRaidIdToUpdateRequest(UserId: userId, RaidId: raidId));
 
             return await this.Step3(message, text, bot, batchMode);
         }
@@ -187,10 +187,10 @@ namespace EventBot.Business.Commands.Minun
         {
             var userId = base.GetUserId(message);
 
-            var raidId = this.getCurrentManualRaidQuery.Execute(new GetCurrentManualRaidRequest { UserId = userId }).UpdRaidId;
+            var raidId = this.getCurrentManualRaidQuery.Execute(new GetCurrentManualRaidRequest(UserId: userId)).UpdRaidId;
 
 
-            var chats = this.getActivePogoGroups.Execute(new GetActivePogoGroupsRequest { BotIds = new long[] { this.nimRaidBot.BotId } });
+            var chats = this.getActivePogoGroups.Execute(new GetActivePogoGroupsRequest(BotIds: new long[] { this.nimRaidBot.BotId }));
             int numberOfCurrentActiveUsers = chats.Count(x => x.RaidLevel.HasValue);
             if (numberOfCurrentActiveUsers <= 0)
                 return StateResult.Finished;
@@ -199,11 +199,11 @@ namespace EventBot.Business.Commands.Minun
             {
                 try
                 {
-                    var poll = this.getActivePollByRaidId.Execute(new GetActivePollByRaidRequest { RaidId = raidId, ChatId = chat.ChatId });
+                    var poll = this.getActivePollByRaidId.Execute(new GetActivePollByRaidRequest(RaidId: raidId, ChatId: chat.ChatId));
 
                     if (poll != null)
                     {
-                        this.deletePollsByIdsCommand.Execute(new DeletePollsByIdsRequest { Ids = new[] { poll.Id } });
+                        this.deletePollsByIdsCommand.Execute(new DeletePollsByIdsRequest(Ids: new[] { poll.Id }));
                         await this.nimRaidBot.DeleteMessageAsync(chat.ChatId, (int)poll.MessageId).ConfigureAwait(false);
                     }
                 }
@@ -248,10 +248,10 @@ namespace EventBot.Business.Commands.Minun
                     return StateResult.TryAgain;
                 }
 
-                var raidId = this.getCurrentManualRaidQuery.Execute(new GetCurrentManualRaidRequest { UserId = userId }).UpdRaidId;
+                var raidId = this.getCurrentManualRaidQuery.Execute(new GetCurrentManualRaidRequest(UserId: userId)).UpdRaidId;
 
 
-                this.setPokeIdForRaidCommand.Execute(new SetPokeIdForRaidRequest { RaidId = raidId, PokeId = pokeId, PokeForm = form });
+                this.setPokeIdForRaidCommand.Execute(new SetPokeIdForRaidRequest(RaidId: raidId, PokeId: pokeId, PokeForm: form));
             }
 
             return await this.StepFinished(message, text, bot, batchMode);

@@ -6,10 +6,9 @@ using EventBot.DataAccess.Models;
 
 namespace EventBot.DataAccess.Queries.Location
 {
-    public class GetNotifyLocationsByChatIdRequest
-    {
-        public IEnumerable<long> ChatIds;
-     }
+    public record GetNotifyLocationsByChatIdRequest(
+        IEnumerable<long> ChatIds
+    );
 
     public interface IGetNotifyLocationsByChatIdQuery : IQuery<GetNotifyLocationsByChatIdRequest, IEnumerable<NotifyLocation>>
     {

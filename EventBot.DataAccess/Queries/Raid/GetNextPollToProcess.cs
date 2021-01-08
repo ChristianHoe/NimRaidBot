@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Raid
 {
-    public class GetNextPollToProcessRequest
+    public record GetNextPollToProcessRequest
     {
     }
 

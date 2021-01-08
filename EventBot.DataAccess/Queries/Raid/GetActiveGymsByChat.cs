@@ -6,10 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EventBot.DataAccess.Queries.Raid
 {
-    public class GetActiveGymsByChatRequest
-    {
-        public long ChatId;
-    }
+    public record GetActiveGymsByChatRequest(
+        long ChatId
+    );
 
     public interface IGetActiveGymsByChatQuery : IQuery<GetActiveGymsByChatRequest, IEnumerable<PogoGymsExtended>>
     {

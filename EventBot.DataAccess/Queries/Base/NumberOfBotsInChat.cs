@@ -1,16 +1,11 @@
 ﻿using EventBot.DataAccess.Database;
-using EventBot.DataAccess.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace EventBot.DataAccess.Queries.Base
 {
-    public class NumberOfBotsInChatRequest
-    {
-        public long ChatId;
-    }
+    public record NumberOfBotsInChatRequest(
+        long ChatId
+    );
 
     public interface INumberOfBotsInChatQuery : IQuery<NumberOfBotsInChatRequest, int>
     {

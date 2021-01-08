@@ -269,7 +269,7 @@ namespace EventBot.Business.Tasks.NimGoMapBot
                         var newGyms = mappedGyms.Where(x => x.PogoGym == null && !string.IsNullOrWhiteSpace(x.GoMapGym.name)).ToList();
                         if (newGyms.Count() > 0)
                         {
-                            this.addGoMapGymsCommand.Execute(new AddRocketMapGymsRequest { Gyms = newGyms.Select(x => x.GoMapGym).ToList() });
+                            this.addGoMapGymsCommand.Execute(new AddRocketMapGymsRequest(Gyms: newGyms.Select(x => x.GoMapGym).ToList()));
 
                             gyms = this.getGyms.Execute(new GetGymsRequest { });
 
@@ -285,7 +285,7 @@ namespace EventBot.Business.Tasks.NimGoMapBot
 
                         var utc = DateTime.UtcNow;
 
-                        var knownRaids = this.getRaids.Execute(new GetAllRaidsRequest { Date = utc });
+                        var knownRaids = this.getRaids.Execute(new GetAllRaidsRequest(Date: utc));
                         var currentRaids = mappedGyms.Where(x => x.GoMapGym.raid != null && x.PogoGym != null && x.GoMapGym.raid?.level > 0 && Models.GoMap.Helper.TimeWithoutMilliseconds(Models.GoMap.Helper.PokeMapTimeToUtc(x.GoMapGym.raid.end)) >= Models.GoMap.Helper.TimeWithoutMilliseconds(utc)).ToList();
 
                         var newRaids = new List<PogoRaids>();
@@ -307,10 +307,10 @@ namespace EventBot.Business.Tasks.NimGoMapBot
                         }
 
                         if (newRaids.Count > 0)
-                            this.addRaidsCommand.Execute(new AddRaidsRequest { Raids = newRaids });
+                            this.addRaidsCommand.Execute(new AddRaidsRequest(Raids: newRaids));
 
                         if (updateRaids.Count > 0)
-                            this.updateRaidsCommand.Execute(new UpdateRaidsRequest { Raids = updateRaids });
+                            this.updateRaidsCommand.Execute(new UpdateRaidsRequest(Raids: updateRaids));
                     }
 
                     // filter new pokestops/quests
@@ -337,7 +337,7 @@ namespace EventBot.Business.Tasks.NimGoMapBot
                         var remberId = 0;
                         if (newStops.Count() > 0)
                         {
-                            var request = new AddRocketMapStopsRequest { Stops = newStops.Select(x => new PogoStops{ Latitude = x.GoMapStop.latitude, Longitude = x.GoMapStop.longitude, Name = x.GoMapStop.name }).ToList() };
+                            var request = new AddRocketMapStopsRequest(Stops: newStops.Select(x => new PogoStops{ Latitude = x.GoMapStop.latitude, Longitude = x.GoMapStop.longitude, Name = x.GoMapStop.name }).ToList());
                             this.addRocketMapStopsCommand.Execute(request);
 
                             foreach(var newStop in request.Stops)
@@ -379,7 +379,7 @@ var reward_text = $"{quest.GoMapStop.quest_raw.item_type} : {(quest.GoMapStop.qu
 
 
                         if (newQuests.Count > 0)
-                            this.addQuestsCommand.Execute(new AddQuestsRequest { Quests = newQuests });
+                            this.addQuestsCommand.Execute(new AddQuestsRequest(Quests: newQuests));
 
                         foreach(var quest in newQuests)
                         {

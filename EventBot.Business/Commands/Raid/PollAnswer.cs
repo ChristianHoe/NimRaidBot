@@ -55,7 +55,7 @@ namespace EventBot.Business.Commands.Raid
             var chatId = this.GetChatId(message);
             var userId = this.GetUserId(message);
 
-            this.addUserCommand.Execute(new DataAccess.Commands.Raid.AddUserRequest { UserId = userId, FirstName = message.From.FirstName });
+            this.addUserCommand.Execute(new DataAccess.Commands.Raid.AddUserRequest(UserId: userId, FirstName: message.From.FirstName));
 
             var answer = text.Split('|');
             if (answer == null || answer.Count() != 2)
@@ -71,14 +71,14 @@ namespace EventBot.Business.Commands.Raid
                 return new AnswerResult();
             }
 
-            var voteRequest = new DataAccess.Queries.Raid.GetUserVoteRequest { ChatId = chatId, MessageId = messageId, UserId = userId, Poll = poll };
+            var voteRequest = new DataAccess.Queries.Raid.GetUserVoteRequest(ChatId: chatId, MessageId: messageId, UserId: userId, Poll: poll);
 
             var oldVote = this.getUserVoteQuery.Execute(voteRequest);
 
             var defaultAttendee = 1;
             if (oldVote == null || oldVote.Attendee == 0)
             {
-                var user = this.getUserByIdQuery.Execute(new DataAccess.Queries.Raid.GetUserByIdRequest { UserId = userId });
+                var user = this.getUserByIdQuery.Execute(new DataAccess.Queries.Raid.GetUserByIdRequest(UserId: userId));
                 if (user != null)
                     defaultAttendee = user.GroupMembers ?? 1;
             }
@@ -159,7 +159,7 @@ namespace EventBot.Business.Commands.Raid
 
             this.pollVoteUpdateCommand.Execute(new DataAccess.Commands.PoGo.PollVoteUpdateRequest { ChatId = chatId, MessageId = messageId, UserId = message.From.Id, Poll = poll, Attendee = attendee, Time = time, Comment = (int?)comments });
 
-            this.updateMembershipAccessCommand.Execute(new DataAccess.Commands.Raid.UpdateMembershipAccessRequest { GroupId = chatId, UserId = GetUserId(message) });
+            this.updateMembershipAccessCommand.Execute(new DataAccess.Commands.Raid.UpdateMembershipAccessRequest(GroupId: chatId, UserId: GetUserId(message)));
 
             return new AnswerResult();
         }

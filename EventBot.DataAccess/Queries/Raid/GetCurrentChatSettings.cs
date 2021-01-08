@@ -4,10 +4,9 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Raid
 {
-    public class GetCurrentChatSettingsRequest
-    {
-        public long ChatId;
-    }
+    public record GetCurrentChatSettingsRequest(
+        long ChatId
+    );
 
     public interface IGetCurrentChatSettingsQuery    : IQuery<GetCurrentChatSettingsRequest, PogoRaidUsers>
     {

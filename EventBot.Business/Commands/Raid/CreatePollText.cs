@@ -13,22 +13,20 @@ using Telegram.Bot.Types.ReplyMarkups;
 
 namespace EventBot.Business.Commands.Raid
 {
-    public class SendRaidPollRequest
-    {
-        public IEnumerable<PollVoteResponse> Votes;
-        public DataAccess.Queries.Raid.Raid Raid;
-        public Dictionary<int, string> PokeNames;
-        public IEnumerable<PogoSpecialGyms> SpecialGymSettings;
-        public IEnumerable<PogoRaidPreference> RaidPreferences;
-        public IEnumerable<int> TimeOffsets;
-    }
+    public record SendRaidPollRequest(
+        IEnumerable<PollVoteResponse> Votes,
+        DataAccess.Queries.Raid.Raid Raid,
+        Dictionary<int, string> PokeNames,
+        IEnumerable<PogoSpecialGyms> SpecialGymSettings,
+        IEnumerable<PogoRaidPreference>? RaidPreferences,
+        IEnumerable<int> TimeOffsets
+    );
 
-    public class RaidPollResponse
-    {
-        public string Text;
-        public InlineKeyboardMarkup InlineKeyboardMarkup;
-        public ParseMode ParseMode;
-    }
+    public record RaidPollResponse(
+        string Text,
+        InlineKeyboardMarkup InlineKeyboardMarkup,
+        ParseMode ParseMode
+    );
 
     public interface ICreatePollText
     {
@@ -246,7 +244,7 @@ namespace EventBot.Business.Commands.Raid
             //var inlineKeyboard = new InlineKeyboardMarkup(new InlineKeyboardButton[3][] { keyBoardStartFrames, extendedKeyBoardStartFrames, keyBoardNumberOfPersons });
             var inlineKeyboard = new InlineKeyboardMarkup(new InlineKeyboardButton[2][] { keyBoardStartFrames, keyBoardNumberOfPersons });
 
-            return new RaidPollResponse { Text = text.ToString(), InlineKeyboardMarkup = inlineKeyboard, ParseMode = ParseMode.Markdown };
+            return new RaidPollResponse(Text: text.ToString(), InlineKeyboardMarkup: inlineKeyboard, ParseMode: ParseMode.Markdown);
         }
 
         private bool LikesInvite(PogoUserVoteComments? c)
@@ -254,7 +252,7 @@ namespace EventBot.Business.Commands.Raid
             return c.HasValue && (c.Value & PogoUserVoteComments.LikeInvite) != 0;
         }
 
-        private void AppendUser(StringBuilder text, PollVoteResponse a, IEnumerable<PogoRaidPreference> raidPreference)
+        private void AppendUser(StringBuilder text, PollVoteResponse a, IEnumerable<PogoRaidPreference>? raidPreference)
         {
             if (a.Comment.HasValue)
             {
@@ -332,7 +330,7 @@ namespace EventBot.Business.Commands.Raid
             }
         }
 
-        private string GetRaidBossSymbolsForUser(long userId, IEnumerable<PogoRaidPreference> preferences)
+        private string GetRaidBossSymbolsForUser(long userId, IEnumerable<PogoRaidPreference>? preferences)
         {
             if (preferences == null)
                 return string.Empty;

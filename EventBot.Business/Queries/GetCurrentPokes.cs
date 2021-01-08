@@ -34,7 +34,7 @@ namespace EventBot.Business.Queries
 
 
             var pokelist = new ConcurrentDictionary<ulong, PogoPokes>();
-            var pokes = this.getCurrentPokesQuery.Execute(new DataAccess.Queries.Pokes.GetCurrentPokesRequest { MapId = request.MapId });
+            var pokes = this.getCurrentPokesQuery.Execute(new DataAccess.Queries.Pokes.GetCurrentPokesRequest(MapId: request.MapId));
 
             foreach(var poke in pokes)
             {

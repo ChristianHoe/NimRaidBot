@@ -66,7 +66,7 @@ namespace EventBot.Business.Commands.Minun
             if (!batchMode)
             {
                 var chatId = base.GetChatId(message);
-                var notifications = this.getNotifyLocationsByChatIdQuery.Execute(new GetNotifyLocationsByChatIdRequest { ChatIds = new[] { chatId } });
+                var notifications = this.getNotifyLocationsByChatIdQuery.Execute(new GetNotifyLocationsByChatIdRequest(ChatIds: new[] { chatId } ));
                 var gyms = GetCurrentGyms(chatId);
 
                 await Helper.Business.SendGymList(gyms, notifications, chatId, bot);
@@ -77,8 +77,8 @@ namespace EventBot.Business.Commands.Minun
 
         private IEnumerable<PogoGyms> GetCurrentGyms(long chatId)
         {
-            var chats = this.getActiveChatsForUser.Execute(new GetActiveChatsForUserRequest { BotId = nimRaidBot.BotId, UserId = chatId });
-            var gyms = this.getActiveGymsForChatQuery.Execute(new GetActiveGymsForChatRequest { ChatIds = chats.Select(x => x.ChatId) });
+            var chats = this.getActiveChatsForUser.Execute(new GetActiveChatsForUserRequest(BotId: nimRaidBot.BotId, UserId: chatId));
+            var gyms = this.getActiveGymsForChatQuery.Execute(new GetActiveGymsForChatRequest(ChatIds: chats.Select(x => x.ChatId)));
 
             return gyms;
         }
@@ -92,17 +92,17 @@ namespace EventBot.Business.Commands.Minun
             if (gymId == null)
                 return StateResult.TryAgain;
 
-            var notifications = this.getNotifyLocationsByChatIdQuery.Execute(new GetNotifyLocationsByChatIdRequest { ChatIds = new[] { chatId } });
+            var notifications = this.getNotifyLocationsByChatIdQuery.Execute(new GetNotifyLocationsByChatIdRequest(ChatIds: new[] { chatId } ));
 
             var gym = gyms.SingleOrDefault(x => x.Id == gymId.Value);
             if (notifications.Any(x => x.LocationId == gymId))
             {
-                this.removeNotifyLocationCommand.Execute(new RemoveNotifyLocationRequest { ChatId = chatId, LocationId = gymId.Value });
+                this.removeNotifyLocationCommand.Execute(new RemoveNotifyLocationRequest(ChatId: chatId, LocationId: gymId.Value));
                 await bot.SendTextMessageAsync(chatId, $"{gym.Name} entfernt.").ConfigureAwait(false);
             }
             else
             {
-                this.addNotifyLocationCommand.Execute(new AddNotifyLocationRequest { ChatId = chatId, LocationId = gymId.Value });
+                this.addNotifyLocationCommand.Execute(new AddNotifyLocationRequest(ChatId: chatId, LocationId: gymId.Value));
                 await bot.SendTextMessageAsync(chatId, $"{gym.Name} hinzugefügt.").ConfigureAwait(false);
             }
             

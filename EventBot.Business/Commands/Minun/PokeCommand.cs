@@ -47,7 +47,7 @@ namespace EventBot.Business.Commands.Minun
 
             if (!int.TryParse(text, out int pokeId))
             {
-                var names = this.getPokeNamesQuery.Execute(new GetPokeNamesRequest { PokeName = text });
+                var names = this.getPokeNamesQuery.Execute(new GetPokeNamesRequest(PokeName: text));
                 if (names.Count() == 0)
                 {
                     await bot.SendTextMessageAsync(chatId, "Pokemon nicht erkannt! Poke-Id:").ConfigureAwait(false);

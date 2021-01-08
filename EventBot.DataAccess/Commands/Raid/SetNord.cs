@@ -3,11 +3,10 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public class SetNordRequest
-    {
-        public long ChatId;
-        public decimal Nord;
-    }
+    public record SetNordRequest(
+        long ChatId,
+        decimal Nord
+    );
 
     public interface ISetNordCommand : ICommand<SetNordRequest>
     {

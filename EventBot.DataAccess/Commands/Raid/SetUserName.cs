@@ -3,11 +3,10 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public class SetUserNameRequest
-    {
-        public long UserId;
-        public string Name;
-    }
+    public record SetUserNameRequest(
+        long UserId,
+        string Name
+    );
 
     public interface ISetUserNameCommand : ICommand<SetUserNameRequest>
     {

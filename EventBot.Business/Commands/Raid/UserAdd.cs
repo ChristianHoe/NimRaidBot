@@ -31,8 +31,8 @@ namespace EventBot.Business.Commands.Raid
 
         public void Execute(UserAddRequest request)
         {
-            this.addUserCommand.Execute(new AddUserRequest { UserId = request.UserId, FirstName = request.UserName });
-            this.userChannelRelationAddCommand.Execute(new UserChannelRelationAddRequest { UserId = request.UserId, ChatId = request.ChatId });
+            this.addUserCommand.Execute(new AddUserRequest(UserId: request.UserId, FirstName: request.UserName));
+            this.userChannelRelationAddCommand.Execute(new UserChannelRelationAddRequest(UserId: request.UserId, ChatId: request.ChatId));
         }
     }
 }

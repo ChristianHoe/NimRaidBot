@@ -6,14 +6,13 @@ using Telegram.Bot.Types.ReplyMarkups;
 
 namespace EventBot.Business.Commands.Raid
 {
-    public class CreatePollRequest
-    {
-        public DataAccess.Queries.Raid.Raid Raid;
-        public string Text;
-        public InlineKeyboardMarkup InlineKeyboardMarkup;
-        public ParseMode ParseMode;
-        public int? TimeOffsetId;
-    }
+    public record CreatePollRequest(
+        DataAccess.Queries.Raid.Raid Raid,
+        string Text,
+        InlineKeyboardMarkup InlineKeyboardMarkup,
+        ParseMode ParseMode,
+        int? TimeOffsetId
+    );
 
     public interface ICreatePollCommand
     {
@@ -37,7 +36,7 @@ namespace EventBot.Business.Commands.Raid
 
         public async Task<bool> Execute(CreatePollRequest request, long chatId, TelegramBotClient bot)
         {
-            var poll = this.getActivePollByRaidId.Execute(new GetActivePollByRaidRequest { ChatId = chatId, RaidId = request.Raid.Id });
+            var poll = this.getActivePollByRaidId.Execute(new GetActivePollByRaidRequest(ChatId: chatId, RaidId: request.Raid.Id));
             if (poll != null)
             {
                 await Helper.Operator.SendMessage(bot, $"CreatePoll für existierend Poll/Raid aufgerufen Chat: {chatId} Raid: {request.Raid.Id}").ConfigureAwait(false);

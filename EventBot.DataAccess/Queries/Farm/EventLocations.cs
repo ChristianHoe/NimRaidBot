@@ -6,11 +6,9 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Farm
 {
-    public class EventLocationsRequest
-    {
-        //public long EventId;
-        public string Name;
-    }
+    public record EventLocationsRequest(
+        string Name
+    );
 
     public interface IEventLocationsQuery : IQuery<EventLocationsRequest, IEnumerable<Locations>>
     {

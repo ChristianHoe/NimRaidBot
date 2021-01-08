@@ -40,7 +40,7 @@ namespace EventBot.Business.Commands.Raid
             if (iv > 100)
                 iv = 100;
 
-            this.setIvCommand.Execute(new SetIvRequest { ChatId = chatId, Iv = iv });
+            this.setIvCommand.Execute(new SetIvRequest(ChatId: chatId, Iv: iv));
 
             await bot.SendTextMessageAsync(chatId, $"Minimum-IV-Level auf {iv} gestetzt.").ConfigureAwait(false);
 

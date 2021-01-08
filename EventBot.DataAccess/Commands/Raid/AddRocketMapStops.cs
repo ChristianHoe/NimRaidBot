@@ -1,16 +1,13 @@
 using EventBot.DataAccess.Database;
 using EventBot.DataAccess.Models;
-using EventBot.Models.RocketMap;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public class AddRocketMapStopsRequest
-    {
-        public IEnumerable<PogoStops> Stops;
-    }
+    public record AddRocketMapStopsRequest(
+        IEnumerable<PogoStops> Stops
+    );
 
     public interface IAddRocketMapStopsCommand : ICommand<AddRocketMapStopsRequest>
     {

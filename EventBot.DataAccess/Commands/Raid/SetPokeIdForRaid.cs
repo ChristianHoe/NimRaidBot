@@ -3,12 +3,11 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public class SetPokeIdForRaidRequest
-    {
-        public long RaidId;
-        public int PokeId;
-        public char? PokeForm;
-    }
+    public record SetPokeIdForRaidRequest(
+        long RaidId,
+        int PokeId,
+        char? PokeForm
+    );
 
     public interface ISetPokeIdForRaidCommand : ICommand<SetPokeIdForRaidRequest>
     {

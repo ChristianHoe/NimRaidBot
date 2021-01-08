@@ -72,7 +72,7 @@ namespace EventBot.Business.Tasks.NimPokeBot
             if (questToNotify == null)
                 return;
 
-            var canProcess = this.markQuestAsProcssingQuery.Execute(new MarkQuestAsProcessingRequest { Id = questToNotify.StopId });
+            var canProcess = this.markQuestAsProcssingQuery.Execute(new MarkQuestAsProcessingRequest(Id: questToNotify.StopId));
             if (!canProcess)
                 return;
 
@@ -83,7 +83,7 @@ namespace EventBot.Business.Tasks.NimPokeBot
 
             // var specials = this.getSpecialGymsForChatsQuery.Execute(new GetSpecialGymsForChatsRequest { ChatIds = chats.Select(x => x.ChatId).ToArray() });
 
-            var quest = this.getQuestByStopIdQuery.Execute(new GetQuestByStopIdRequest { StopId = questToNotify.StopId });
+            var quest = this.getQuestByStopIdQuery.Execute(new GetQuestByStopIdRequest(StopId: questToNotify.StopId));
 
             var text = new StringBuilder();
             text.AppendLine($"[{quest.StopName}](https://maps.google.com/?q={quest.Latitude.ToString(CultureInfo.InvariantCulture)},{quest.Longitude.ToString(CultureInfo.InvariantCulture)})");
@@ -92,7 +92,7 @@ namespace EventBot.Business.Tasks.NimPokeBot
 
             await this.proxy.SendTextMessageAsync(Operator.TelegramId, text.ToString(), parseMode: ParseMode.Markdown, disableWebPagePreview: true).ConfigureAwait(false);
 
-            var isProcessed = this.markQuestAsProcessedQuery.Execute(new MarkQuestAsProcessedRequest { Id = questToNotify.StopId });
+            var isProcessed = this.markQuestAsProcessedQuery.Execute(new MarkQuestAsProcessedRequest(Id: questToNotify.StopId));
 
             if (!isProcessed)
             {

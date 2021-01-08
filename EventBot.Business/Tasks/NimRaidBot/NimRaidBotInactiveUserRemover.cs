@@ -43,14 +43,14 @@ namespace EventBot.Business.Tasks.NimRaidBot
         {
             try
             {
-                var activeGroups = this.getActiveUsers.Execute(new GetActivePogoGroupsRequest { BotIds = new long[] { this.proxy.BotId } });
+                var activeGroups = this.getActiveUsers.Execute(new GetActivePogoGroupsRequest(BotIds: new long[] { this.proxy.BotId }));
                 foreach(var group in activeGroups.Where(x => x.KickInactive == true))
                 {
                     var botPrivileges = await proxy.GetChatMemberAsync(group.ChatId, (int)this.proxy.BotId);
                     if (botPrivileges.Status != ChatMemberStatus.Creator && botPrivileges.Status != ChatMemberStatus.Administrator)
                         continue;
 
-                    var users = this.getUsersWithoutMinunConfigurationQuery.Execute(new GetUsersWithoutMinunConfigurationRequest { GroupId = group.ChatId, Threshold = DateTime.UtcNow.AddDays(-8)});
+                    var users = this.getUsersWithoutMinunConfigurationQuery.Execute(new GetUsersWithoutMinunConfigurationRequest(GroupId: group.ChatId, Threshold: DateTime.UtcNow.AddDays(-8)));
 
                     foreach (var user in users)
                     {
@@ -69,9 +69,9 @@ namespace EventBot.Business.Tasks.NimRaidBot
                         await Task.Delay(100);
                     }
 
-                    this.removeMembershipByUserIdsCommand.Execute(new RemoveMembershipByUserIdsRequest { GroupId = group.ChatId, UserIds = users.Select(x => x.UserId).ToArray() });
+                    this.removeMembershipByUserIdsCommand.Execute(new RemoveMembershipByUserIdsRequest(GroupId: group.ChatId, UserIds: users.Select(x => x.UserId).ToArray()));
                 
-                    var inactiveUsers = this.getInactiveUsersQuery.Execute(new GetInactiveUsersRequest { GroupId = group.ChatId, Threshold = DateTime.UtcNow.AddMonths(-6)});
+                    var inactiveUsers = this.getInactiveUsersQuery.Execute(new GetInactiveUsersRequest(GroupId: group.ChatId, Threshold: DateTime.UtcNow.AddMonths(-6)));
                                         
                     foreach (var user in inactiveUsers)
                     {
@@ -90,7 +90,7 @@ namespace EventBot.Business.Tasks.NimRaidBot
                         await Task.Delay(100);
                     }
 
-                    this.removeMembershipByUserIdsCommand.Execute(new RemoveMembershipByUserIdsRequest { GroupId = group.ChatId, UserIds = inactiveUsers.Select(x => x.UserId).ToArray() });
+                    this.removeMembershipByUserIdsCommand.Execute(new RemoveMembershipByUserIdsRequest(GroupId: group.ChatId, UserIds: inactiveUsers.Select(x => x.UserId).ToArray()));
                 
                 
                 

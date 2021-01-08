@@ -1,14 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using EventBot.DataAccess.Database;
-using EventBot.DataAccess.Models;
 
 namespace EventBot.DataAccess.Queries.Raid
 {
-    public class GetRaidTimeOffsetsRequest
-    {
-        public int? OffsetId;
-    }
+    public record GetRaidTimeOffsetsRequest(
+        int? OffsetId
+    );
 
     public interface IGetRaidTimeOffsetsQuery : IQuery<GetRaidTimeOffsetsRequest, IEnumerable<int>>
     {

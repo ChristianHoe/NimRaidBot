@@ -3,10 +3,9 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Raid
 {
-    public class GetRaidByIdRequest
-    {
-        public long RaidId;
-    }
+    public record GetRaidByIdRequest(
+        long RaidId
+    );
 
     public interface IGetRaidByIdQuery : IQuery<GetRaidByIdRequest, Raid>
     {

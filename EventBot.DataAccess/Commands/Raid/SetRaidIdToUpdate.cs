@@ -4,11 +4,10 @@ using EventBot.DataAccess.Database;
 namespace EventBot.DataAccess.Commands.Raid
 {
 
-    public class SetRaidIdToUpdateRequest
-    {
-        public long UserId;
-        public int RaidId;
-    }
+    public record SetRaidIdToUpdateRequest(
+        long UserId,
+        int RaidId
+    );
 
     public interface ISetRaidIdToUpdateCommand : ICommand<SetRaidIdToUpdateRequest>
     {

@@ -4,11 +4,10 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public class AddUserRequest
-    {
-        public long UserId;
-        public string FirstName;
-    }
+    public record AddUserRequest(
+        long UserId,
+        string FirstName
+    );
 
     public interface IAddUserCommand : ICommand<AddUserRequest>
     {

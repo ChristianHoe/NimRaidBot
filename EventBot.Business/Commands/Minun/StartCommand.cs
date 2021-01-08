@@ -35,7 +35,7 @@ namespace EventBot.Business.Commands.Minun
         public override async Task ExecuteAsync(Message message, string text, TelegramBotClient bot)
         {
             this.botAddCommand.Execute(new BotAddRequest { ChatId = base.GetChatId(message), BotId = bot.BotId });
-            this.addMinunUserCommand.Execute(new AddUserRequest { UserId = base.GetUserId(message), FirstName = message.From.Username });
+            this.addMinunUserCommand.Execute(new AddUserRequest(UserId: base.GetUserId(message), FirstName: message.From.Username));
             try
             {
                 await bot.SendTextMessageAsync(GetChatId(message), "Mit /nutzer kann der Bot konfiguriert werden.").ConfigureAwait(false);

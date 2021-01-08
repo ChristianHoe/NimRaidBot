@@ -5,10 +5,9 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Minun
 {
-    public class GetChatAreasRequest
-    {
-        public long[] ChatIds;
-    }
+    public record GetChatAreasRequest(
+        long[] ChatIds
+    );
 
     public interface IGetChatAreas : IQuery<GetChatAreasRequest, IEnumerable<PogoRaidUsers>>    {
     }

@@ -6,11 +6,10 @@ using EventBot.DataAccess.ModelsEx;
 
 namespace EventBot.DataAccess.Queries.Location
 {
-    public class GetCurrentNotificationsRequest
-    {
-        public int LocationId;
-        public DateTime Threshold;
-    }
+    public record GetCurrentNotificationsRequest(
+        int LocationId,
+        DateTime Threshold
+    );
 
     public interface IGetCurrentNotificationsQuery : IQuery<GetCurrentNotificationsRequest, IEnumerable<NotifyLocationExtended>>
     {

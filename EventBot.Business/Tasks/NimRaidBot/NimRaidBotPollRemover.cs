@@ -39,13 +39,13 @@ namespace EventBot.Business.NimRaidBot
         {
             try
             {
-                var activeUsers = this.getActiveUsers.Execute(new GetActivePogoGroupsRequest { BotIds = new long[] { this.proxy.BotId } });
+                var activeUsers = this.getActiveUsers.Execute(new GetActivePogoGroupsRequest(BotIds: new long[] { this.proxy.BotId }));
                 foreach(var user in activeUsers.Where(x => x.CleanUp.HasValue))
                 {
                     DateTime cleanUpTime = DateTime.UtcNow.AddMinutes(-1 * user.CleanUp.Value);
-                    var pollsToBeDeleted = this.getPollsToCleanUpsQuery.Execute(new GetPollsToCleanUpRequest {  ChatId = user.ChatId, ExpiredBefore = cleanUpTime });
+                    var pollsToBeDeleted = this.getPollsToCleanUpsQuery.Execute(new GetPollsToCleanUpRequest(ChatId: user.ChatId, ExpiredBefore: cleanUpTime));
 
-                    this.deletePollsByIdsCommand.Execute(new DeletePollsByIdsRequest { Ids = pollsToBeDeleted.Select(x => x.Id).ToArray() });
+                    this.deletePollsByIdsCommand.Execute(new DeletePollsByIdsRequest(Ids: pollsToBeDeleted.Select(x => x.Id).ToArray()));
 
                     foreach (var poll in pollsToBeDeleted)
                     {

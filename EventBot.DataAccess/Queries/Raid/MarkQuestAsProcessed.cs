@@ -4,10 +4,9 @@ using MySqlConnector;
 
 namespace EventBot.DataAccess.Queries.Raid
 {
-    public class MarkQuestAsProcessedRequest
-    {
-        public int Id;
-    }
+    public record MarkQuestAsProcessedRequest(
+        int Id
+    );
 
     public interface IMarkQuestAsProcessedQuery : IQuery<MarkQuestAsProcessedRequest, bool>
     {

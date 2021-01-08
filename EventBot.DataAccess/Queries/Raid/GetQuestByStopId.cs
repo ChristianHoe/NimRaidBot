@@ -4,10 +4,9 @@ using EventBot.DataAccess.ModelsEx;
 
 namespace EventBot.DataAccess.Queries.Raid
 {
-    public class GetQuestByStopIdRequest
-    {
-        public long StopId;
-    }
+    public record GetQuestByStopIdRequest(
+        long StopId
+    );
 
     public interface IGetQuestByStopIdQuery : IQuery<GetQuestByStopIdRequest, Quest>
     {

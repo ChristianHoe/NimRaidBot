@@ -5,11 +5,10 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public class CreateManuelRaidRequest
-    {
-        public long UserId;
-        public int DurationInMinutes;
-    }
+    public record CreateManuelRaidRequest(
+        long UserId,
+        int DurationInMinutes
+    );
 
     public interface ICreateManuelRaidCommand : ICommand<CreateManuelRaidRequest>
     {

@@ -5,11 +5,10 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Base
 {
-    public class UserChannelRelationAddRequest
-    {
-        public long UserId;
-        public long ChatId;
-    }
+    public record UserChannelRelationAddRequest(
+        long UserId,
+        long ChatId
+    );
 
     public interface IUserChannelRelationAddCommand : ICommand<UserChannelRelationAddRequest>
     {

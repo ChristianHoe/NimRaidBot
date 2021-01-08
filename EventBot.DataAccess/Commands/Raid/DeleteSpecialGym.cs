@@ -4,12 +4,11 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public class DeleteSpecialGymRequest
-    {
-        public long ChatId;
-        public int GymId;
-        public GymType Type;
-    }
+    public record DeleteSpecialGymRequest(
+        long ChatId,
+        int GymId,
+        GymType Type
+    );
 
     public interface IDeleteSpecialGymCommand : ICommand<DeleteSpecialGymRequest>
     {

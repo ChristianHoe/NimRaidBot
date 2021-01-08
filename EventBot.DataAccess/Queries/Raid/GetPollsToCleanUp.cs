@@ -6,11 +6,10 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Raid
 {
-    public class GetPollsToCleanUpRequest
-    {
-        public long ChatId;
-        public DateTime ExpiredBefore;
-    }
+    public record GetPollsToCleanUpRequest(
+        long ChatId,
+        DateTime ExpiredBefore
+    );
 
     public interface IGetPollsToCleanUpsQuery : IQuery<GetPollsToCleanUpRequest, IEnumerable<ActivePolls>>
     {

@@ -6,11 +6,10 @@ using EventBot.DataAccess.Models;
 
 namespace EventBot.DataAccess.Queries.Raid
 {
-    public class GetUsersWithoutMinunConfigurationRequest
-    {
-        public long GroupId;
-        public DateTime Threshold;
-    }
+    public record GetUsersWithoutMinunConfigurationRequest(
+        long GroupId,
+        DateTime Threshold
+    );
 
     public interface IGetUsersWithoutMinunConfigurationQuery : IQuery<GetUsersWithoutMinunConfigurationRequest, IEnumerable<PogoUser>>
     {

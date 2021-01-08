@@ -3,11 +3,10 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public class SetTitleForManualRaidRequest
-    {
-        public long UserId;
-        public string Title;
-    }
+    public record SetTitleForManualRaidRequest(
+        long UserId,
+        string Title
+    );
 
     public interface ISetTitleForManualRaidCommand : ICommand<SetTitleForManualRaidRequest>
     {

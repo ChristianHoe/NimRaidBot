@@ -61,9 +61,9 @@ namespace EventBot.Business.Commands.Raid
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);
 
-            var currentChatSettings = this.getCurrentChatSettingsQuery.Execute(new GetCurrentChatSettingsRequest { ChatId = chatId });
-            var gyms = this.getGymsByChatQuery.Execute(new GetGymsByChatRequest { Chat = currentChatSettings });
-            var special = this.getSpecialGymsQuery.Execute(new GetSpecialGymsForChatsRequest { ChatIds = new[] { chatId } });
+            var currentChatSettings = this.getCurrentChatSettingsQuery.Execute(new GetCurrentChatSettingsRequest(ChatId: chatId));
+            var gyms = this.getGymsByChatQuery.Execute(new GetGymsByChatRequest(Chat: currentChatSettings));
+            var special = this.getSpecialGymsQuery.Execute(new GetSpecialGymsForChatsRequest(ChatIds: new[] { chatId }));
 
             StringBuilder msg = new StringBuilder("Bitte wähle ein Gym\r\n");
 
@@ -99,8 +99,8 @@ namespace EventBot.Business.Commands.Raid
                     return StateResult.TryAgain;
                 }
 
-                var currentChatSettings = this.getCurrentChatSettingsQuery.Execute(new GetCurrentChatSettingsRequest { ChatId = chatId });
-                var gyms = this.getGymsByChatQuery.Execute(new GetGymsByChatRequest { Chat = currentChatSettings });
+                var currentChatSettings = this.getCurrentChatSettingsQuery.Execute(new GetCurrentChatSettingsRequest(ChatId: chatId));
+                var gyms = this.getGymsByChatQuery.Execute(new GetGymsByChatRequest(Chat: currentChatSettings));
 
                 if (gymIndex < 0 || gyms.Count() < gymIndex)
                 {
@@ -110,17 +110,17 @@ namespace EventBot.Business.Commands.Raid
 
 
                 // TODO: if multiple queries
-                var specials = this.getSpecialGymsQuery.Execute(new GetSpecialGymsForChatsRequest { ChatIds = new[] { chatId } });
+                var specials = this.getSpecialGymsQuery.Execute(new GetSpecialGymsForChatsRequest(ChatIds: new[] { chatId }));
                 var gym = gyms.ElementAt(gymIndex);
 
                 if (specials.Any(x => x.GymId == gym.Id))
                 {
-                    this.deleteSpecialGymCommand.Execute(new DeleteSpecialGymRequest { ChatId = chatId, GymId = gym.Id, Type = GymType.Exclude });
+                    this.deleteSpecialGymCommand.Execute(new DeleteSpecialGymRequest(ChatId: chatId, GymId: gym.Id, Type: GymType.Exclude));
                     await bot.SendTextMessageAsync(chatId, $"{gym.Name} aktiviert.").ConfigureAwait(false);
                 }
                 else
                 {
-                    this.addSpecialGymCommand.Execute(new AddSpecialGymRequest { ChatId = chatId, GymId = gym.Id, Type = GymType.Exclude });
+                    this.addSpecialGymCommand.Execute(new AddSpecialGymRequest(ChatId: chatId, GymId: gym.Id, Type: GymType.Exclude));
                     await bot.SendTextMessageAsync(chatId, $"{gym.Name} deaktiviert.").ConfigureAwait(false);
                 }
             }

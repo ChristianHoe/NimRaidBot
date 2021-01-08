@@ -6,12 +6,11 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public class AddSpecialGymRequest
-    {
-        public long ChatId;
-        public int GymId;
-        public GymType Type;
-    }
+    public record AddSpecialGymRequest(
+        long ChatId,
+        int GymId,
+        GymType Type
+    );
 
     public interface IAddSpecialGymCommand : ICommand<AddSpecialGymRequest>
     {

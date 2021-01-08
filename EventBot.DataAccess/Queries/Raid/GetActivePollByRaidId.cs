@@ -4,11 +4,10 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Raid
 {
-    public class GetActivePollByRaidRequest
-    {
-        public int RaidId;
-        public long ChatId;
-    }
+    public record GetActivePollByRaidRequest(
+        int RaidId,
+        long ChatId
+    );
 
     public interface IGetActivePollByRaidId : IQuery<GetActivePollByRaidRequest, ActivePolls>
     {

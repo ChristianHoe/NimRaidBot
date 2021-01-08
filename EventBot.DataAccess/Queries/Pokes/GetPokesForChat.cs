@@ -5,10 +5,9 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Pokes
 {
-    public class GetPokesForChatRequest
-    {
-        public long ChatId;
-    }
+    public record GetPokesForChatRequest(
+        long ChatId
+    );
 
     public interface IGetPokesForChatQuery : IQuery<GetPokesForChatRequest, IEnumerable<PogoChatPoke>>
     {

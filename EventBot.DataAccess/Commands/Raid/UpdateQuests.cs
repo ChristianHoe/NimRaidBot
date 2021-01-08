@@ -1,19 +1,18 @@
 using EventBot.DataAccess.Database;
 using EventBot.DataAccess.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public class UpdateQuestsRequest
-    {
-        public IEnumerable<PogoQuests> Quests;
-    }
+    public record UpdateQuestsRequest(
+        IEnumerable<PogoQuests> Quests
+    );
 
     public interface IUpdateQuestsCommand : ICommand<UpdateQuestsRequest>
     {
     }
+
     public class UpdateQuests : IUpdateQuestsCommand
     {
         readonly DatabaseFactory databaseFactory;

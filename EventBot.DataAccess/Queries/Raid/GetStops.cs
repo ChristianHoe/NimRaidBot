@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Raid
 {
-    public class GetStopsRequest
+    public record GetStopsRequest
     {
     }
 

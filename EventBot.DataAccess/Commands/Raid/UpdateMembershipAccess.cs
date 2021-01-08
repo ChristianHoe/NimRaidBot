@@ -5,11 +5,10 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-       public class UpdateMembershipAccessRequest
-    {
-        public long GroupId;
-        public long UserId;
-    }
+    public record UpdateMembershipAccessRequest(
+        long GroupId,
+        long UserId
+    );
 
     public interface IUpdateMembershipAccessCommand : ICommand<UpdateMembershipAccessRequest>
     {

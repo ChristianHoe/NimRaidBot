@@ -4,10 +4,9 @@ using System.Collections.Generic;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public class AddQuestsRequest
-    {
-        public IEnumerable<PogoQuests> Quests;
-    }
+    public record AddQuestsRequest(
+        IEnumerable<PogoQuests> Quests
+    );
 
     public interface IAddQuestsCommand : ICommand<AddQuestsRequest>
     {

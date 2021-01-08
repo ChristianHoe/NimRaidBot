@@ -7,10 +7,9 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public class AddRocketMapGymsRequest
-    {
-        public IEnumerable<PokeMapGym> Gyms;
-    }
+    public record AddRocketMapGymsRequest(
+        IEnumerable<PokeMapGym> Gyms
+    );
 
     public interface IAddRocketMapGymsCommand : ICommand<AddRocketMapGymsRequest>
     {

@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Pokes
 {
-    public class GetNextNewPokeRequest
+    public record GetNextNewPokeRequest
     {
     }
 

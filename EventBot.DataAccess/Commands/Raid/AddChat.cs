@@ -4,11 +4,10 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public class AddChatRequest
-    {
-        public long ChatId;
-        public string Name;
-    }
+    public record AddChatRequest(
+        long ChatId,
+        string Name
+    );
 
     public interface IAddChatCommand : ICommand<AddChatRequest>
     {

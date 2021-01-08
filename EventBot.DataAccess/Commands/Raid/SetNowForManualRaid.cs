@@ -4,11 +4,10 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public class SetNowForManualRaidRequest
-    {
-        public long UserId;
-        public DateTime Start;
-    }
+    public record SetNowForManualRaidRequest(
+        long UserId,
+        DateTime Start
+    );
 
     public interface ISetNowForManualRaidCommand : ICommand<SetNowForManualRaidRequest>
     {

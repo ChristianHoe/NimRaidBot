@@ -1,14 +1,12 @@
 ﻿using EventBot.DataAccess.Database;
-using EventBot.DataAccess.Models;
 using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public class SetSouthRequest
-    {
-        public long ChatId;
-        public decimal South;
-    }
+    public record SetSouthRequest(
+        long ChatId,
+        decimal South
+    );
 
     public interface ISetSouthCommand : ICommand<SetSouthRequest>
     {

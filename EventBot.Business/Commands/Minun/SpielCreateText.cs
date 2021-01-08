@@ -11,21 +11,17 @@ using Telegram.Bot.Types.ReplyMarkups;
 
 namespace EventBot.Business.Commands.Minun
 {
-    public class GamePokeCreateTextRequest
-    {
-        public DateTime Now;
+    public record GamePokeCreateTextRequest(
+        DateTime Now,
+        PogoGamePokes Game,
+        IEnumerable<PogoGamePokesAnswers> Votes
+    );
 
-        public PogoGamePokes Game;
-
-        public IEnumerable<PogoGamePokesAnswers> Votes;
-    }
-
-    public class GamePokeCreateTextResponse
-    {
-        public string Text;
-        public InlineKeyboardMarkup InlineKeyboardMarkup;
-        public ParseMode ParseMode;
-    }
+    public record GamePokeCreateTextResponse(
+        string Text,
+        InlineKeyboardMarkup? InlineKeyboardMarkup = null,
+        ParseMode ParseMode = ParseMode.Default
+    );
 
     public interface IGamePokeCreateText
     {
@@ -100,7 +96,7 @@ namespace EventBot.Business.Commands.Minun
 
             var inlineKeyboard = new InlineKeyboardMarkup(new InlineKeyboardButton[4][] { keyBoardPoke1, keyBoardPoke2, keyBoardPoke3, keyBoardPoke4 });
 
-            return new GamePokeCreateTextResponse { Text = text.ToString(), InlineKeyboardMarkup = inlineKeyboard,ParseMode = ParseMode.Markdown, };
+            return new GamePokeCreateTextResponse(Text: text.ToString(), InlineKeyboardMarkup: inlineKeyboard, ParseMode: ParseMode.Markdown);
         }
 
         private void CreatePokeWithTyping(StringBuilder text, int id, int moveType)
@@ -133,7 +129,7 @@ namespace EventBot.Business.Commands.Minun
             //     request.Game.TargetPokeId, request.Game.TargetPokeMoveTyp, request.Game.Choice4PokeId, request.Game.Choice4PokeMoveTyp);
          
             X(text, request);
-            return new GamePokeCreateTextResponse { Text = text.ToString() };
+            return new GamePokeCreateTextResponse(Text: text.ToString());
         }
 
         private void X(StringBuilder text, GamePokeCreateTextRequest request)

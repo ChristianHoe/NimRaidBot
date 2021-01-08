@@ -1,14 +1,12 @@
 ﻿using EventBot.DataAccess.Database;
-using EventBot.DataAccess.Models;
 using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public class ModifyChatTitleRequest
-    {
-        public long ChatId;
-        public string Name;
-    }
+    public record ModifyChatTitleRequest(
+        long ChatId,
+        string Name
+    );
 
     public interface IModifyChatTitleCommand : ICommand<ModifyChatTitleRequest>
     {

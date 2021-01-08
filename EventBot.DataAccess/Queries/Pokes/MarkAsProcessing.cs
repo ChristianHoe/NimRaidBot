@@ -4,10 +4,9 @@ using MySqlConnector;
 
 namespace EventBot.DataAccess.Queries.Pokes
 {
-    public class MarkAsProcessingRequest
-    {
-        public int Id;
-    }
+    public record MarkAsProcessingRequest(
+        int Id
+    );
 
     public interface IMarkAsProcessingQuery : IQuery<MarkAsProcessingRequest, bool>
     {

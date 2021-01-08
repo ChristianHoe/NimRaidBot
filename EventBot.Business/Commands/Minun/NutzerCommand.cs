@@ -78,7 +78,7 @@ namespace EventBot.Business.Commands.Minun
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);
 
-            var currentSettings = this.getCurrentUserSettingsQuery.Execute(new DataAccess.Queries.Raid.GetCurrentUserSettingsRequest { UserId = userId });
+            var currentSettings = this.getCurrentUserSettingsQuery.Execute(new DataAccess.Queries.Raid.GetCurrentUserSettingsRequest(UserId: userId));
 
             var name = currentSettings?.IngameName ?? "";
 
@@ -92,7 +92,7 @@ namespace EventBot.Business.Commands.Minun
             {
                 var userId = base.GetUserId(message);
 
-                this.setUserNameCommand.Execute(new DataAccess.Commands.Raid.SetUserNameRequest { UserId = userId, Name = text });
+                this.setUserNameCommand.Execute(new DataAccess.Commands.Raid.SetUserNameRequest(UserId: userId, Name: text));
             }
 
             return await this.Step3(message, text, bot, batchMode);
@@ -103,7 +103,7 @@ namespace EventBot.Business.Commands.Minun
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);
 
-            var currentSettings = this.getCurrentUserSettingsQuery.Execute(new DataAccess.Queries.Raid.GetCurrentUserSettingsRequest { UserId = userId });
+            var currentSettings = this.getCurrentUserSettingsQuery.Execute(new DataAccess.Queries.Raid.GetCurrentUserSettingsRequest(UserId: userId));
             var team = currentSettings.Team?.ToString() ?? "";
 
             await bot.SendTextMessageAsync(chatId, $"Team: {team} \n\r(1-Blau, 2-Rot, 3-Gelb)");
@@ -130,7 +130,7 @@ namespace EventBot.Business.Commands.Minun
                     return StateResult.TryAgain;
                 }
 
-                this.setUserTeamCommand.Execute(new DataAccess.Commands.Raid.SetUserTeamRequest { UserId = userId, Team = (TeamType)team });
+                this.setUserTeamCommand.Execute(new DataAccess.Commands.Raid.SetUserTeamRequest(UserId :userId, Team: (TeamType)team));
             }
 
             return await this.Step5(message, text, bot, batchMode);
@@ -141,7 +141,7 @@ namespace EventBot.Business.Commands.Minun
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);
 
-            var currentSettings = this.getCurrentUserSettingsQuery.Execute(new DataAccess.Queries.Raid.GetCurrentUserSettingsRequest { UserId = userId });
+            var currentSettings = this.getCurrentUserSettingsQuery.Execute(new DataAccess.Queries.Raid.GetCurrentUserSettingsRequest(UserId: userId));
 
             var level = currentSettings.Level?.ToString() ?? "";
 
@@ -168,7 +168,7 @@ namespace EventBot.Business.Commands.Minun
                     return StateResult.TryAgain;
                 }
 
-                this.setUserLevelCommand.Execute(new DataAccess.Commands.Raid.SetUserLevelRequest { UserId = userId, Level = level });
+                this.setUserLevelCommand.Execute(new DataAccess.Commands.Raid.SetUserLevelRequest(UserId: userId, Level: level));
             }
 
             await bot.SendTextMessageAsync(chatId, "Konfiguration abgeschlossen");

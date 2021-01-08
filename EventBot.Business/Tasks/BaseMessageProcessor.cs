@@ -242,7 +242,7 @@ namespace EventBot.Business.Tasks
 
             if (message.NewChatTitle != null)
             {
-                this.modifyChatTitleCommand.Execute(new DataAccess.Commands.Raid.ModifyChatTitleRequest { ChatId = message.Chat.Id, Name = message.NewChatTitle });
+                this.modifyChatTitleCommand.Execute(new DataAccess.Commands.Raid.ModifyChatTitleRequest(ChatId: message.Chat.Id, Name: message.NewChatTitle));
                 return;
             }
 

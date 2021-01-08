@@ -32,7 +32,7 @@ namespace EventBot.Business.Queries
 
             cache = new ConcurrentDictionary<int, Quest>();
 
-            var quests = this.getQuestsQuery.Execute(new DataAccess.Queries.Raid.GetQuestsRequest { });
+            var quests = this.getQuestsQuery.Execute(new DataAccess.Queries.Raid.GetQuestsRequest());
 
             foreach(var quest in quests)
             {

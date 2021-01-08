@@ -6,13 +6,12 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Raid
 {
-    public class GetUserVoteRequest
-    {
-        public long ChatId;
-        public long MessageId;
-        public long UserId;
-        public ActivePolls Poll;
-    }
+    public record GetUserVoteRequest(
+        long ChatId,
+        long MessageId,
+        long UserId,
+        ActivePolls Poll
+    );
 
     public interface IGetUserVoteQuery : IQuery<GetUserVoteRequest, PollVoteResponse>
     {
@@ -38,7 +37,7 @@ namespace EventBot.DataAccess.Queries.Raid
                         db.PogoUser,
                         v => v.UserId,
                         u => u.UserId,
-                        (v, u) => new PollVoteResponse { FirstName = u.FirstName, Attendee = v.Attendee, Time = v.Time, Comment = (PogoUserVoteComments?) v.Comment }
+                        (v, u) => new PollVoteResponse(u.UserId, u.FirstName, u.IngameName, u.IngressName, u.Level, (Commands.Raid.TeamType?)u.Team, v.Attendee, v.Time, (PogoUserVoteComments?) v.Comment)
                         ).SingleOrDefault();
                 }
 

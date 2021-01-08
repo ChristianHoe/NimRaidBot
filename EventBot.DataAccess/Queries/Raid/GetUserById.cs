@@ -1,14 +1,12 @@
 using EventBot.DataAccess.Database;
 using EventBot.DataAccess.Models;
-using EventBot.DataAccess.Queries.PoGo;
 using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Raid
 {
-    public class GetUserByIdRequest
-    {
-        public long UserId;
-    }
+    public record GetUserByIdRequest(
+        long UserId
+    );
 
     public interface IGetUserByIdQuery : IQuery<GetUserByIdRequest, PogoUser>
     {

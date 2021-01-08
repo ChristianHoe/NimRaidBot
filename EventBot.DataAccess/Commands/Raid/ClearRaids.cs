@@ -4,10 +4,9 @@ using System;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public class ClearRaidsRequest
-    {
-        public long ChatId;
-    }
+    public record ClearRaidsRequest(
+        long ChatId
+    );
 
     public interface IClearRaidsCommand : ICommand<ClearRaidsRequest>
     {

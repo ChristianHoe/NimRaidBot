@@ -5,10 +5,9 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Raid
 {
-    public class GetActivePogoGroupsRequest
-    {
-        public long[] BotIds;
-    }
+    public record GetActivePogoGroupsRequest(
+        long[] BotIds
+    );
 
     public interface IGetActivePogoGroups : IQuery<GetActivePogoGroupsRequest, IEnumerable<PogoRaidUsersEx>>
     {

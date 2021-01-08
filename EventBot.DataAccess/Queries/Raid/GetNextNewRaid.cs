@@ -1,10 +1,9 @@
 ﻿using EventBot.DataAccess.Database;
-using EventBot.DataAccess.Models;
 using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Raid
 {
-    public class GetNextNewRaidRequest
+    public record GetNextNewRaidRequest
     {
     }
 

@@ -3,11 +3,10 @@ using EventBot.DataAccess.Models;
 
 namespace EventBot.DataAccess.Commands.Location
 {
-    public class AddNotifyLocationRequest
-    {
-        public long ChatId;
-        public int LocationId;
-    }
+    public record AddNotifyLocationRequest(
+        long ChatId,
+        int LocationId
+    );
 
     public interface IAddNotifyLocationCommand : ICommand<AddNotifyLocationRequest>
     {

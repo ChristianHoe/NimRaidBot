@@ -68,7 +68,7 @@ namespace EventBot.Business.Commands.Minun
             var userId = base.GetUserId(message);
             var chatId = base.GetChatId(message);
 
-            var chats = this.getActiveChatsForUser.Execute(new GetActiveChatsForUserRequest { UserId = userId, BotId = nimRaidBot.BotId });
+            var chats = this.getActiveChatsForUser.Execute(new GetActiveChatsForUserRequest(UserId: userId, BotId: nimRaidBot.BotId));
 
             if (chats.Count() == 0)
             {
@@ -94,7 +94,7 @@ namespace EventBot.Business.Commands.Minun
                 if (!batchMode)
                     await bot.SendTextMessageAsync(chatId, $"Folgende Gruppe wird verwendet\n\r{msg.ToString()}").ConfigureAwait(false);
                 
-                setChatForManualRaidCommand.Execute(new SetChatForManualRaidAndInitializeRequest { UserId = userId, ChatId = chats.First().ChatId });
+                setChatForManualRaidCommand.Execute(new SetChatForManualRaidAndInitializeRequest(UserId: userId, ChatId: chats.First().ChatId));
                 return await this.Step3(message, text, bot, batchMode);
             }
         }
@@ -112,14 +112,14 @@ namespace EventBot.Business.Commands.Minun
                     return StateResult.TryAgain;
                 }
 
-                var activeChatIds = this.getActiveChatsForUser.Execute(new GetActiveChatsForUserRequest { UserId = userId, BotId = nimRaidBot.BotId });
+                var activeChatIds = this.getActiveChatsForUser.Execute(new GetActiveChatsForUserRequest(UserId: userId, BotId: nimRaidBot.BotId));
                 if (chat < 0 || activeChatIds.Count() <= chat)
                 {
                     await bot.SendTextMessageAsync(chatId, "Der ausgewählt Wert liegt nicht im Wertebereich, bitte probiere es noch einmal.").ConfigureAwait(false);
                     return StateResult.TryAgain;
                 }
 
-                this.setChatForManualRaidCommand.Execute(new SetChatForManualRaidAndInitializeRequest { UserId = userId, ChatId = activeChatIds.ElementAt(chat).ChatId });
+                this.setChatForManualRaidCommand.Execute(new SetChatForManualRaidAndInitializeRequest(UserId: userId, ChatId: activeChatIds.ElementAt(chat).ChatId));
             }
 
             return await this.Step3(message, text, bot, batchMode);
@@ -132,9 +132,9 @@ namespace EventBot.Business.Commands.Minun
 
             if (!batchMode)
             {
-                var raid = this.getCurrentManualRaidQuery.Execute(new GetCurrentManualRaidRequest { UserId = userId } );
-                var gyms = this.getActiveGymsByChatQuery.Execute(new GetActiveGymsByChatRequest { ChatId = raid.ChatId ?? 0 });
-                var special = this.getSpecialGymsQuery.Execute(new GetSpecialGymsForChatsRequest { ChatIds = new[] { raid.ChatId ?? 0 } });
+                var raid = this.getCurrentManualRaidQuery.Execute(new GetCurrentManualRaidRequest(UserId: userId));
+                var gyms = this.getActiveGymsByChatQuery.Execute(new GetActiveGymsByChatRequest(ChatId: raid.ChatId ?? 0));
+                var special = this.getSpecialGymsQuery.Execute(new GetSpecialGymsForChatsRequest(ChatIds: new[] { raid.ChatId ?? 0 }));
 
                 StringBuilder msg = new StringBuilder();
 
@@ -166,8 +166,8 @@ namespace EventBot.Business.Commands.Minun
 
             if (!SkipCurrentStep(text))
             {
-                var raid = this.getCurrentManualRaidQuery.Execute(new GetCurrentManualRaidRequest { UserId = userId });
-                var gyms = this.getActiveGymsByChatQuery.Execute(new GetActiveGymsByChatRequest { ChatId = raid.ChatId ?? 0 });
+                var raid = this.getCurrentManualRaidQuery.Execute(new GetCurrentManualRaidRequest(UserId: userId));
+                var gyms = this.getActiveGymsByChatQuery.Execute(new GetActiveGymsByChatRequest(ChatId: raid.ChatId ?? 0));
 
                 var gymId = 0;
 
@@ -201,7 +201,7 @@ namespace EventBot.Business.Commands.Minun
                 }
 
 
-                this.setGymForManualRaidCommand.Execute(new SetGymForManualRaidRequest { UserId = userId, GymId = gymId });
+                this.setGymForManualRaidCommand.Execute(new SetGymForManualRaidRequest(UserId: userId, GymId: gymId));
             }
 
             return StateResult.Finished;
@@ -214,9 +214,9 @@ namespace EventBot.Business.Commands.Minun
 
             var pogoConfiguration = this.getPogoConfigurationQuery.Execute(new GetPogoConfigurationRequest());
 
-            this.createManuelRaidCommand.Execute(new CreateManuelRaidRequest { UserId = userId, DurationInMinutes = pogoConfiguration.RaidDurationInMin });
+            this.createManuelRaidCommand.Execute(new CreateManuelRaidRequest(UserId: userId, DurationInMinutes: pogoConfiguration.RaidDurationInMin));
 
-            var current = this.getCurrentManualRaidQuery.Execute(new GetCurrentManualRaidRequest { UserId = userId });
+            var current = this.getCurrentManualRaidQuery.Execute(new GetCurrentManualRaidRequest(UserId: userId));
 
             await bot.SendTextMessageAsync(chatId, $"Fertig. Aktualisierung per Befehl: /update_{current.RaidId}").ConfigureAwait(false);
 

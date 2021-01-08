@@ -7,20 +7,17 @@ using Telegram.Bot.Types.ReplyMarkups;
 
 namespace EventBot.Business.Commands.Farm
 {
-    public class CreateEventSetupTextRequest
-    {
-        //public TmpEvents EventSetup;
-        public Locations Locations;
-        public DateTime? Start;
-        public Eventtypes Eventtypes;
-    }
+    public record CreateEventSetupTextRequest(
+        Locations Locations,
+        DateTime? Start,
+        Eventtypes Eventtypes
+    );
 
-    public class CreateEventSetupTextResponse
-    {
-        public string Text;
-        public InlineKeyboardMarkup InlineKeyboardMarkup;
-        public ParseMode ParseMode;
-    }
+    public record CreateEventSetupTextResponse(
+        string Text,
+        InlineKeyboardMarkup InlineKeyboardMarkup,
+        ParseMode ParseMode
+    );
 
     public interface ICreateEventSetupText
     {
@@ -47,7 +44,7 @@ namespace EventBot.Business.Commands.Farm
 
             var inlineKeyboard = new InlineKeyboardMarkup(new InlineKeyboardButton[4][] { /*chat, keyBoardEvent,*/ keyBoardLocation, keyBoardDay, keyBoardTime, generate });
 
-            return new CreateEventSetupTextResponse { Text = text.ToString(), InlineKeyboardMarkup = inlineKeyboard, ParseMode = ParseMode.Markdown };
+            return new CreateEventSetupTextResponse(Text: text.ToString(), InlineKeyboardMarkup: inlineKeyboard, ParseMode: ParseMode.Markdown);
         }
     }
 }

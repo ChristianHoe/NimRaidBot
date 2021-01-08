@@ -4,11 +4,9 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Base
 {
-    public class GetPokeNamesRequest
-    {
-        public int? PokeId;
-        public string PokeName;
-    }
+    public record GetPokeNamesRequest(
+        string PokeName
+    );
 
     public interface IGetPokeNamesQuery : IQuery<GetPokeNamesRequest, IEnumerable<KeyValuePair<int, string>>>
     {
@@ -22,13 +20,13 @@ namespace EventBot.DataAccess.Queries.Base
 
         public IEnumerable<KeyValuePair<int, string>> Execute(GetPokeNamesRequest request)
         {
-            if (request.PokeId.HasValue)
-            {
-                if (EventBot.Models.GoMap.Helper.PokeNames.TryGetValue(request.PokeId.Value, out string name))
-                    return new Dictionary<int, string>() { {request.PokeId.Value, name} };
+            // if (request.PokeId.HasValue)
+            // {
+            //     if (EventBot.Models.GoMap.Helper.PokeNames.TryGetValue(request.PokeId.Value, out string name))
+            //         return new Dictionary<int, string>() { {request.PokeId.Value, name} };
 
-                return Enumerable.Empty<KeyValuePair<int, string>>();
-            }
+            //     return Enumerable.Empty<KeyValuePair<int, string>>();
+            // }
 
             if (string.IsNullOrWhiteSpace(request.PokeName))
                 return Enumerable.Empty<KeyValuePair<int, string>>();

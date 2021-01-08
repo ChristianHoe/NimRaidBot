@@ -5,11 +5,10 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Minun
 {
-    public class GetGameAnswersRequest
-    {
-        public long ChatId;
-        public int MessageId;
-    }
+    public record GetGameAnswersRequest(
+        long ChatId,
+        int MessageId
+    );
 
     public interface IGetGameAnswersQuery : IQuery<GetGameAnswersRequest, IEnumerable<PogoGamePokesAnswers>>
     {

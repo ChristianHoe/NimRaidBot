@@ -5,13 +5,12 @@ using Telegram.Bot.Types.ReplyMarkups;
 
 namespace EventBot.Business.Commands.Farm
 {
-    public class CreatePollRequest
-    {
-        public int EventId;
-        public string Text;
-        public InlineKeyboardMarkup InlineKeyboardMarkup;
-        public ParseMode ParseMode;
-    }
+    public record CreatePollRequest(
+        int EventId,
+        string Text,
+        InlineKeyboardMarkup InlineKeyboardMarkup,
+        ParseMode ParseMode
+    );
 
     public interface ICreatePollCommand
     {

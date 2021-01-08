@@ -40,11 +40,11 @@ namespace EventBot.Business.NimPokeBot
         {
             try
             {
-                var activeUsers = this.getActiveUsers.Execute(new GetActivePogoGroupsRequest { BotIds = new long[] { this.proxy.BotId } });
+                var activeUsers = this.getActiveUsers.Execute(new GetActivePogoGroupsRequest(BotIds: new long[] { this.proxy.BotId }));
                 foreach (var user in activeUsers.Where(x => x.CleanUp.HasValue))
                 {
                     DateTime cleanUpTime = DateTime.UtcNow.AddMinutes(-1);
-                    var pokesToBeRemoved = this.getPokesToCleanUpQuery.Execute(new GetPokesToCleanUpRequest { ChatId = user.ChatId, ExpiredBefore = cleanUpTime });
+                    var pokesToBeRemoved = this.getPokesToCleanUpQuery.Execute(new GetPokesToCleanUpRequest(ChatId: user.ChatId, ExpiredBefore: cleanUpTime));
 
                     this.removeNotificationsByIdsCommand.Execute(new RemoveNoficationsByIdsRequest { Ids = pokesToBeRemoved.Select(x => x.Id).ToArray() });
 

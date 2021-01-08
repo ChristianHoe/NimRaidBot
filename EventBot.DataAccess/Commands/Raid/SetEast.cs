@@ -3,11 +3,10 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public class SetEastRequest
-    {
-        public long ChatId;
-        public decimal East;
-    }
+    public record SetEastRequest(
+        long ChatId,
+        decimal East
+    );
 
     public interface ISetEastCommand : ICommand<SetEastRequest>
     {

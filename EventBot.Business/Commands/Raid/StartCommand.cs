@@ -43,10 +43,10 @@ namespace EventBot.Business.Commands.Raid
             {
                 var chatId = base.GetChatId(message);
 
-                var currentSettings = this.getCurrentChatSettingsQuery.Execute(new DataAccess.Queries.Raid.GetCurrentChatSettingsRequest { ChatId = chatId });
+                var currentSettings = this.getCurrentChatSettingsQuery.Execute(new DataAccess.Queries.Raid.GetCurrentChatSettingsRequest(ChatId: chatId));
                 if (currentSettings == null)
                 {
-                    this.addChatCommand.Execute(new AddChatRequest { ChatId = chatId, Name = message.Chat.Title });
+                    this.addChatCommand.Execute(new AddChatRequest(ChatId: chatId, Name: message.Chat.Title));
                 }
 
                 await bot.SendTextMessageAsync(chatId, "Mit /settings kann der Bot konfiguriert werden.").ConfigureAwait(false);

@@ -123,18 +123,18 @@ namespace EventBot.Business.NimRaidBot
             if (pollToUpdate == null)
                 return;
 
-            var canProcess = this.markPollAsProcessingQuery.Execute(new MarkPollAsProcessingRequest { Id = pollToUpdate.Id });
+            var canProcess = this.markPollAsProcessingQuery.Execute(new MarkPollAsProcessingRequest(Id: pollToUpdate.Id));
             if (!canProcess)
                 return;
 
-            var currentResults = this.pollVotesUsers.Execute(new DataAccess.Queries.PoGo.PollVotesRequest { ChatId = pollToUpdate.ChatId, MessageId = pollToUpdate.MessageId });
+            var currentResults = this.pollVotesUsers.Execute(new DataAccess.Queries.PoGo.PollVotesRequest(ChatId: pollToUpdate.ChatId, MessageId: pollToUpdate.MessageId));
 
-            var specials = this.getSpecialGymsForChatsQuery.Execute(new GetSpecialGymsForChatsRequest { ChatIds = new[] { pollToUpdate.ChatId } });
+            var specials = this.getSpecialGymsForChatsQuery.Execute(new GetSpecialGymsForChatsRequest(ChatIds: new[] { pollToUpdate.ChatId }));
 
-            var raidToNotify = this.getRaidByIdQuery.Execute(new GetRaidByIdRequest { RaidId = pollToUpdate.RaidId ?? 0 });
+            var raidToNotify = this.getRaidByIdQuery.Execute(new GetRaidByIdRequest(RaidId: pollToUpdate.RaidId ?? 0));
             var bossPreferences = this.getRaidBossPreferencesQuery.Execute(new GetRaidBossPreferencesAllRequest { });
-            var raidTimeOffsets = this.getRaidTimeOffsetsQuery.Execute(new GetRaidTimeOffsetsRequest { OffsetId = pollToUpdate.TimeOffsetId });
-            var pollText = this.createPollText.Execute(new Commands.Raid.SendRaidPollRequest { PokeNames = Models.GoMap.Helper.PokeNames, Raid = raidToNotify, Votes = currentResults, SpecialGymSettings = specials.Where(x => x.ChatId == pollToUpdate.ChatId && x.GymId == raidToNotify.GymId && x.Type == (int)GymType.ExRaid), RaidPreferences = bossPreferences, TimeOffsets = raidTimeOffsets });
+            var raidTimeOffsets = this.getRaidTimeOffsetsQuery.Execute(new GetRaidTimeOffsetsRequest(OffsetId: pollToUpdate.TimeOffsetId));
+            var pollText = this.createPollText.Execute(new Commands.Raid.SendRaidPollRequest(PokeNames: Models.GoMap.Helper.PokeNames, Raid: raidToNotify, Votes: currentResults, SpecialGymSettings: specials.Where(x => x.ChatId == pollToUpdate.ChatId && x.GymId == raidToNotify.GymId && x.Type == (int)GymType.ExRaid), RaidPreferences: bossPreferences, TimeOffsets: raidTimeOffsets));
 
             try
             {
@@ -145,7 +145,7 @@ namespace EventBot.Business.NimRaidBot
                 await Operator.SendMessage(this.proxy, $"{this.Name}: Nachricht '{pollText?.Text}' für Gruppe {pollToUpdate.ChatId} konnte nicht aktualisiert werden.", ex).ConfigureAwait(false);
             }
 
-            var isProcessed = this.markPollAsProcessedQuery.Execute(new MarkPollAsProcessedRequest { Id = pollToUpdate.Id });
+            var isProcessed = this.markPollAsProcessedQuery.Execute(new MarkPollAsProcessedRequest(Id: pollToUpdate.Id));
             if (!isProcessed)
             {
                 await Operator.SendMessage(this.proxy, $"{this.Name} - Poll konnte nicht auf processed gesetzt werden für {pollToUpdate.Id}.").ConfigureAwait(false);
@@ -160,24 +160,24 @@ namespace EventBot.Business.NimRaidBot
             if (raidToNotify == null)
                 return;
 
-            var canProcess = this.markAsProcessingQuery.Execute(new MarkEventAsProcessingRequest { Id = raidToNotify.Id });
+            var canProcess = this.markAsProcessingQuery.Execute(new MarkEventAsProcessingRequest(Id: raidToNotify.Id));
             if (!canProcess)
                 return;
 
-            var locationsToNotify = getCurrentNotificationsQuery.Execute(new GetCurrentNotificationsRequest { Threshold = DateTime.UtcNow.AddDays(-7), LocationId = raidToNotify.GymId });
+            var locationsToNotify = getCurrentNotificationsQuery.Execute(new GetCurrentNotificationsRequest(Threshold: DateTime.UtcNow.AddDays(-7), LocationId: raidToNotify.GymId));
 
-            var chats = this.activeUsers.Execute(new GetActivePogoGroupsRequest { BotIds = new long[] { this.proxy.BotId } });
+            var chats = this.activeUsers.Execute(new GetActivePogoGroupsRequest(BotIds: new long[] { this.proxy.BotId }));
             int numberOfCurrentActiveUsers = chats.Count(x => x.RaidLevel.HasValue);
             if (numberOfCurrentActiveUsers <= 0)
                 return;
 
-            var specials = this.getSpecialGymsForChatsQuery.Execute(new GetSpecialGymsForChatsRequest { ChatIds = chats.Select(x => x.ChatId).ToArray() });
+            var specials = this.getSpecialGymsForChatsQuery.Execute(new GetSpecialGymsForChatsRequest(ChatIds: chats.Select(x => x.ChatId).ToArray()));
 
             foreach (var chat in chats.Where(x => x.LatMin <= raidToNotify.Latitude && raidToNotify.Latitude <= x.LatMax && x.LonMin <= raidToNotify.Longitude && raidToNotify.Longitude <= x.LonMax && x.RaidLevel.HasValue))
             {
                 try
                 {
-                    var pokesToNotify = getPokesForChatQuery.Execute(new DataAccess.Queries.Pokes.GetPokesForChatRequest { ChatId = chat.ChatId });
+                    var pokesToNotify = getPokesForChatQuery.Execute(new DataAccess.Queries.Pokes.GetPokesForChatRequest(ChatId: chat.ChatId));
 
                     if (raidToNotify.ChatId.HasValue && raidToNotify.ChatId != chat.ChatId)
                         continue;
@@ -188,21 +188,20 @@ namespace EventBot.Business.NimRaidBot
                     if (specials.Any(x => x.ChatId == chat.ChatId && x.GymId == raidToNotify.GymId && x.Type == (int)GymType.Exclude))
                         continue;
 
-                    var raidTimeOffsets = this.getRaidTimeOffsetsQuery.Execute(new GetRaidTimeOffsetsRequest { OffsetId = chat.TimeOffsetId });
-    
-                    var poll = this.getActivePollByRaidId.Execute(new DataAccess.Queries.Raid.GetActivePollByRaidRequest { RaidId = raidToNotify.Id, ChatId = chat.ChatId });
+                    var raidTimeOffsets = this.getRaidTimeOffsetsQuery.Execute(new GetRaidTimeOffsetsRequest(OffsetId: chat.TimeOffsetId));
+                    var bossPreferences = this.getRaidBossPreferencesQuery.Execute(new GetRaidBossPreferencesAllRequest { });
+
+                    var poll = this.getActivePollByRaidId.Execute(new DataAccess.Queries.Raid.GetActivePollByRaidRequest(RaidId: raidToNotify.Id, ChatId: chat.ChatId));
                     if (poll == null)
                     {
-                        var result = this.createPollText.Execute(new Commands.Raid.SendRaidPollRequest { PokeNames = Models.GoMap.Helper.PokeNames, Raid = raidToNotify, Votes = Enumerable.Empty<DataAccess.Queries.PoGo.PollVoteResponse>(), SpecialGymSettings = specials.Where(x => x.ChatId == chat.ChatId && x.GymId == raidToNotify.GymId && x.Type == (int)GymType.ExRaid), TimeOffsets = raidTimeOffsets });
+                        var result = this.createPollText.Execute(new Commands.Raid.SendRaidPollRequest(PokeNames: Models.GoMap.Helper.PokeNames, Raid: raidToNotify, Votes: Enumerable.Empty<DataAccess.Queries.PoGo.PollVoteResponse>(), SpecialGymSettings: specials.Where(x => x.ChatId == chat.ChatId && x.GymId == raidToNotify.GymId && x.Type == (int)GymType.ExRaid), RaidPreferences: bossPreferences, TimeOffsets: raidTimeOffsets));
 
-                        await this.pollCommand.Execute(new Commands.Raid.CreatePollRequest { InlineKeyboardMarkup = result.InlineKeyboardMarkup, Raid = raidToNotify, Text = result.Text, ParseMode = result.ParseMode, TimeOffsetId = chat.TimeOffsetId }, chat.ChatId, this.proxy);
+                        await this.pollCommand.Execute(new Commands.Raid.CreatePollRequest(InlineKeyboardMarkup: result.InlineKeyboardMarkup, Raid: raidToNotify, Text: result.Text, ParseMode: result.ParseMode, TimeOffsetId: chat.TimeOffsetId), chat.ChatId, this.proxy);
                     }
                     else
                     {
-                        var currentResults = this.pollVotesUsers.Execute(new DataAccess.Queries.PoGo.PollVotesRequest { ChatId = poll.ChatId, MessageId = poll.MessageId });
-                        var bossPreferences = this.getRaidBossPreferencesQuery.Execute(new GetRaidBossPreferencesAllRequest { });
-
-                        var pollText = this.createPollText.Execute(new Commands.Raid.SendRaidPollRequest { PokeNames = Models.GoMap.Helper.PokeNames, Raid = raidToNotify, Votes = currentResults, SpecialGymSettings = specials.Where(x => x.ChatId == chat.ChatId && x.GymId == raidToNotify.GymId && x.Type == (int)GymType.ExRaid), RaidPreferences = bossPreferences, TimeOffsets = raidTimeOffsets });
+                        var currentResults = this.pollVotesUsers.Execute(new DataAccess.Queries.PoGo.PollVotesRequest(ChatId: poll.ChatId, MessageId: poll.MessageId));
+                        var pollText = this.createPollText.Execute(new Commands.Raid.SendRaidPollRequest(PokeNames: Models.GoMap.Helper.PokeNames, Raid: raidToNotify, Votes: currentResults, SpecialGymSettings: specials.Where(x => x.ChatId == chat.ChatId && x.GymId == raidToNotify.GymId && x.Type == (int)GymType.ExRaid), RaidPreferences: bossPreferences, TimeOffsets: raidTimeOffsets));
 
                         try
                         {
@@ -236,7 +235,7 @@ namespace EventBot.Business.NimRaidBot
                  }
             }
 
-            var isProcessed = this.markAsProcessedQuery.Execute(new MarkEventAsProcessedRequest { Id = raidToNotify.Id });
+            var isProcessed = this.markAsProcessedQuery.Execute(new MarkEventAsProcessedRequest(Id: raidToNotify.Id));
 
             if (!isProcessed)
             {

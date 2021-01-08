@@ -4,11 +4,10 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public class SetGymForManualRaidRequest
-    {
-        public long UserId;
-        public int GymId;
-    }
+    public record SetGymForManualRaidRequest(
+        long UserId,
+        int GymId
+    );
 
     public interface ISetGymForManualRaidCommand : ICommand<SetGymForManualRaidRequest>
     {

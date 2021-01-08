@@ -1,12 +1,11 @@
 using EventBot.DataAccess.Database;
 using EventBot.DataAccess.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Raid
 {
-    public class GetAllQuestsRequest
+    public record GetAllQuestsRequest
     {
         //public DateTime Date;
     }

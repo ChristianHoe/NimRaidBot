@@ -3,10 +3,9 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public class ActivateChatRequest
-    {
-        public long ChatId;
-    }
+    public record ActivateChatRequest(
+        long ChatId
+    );
 
     public interface IActivateChatCommand : ICommand<ActivateChatRequest>
     {

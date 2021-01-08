@@ -5,10 +5,9 @@ using EventBot.DataAccess.Models;
 
 namespace EventBot.DataAccess.Queries.Location
 {
-    public class GetActiveGymsForChatRequest
-    {
-        public IEnumerable<long> ChatIds;
-     }
+    public record GetActiveGymsForChatRequest(
+        IEnumerable<long> ChatIds
+    );
 
     public interface IGetActiveGymsForChatQuery : IQuery<GetActiveGymsForChatRequest, IEnumerable<PogoGyms>>
     {

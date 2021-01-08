@@ -4,10 +4,9 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Pokes
 {
-    public class GetPokeByIdRequest
-    {
-        public int PokeId;
-    }
+    public record GetPokeByIdRequest(
+        int PokeId
+    );
 
     public interface IGetPokeByIdQuery : IQuery<GetPokeByIdRequest, PogoPokes>
     {

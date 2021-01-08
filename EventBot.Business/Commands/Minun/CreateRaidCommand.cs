@@ -131,7 +131,7 @@ namespace EventBot.Business.Commands.Minun
                     return StateResult.TryAgain;
                 }
 
-                this.setRaidLevelForManualRaidCommand.Execute(new SetRaidLevelForManualRaidRequest { UserId = userId, Level = raidLevel });
+                this.setRaidLevelForManualRaidCommand.Execute(new SetRaidLevelForManualRaidRequest(UserId: userId, Level: raidLevel));
             }
 
             return await this.Step5(message, text, bot, batchMode);
@@ -168,7 +168,7 @@ namespace EventBot.Business.Commands.Minun
                 }
 
 
-                this.setTimeModeForManualRaidCommand.Execute(new SetTimeModeForManualRaidRequest { UserId = userId, TimeMode = timeMode });
+                this.setTimeModeForManualRaidCommand.Execute(new SetTimeModeForManualRaidRequest(UserId: userId, TimeMode: timeMode));
             }
 
             return await this.Step7(message, text, bot, batchMode);
@@ -204,7 +204,7 @@ namespace EventBot.Business.Commands.Minun
                     return StateResult.TryAgain;
                 }
 
-                var current = this.getCurrentManualRaidQuery.Execute(new GetCurrentManualRaidRequest { UserId = userId });
+                var current = this.getCurrentManualRaidQuery.Execute(new GetCurrentManualRaidRequest(UserId: userId));
 
                 var start = DateTime.UtcNow;
                 if (current.TimeMode == 1)
@@ -217,7 +217,7 @@ namespace EventBot.Business.Commands.Minun
                     start = start.AddMinutes(minuten - pogoConfigurations.RaidDurationInMin);
                 }
 
-                this.setNowForManualRaidCommand.Execute(new SetNowForManualRaidRequest { UserId = userId, Start = start });
+                this.setNowForManualRaidCommand.Execute(new SetNowForManualRaidRequest(UserId: userId, Start: start));
 
                 //var current = this.getCurrentManualRaidQuery.Execute(new GetCurrentManualRaidRequest { UserId = userId });
                 if (current.TimeMode == 2)
@@ -261,7 +261,7 @@ namespace EventBot.Business.Commands.Minun
                     return StateResult.TryAgain;
                 }
 
-                this.setPokeIdForManualRaidCommand.Execute(new SetPokeIdForManualRaidRequest { UserId = userId, PokeId = pokeId, PokeForm = form });
+                this.setPokeIdForManualRaidCommand.Execute(new SetPokeIdForManualRaidRequest(UserId: userId, PokeId: pokeId, PokeForm: form));
             }
 
             return await this.Step13(message, text, bot, batchMode);
