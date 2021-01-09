@@ -192,7 +192,7 @@ namespace EventBot.Business.Tasks.NimGoMapBot
 
                     var distinctPokes = result.pokemons.GroupBy(g => new { latitude = Math.Round(g.latitude, 7), longitude = Math.Round(g.longitude, 7) }).Select(g => g.OrderByDescending(y => y.last_modified).First());
 
-                    var knownPokes2 = this.getCurrentPokesQuery2.Execute(new Queries.GetCurrentPokesRequest { MapId = this.Configuration.MAP_ID });
+                    var knownPokes2 = this.getCurrentPokesQuery2.Execute(new Queries.GetCurrentPokesRequest(MapId: this.Configuration.MAP_ID));
                     var pokeQueue = this.getPokeQueueQuery.Execute(new Queries.GetPokeQueueRequest { });
 
                     var newPokes = new List<PogoPokes>();

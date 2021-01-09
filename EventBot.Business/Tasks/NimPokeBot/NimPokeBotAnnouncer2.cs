@@ -183,8 +183,8 @@ namespace EventBot.Business.NimPokeBot
                         var now = DateTime.UtcNow;
                         now = now.AddTicks(-(now.Ticks % TimeSpan.TicksPerSecond));
 
-                        var entry = new Queries.ThroughPut { Ticks = now.Ticks, Count = 1 };
-                        var update = throttle.AddOrUpdate(group.ChatId, entry, (key, old) => { if (old.Ticks == now.Ticks) { old.Count++; return old; } else { return entry; } });
+                        var entry = new Queries.ThroughPut(Ticks: now.Ticks);
+                        var update = throttle.AddOrUpdate(group.ChatId, entry, (key, old) => { if (old.Ticks == now.Ticks) { old.Increment(); return old; } else { return entry; } });
 
                         if (update.Count > 9)
                             continue;

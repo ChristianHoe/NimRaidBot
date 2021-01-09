@@ -2,14 +2,18 @@
 
 namespace EventBot.Business.Queries
 {
-    public class GetThrottleRequest
-    {
-    }
+    public record GetThrottleRequest();
 
-    public class ThroughPut
+    public record ThroughPut(
+        long Ticks
+    )
     {
-        public long Ticks;
-        public int Count;
+        public int Count { get; private set;} = 1;
+
+        public void Increment()
+        {
+            Count++;
+        }
     }
 
     public interface IGetThrottleQuery

@@ -52,7 +52,7 @@ namespace EventBot.Business.Commands
                     var admins = await proxy.GetChatAdministratorsAsync(message.Chat.Id);
                     foreach (var user in admins)
                     {
-                        this.userAdd.Execute(new Commands.Raid.UserAddRequest { UserId = user.User.Id, ChatId = chatId, UserName = user.User.Username });
+                        this.userAdd.Execute(new Commands.Raid.UserAddRequest(UserId: user.User.Id, ChatId: chatId, UserName: user.User.Username));
                     }
 
                     return;
@@ -72,7 +72,7 @@ namespace EventBot.Business.Commands
                     if (string.IsNullOrEmpty(name))
                         name = "?";
 
-                    this.userAdd.Execute(new Commands.Raid.UserAddRequest { UserId = member.Id, ChatId = chatId, UserName = name });
+                    this.userAdd.Execute(new Commands.Raid.UserAddRequest(UserId: member.Id, ChatId: chatId, UserName: name));
 
                     // you can not initialize a conversation from a bot, just leave a message here
                     await WelcomeUserAsync(proxy, chatId, name);

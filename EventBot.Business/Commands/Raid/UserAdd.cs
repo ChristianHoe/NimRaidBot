@@ -3,12 +3,11 @@ using EventBot.DataAccess.Commands.Raid;
 
 namespace EventBot.Business.Commands.Raid
 {
-    public class UserAddRequest
-    {
-        public long UserId;
-        public string UserName;
-        public long ChatId;
-    }
+    public record UserAddRequest(
+        long UserId,
+        string UserName,
+        long ChatId
+    );
 
     public interface IUserAdd
     {

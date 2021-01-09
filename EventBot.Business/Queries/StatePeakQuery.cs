@@ -10,11 +10,10 @@ using Telegram.Bot.Types;
 
 namespace EventBot.Business.Queries
 {
-    public class State
-    {
-        public string Command;
-        public int Step;
-    }
+    public record State(
+        string Command,
+        int Step
+    );
 
     public class StatePeakQuery : IQuery<State?>
     {
@@ -31,7 +30,7 @@ namespace EventBot.Business.Queries
             if (result == null)
                 return null;
 
-            return new State { Command = result.Command, Step = result.Step };
+            return new State(Command: result.Command, Step: result.Step);
         }
     }
 }

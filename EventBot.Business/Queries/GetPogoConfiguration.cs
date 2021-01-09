@@ -2,9 +2,7 @@ using EventBot.DataAccess.Models;
 
 namespace EventBot.Business.Queries
 {
-    public class GetPogoConfigurationRequest
-    {
-    }
+    public record GetPogoConfigurationRequest();
 
     public interface IGetPogoConfigurationQuery
     {

@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -11,11 +10,9 @@ using EventBot.Business.Queries;
 using EventBot.DataAccess.Commands;
 using EventBot.DataAccess.Commands.Minun;
 using EventBot.DataAccess.Queries.Base;
-using EventBot.DataAccess.Queries.Minun;
 using EventBot.Models.RocketMap;
 using Telegram.Bot;
 using Telegram.Bot.Types;
-using Telegram.Bot.Types.ReplyMarkups;
 
 namespace EventBot.Business.Commands.Minun
 {

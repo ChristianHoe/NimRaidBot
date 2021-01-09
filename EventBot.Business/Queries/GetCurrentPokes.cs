@@ -4,10 +4,9 @@ using System.Collections.Concurrent;
 
 namespace EventBot.Business.Queries
 {
-    public class GetCurrentPokesRequest
-    {
-        public int MapId;
-    }
+    public record GetCurrentPokesRequest(
+        int MapId
+    );
 
     public interface IGetCurrentPokesQuery
     {

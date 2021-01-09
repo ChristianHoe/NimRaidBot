@@ -7,7 +7,6 @@ using EventBot.DataAccess.Models;
 using EventBot.DataAccess.Queries.Raid;
 using Telegram.Bot;
 using Telegram.Bot.Types;
-using Telegram.Bot.Types.Enums;
 
 namespace EventBot.Business.Commands.Raid
 {

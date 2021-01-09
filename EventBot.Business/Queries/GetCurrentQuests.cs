@@ -3,9 +3,7 @@ using EventBot.DataAccess.ModelsEx;
 
 namespace EventBot.Business.Queries
 {
-    public class GetCurrentQuestsRequest
-    {
-    }
+    public record GetCurrentQuestsRequest();
 
     public interface IGetCurrentQuestsQuery
     {

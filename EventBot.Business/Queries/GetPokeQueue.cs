@@ -3,9 +3,7 @@ using System.Collections.Concurrent;
 
 namespace EventBot.Business.Queries
 {
-    public class GetPokeQueueRequest
-    {
-    }
+    public record GetPokeQueueRequest();
 
     public interface IGetPokeQueueQuery
     {
