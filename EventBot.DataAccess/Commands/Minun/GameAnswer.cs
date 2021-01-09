@@ -3,17 +3,13 @@ using EventBot.DataAccess.Models;
 
 namespace EventBot.DataAccess.Commands.Minun
 {
-    public class GameAnswerRequest
-    {
-        public long ChatId;
-        public int MessageId;
-
-        public long UserId;
-
-        public string UserName;
-
-        public int Choice;
-    }
+    public record GameAnswerRequest(
+        long ChatId,
+        int MessageId,
+        long UserId,
+        string UserName,
+        int Choice
+    );
 
     public interface IGameAnswerCommand : ICommand<GameAnswerRequest>
     {

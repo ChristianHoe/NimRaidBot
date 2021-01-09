@@ -5,9 +5,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.PoGo
 {
-    public class GetAllChatsForAreaRequest
-    {
-    }
+    public record GetAllChatsForAreaRequest();
 
     public interface IGetAllChatsForArea : IQuery<GetAllChatsForAreaRequest, IEnumerable<PogoRelScanChat>>
     {

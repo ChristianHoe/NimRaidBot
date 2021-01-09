@@ -4,9 +4,7 @@ using System;
 
 namespace EventBot.DataAccess.Commands.Farm
 {
-    public class ClearPokeMetaRequest
-    {
-    }
+    public record ClearPokeMetaRequest();
 
     public interface IClearPokeMetaCommand : ICommand<ClearPokeMetaRequest>
     {

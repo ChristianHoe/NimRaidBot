@@ -31,7 +31,7 @@ namespace EventBot.Business.Commands.Minun
 
         public override async Task ExecuteAsync(Message message, string text, TelegramBotClient bot)
         {
-            this.disableNotificationCommand.Execute(new DisableNotificationsRequest { UserId = GetUserId(message), BotId = bot.BotId });
+            this.disableNotificationCommand.Execute(new DisableNotificationsRequest(UserId: GetUserId(message), BotId: bot.BotId));
 
             try
             {
@@ -40,7 +40,7 @@ namespace EventBot.Business.Commands.Minun
             catch (ApiRequestException ex)
             {
                 if (ex.ErrorCode == 403) // blocked by user
-                    this.deactiveMinunUserCommand.Execute(new DeactiveMinunUserRequest { UserId = base.GetUserId(message), BotId = bot.BotId });
+                    this.deactiveMinunUserCommand.Execute(new DeactiveMinunUserRequest(UserId: base.GetUserId(message), BotId: bot.BotId));
                 else
                     throw;
             }

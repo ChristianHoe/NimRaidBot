@@ -3,10 +3,9 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands
 {
-    public class StateClearRequest
-    {
-        public long ChatId;
-    }
+    public record StateClearRequest(
+        long ChatId
+    );
 
     public interface IStateClearCommand : ICommand<StateClearRequest>
     {

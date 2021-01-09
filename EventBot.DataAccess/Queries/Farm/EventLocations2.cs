@@ -1,14 +1,11 @@
 ﻿using EventBot.DataAccess.Database;
 using EventBot.DataAccess.Models;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Farm
 {
-    public class EventLocations2Request
-    {
-    }
+    public record EventLocations2Request();
 
     public interface IEventLocations2Query : IQuery<EventLocations2Request, IEnumerable<Locations>>
     {

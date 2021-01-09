@@ -4,9 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EventBot.DataAccess.Commands.Farm
 {
-    public class ClearQuestMetaRequest
-    {
-    }
+    public record ClearQuestMetaRequest();
 
     public interface IClearQuestMetaCommand : ICommand<ClearQuestMetaRequest>
     {

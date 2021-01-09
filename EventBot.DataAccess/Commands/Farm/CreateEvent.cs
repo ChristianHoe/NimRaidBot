@@ -4,14 +4,13 @@ using System;
 
 namespace EventBot.DataAccess.Commands.Farm
 {
-    public class CreateEventRequest
-    {
-        public int? LocationId;
-        public DateTime? Start;
-        public DateTime? Finished;
-        public long? ChatId;
-        public int EventTypeId;
-    }
+    public record CreateEventRequest(
+        int? LocationId,
+        DateTime? Start,
+        DateTime? Finished,
+        long? ChatId,
+        int EventTypeId
+    );
 
     public interface ICreateEventCommand : ICommand<CreateEventRequest>
     {

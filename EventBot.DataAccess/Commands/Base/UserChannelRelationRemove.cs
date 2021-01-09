@@ -3,11 +3,10 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Base
 {
-    public class UserChannelRelationRemoveRequest
-    {
-        public long UserId;
-        public long ChatId;
-    }
+    public record UserChannelRelationRemoveRequest(
+        long UserId,
+        long ChatId
+    );
 
     public interface IUserChannelRelationRemoveCommand : ICommand<UserChannelRelationRemoveRequest>
     {

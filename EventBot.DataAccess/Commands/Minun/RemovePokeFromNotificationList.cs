@@ -3,11 +3,10 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Minun
 {
-    public class RemovePokeFromNotificationListRequest
-    {
-        public long ChatId;
-        public int PokeId;
-    }
+    public record RemovePokeFromNotificationListRequest(
+        long ChatId,
+        int PokeId
+    );
 
     public interface IRemovePokeFromNotificationListCommand : ICommand<RemovePokeFromNotificationListRequest>
     {

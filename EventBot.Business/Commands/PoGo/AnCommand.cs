@@ -37,7 +37,7 @@ namespace EventBot.Business.Commands.PoGo
 
             if (message.Chat.Id == Operator.TelegramId)
             {
-                this.anCommand.Execute(new DataAccess.Commands.PoGo.AnRequest { UserId = userId });
+                this.anCommand.Execute(new DataAccess.Commands.PoGo.AnRequest(UserId: userId, BotId : bot.BotId));
                 await bot.SendTextMessageAsync(message.Chat.Id, "Benachrichtigungen eingeschaltet").ConfigureAwait(false);
             }
             else

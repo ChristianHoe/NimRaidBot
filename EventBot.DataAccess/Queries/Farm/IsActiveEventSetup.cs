@@ -3,11 +3,10 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Farm
 {
-    public class IsActiveEventSetupRequest
-    {
-        public long ChatId;
-        public long MessageId;
-    }
+    public record IsActiveEventSetupRequest(
+        long ChatId,
+        long MessageId
+    );
 
     public interface IIsActiveEventSetupQuery : IQuery<IsActiveEventSetupRequest, bool>
     {

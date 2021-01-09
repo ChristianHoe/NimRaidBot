@@ -4,11 +4,9 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries
 {
-    public class QueryCurrentStateRequest
-    {
-        public long ChatId;
-    }
-
+    public record QueryCurrentStateRequest(
+        long ChatId
+    );
 
     public interface IQueryCurrentState : IQuery<QueryCurrentStateRequest, States>
     {

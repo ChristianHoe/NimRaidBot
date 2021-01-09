@@ -1,17 +1,16 @@
 ﻿using EventBot.DataAccess.Database;
-using EventBot.DataAccess.Models;
 using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Pokes
 {
-    public class RemoveNoficationsByIdsRequest
-    {
-        public int[] Ids;
-    }
+    public record RemoveNoficationsByIdsRequest(
+        int[] Ids
+    );
 
     public interface IRemoveNotificationsByIdsCommand : ICommand<RemoveNoficationsByIdsRequest>
     {
     }
+
     public class RemoveNotificationsByIdsCommand : IRemoveNotificationsByIdsCommand
     {
         readonly DatabaseFactory databaseFactory;

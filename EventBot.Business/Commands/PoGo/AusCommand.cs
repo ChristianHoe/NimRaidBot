@@ -34,7 +34,7 @@ namespace EventBot.Business.Commands.PoGo
         {
             var userId = message.From.Id;
 
-            this.anCommand.Execute(new DataAccess.Commands.PoGo.AusRequest { UserId = userId });
+            this.anCommand.Execute(new DataAccess.Commands.PoGo.AusRequest(UserId: userId));
 
             await bot.SendTextMessageAsync(message.Chat.Id, "Benachrichtigungen ausgeschaltet").ConfigureAwait(false);
             return;

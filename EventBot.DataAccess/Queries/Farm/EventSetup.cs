@@ -4,11 +4,10 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Farm
 {
-    public class EventSetupRequest
-    {
-        public long ChatId;
-        public long MessageId;
-    }
+    public record EventSetupRequest(
+        long ChatId,
+        long MessageId
+    );
 
     public interface IEventSetupQuery : IQuery<EventSetupRequest, EventSetups>
     {

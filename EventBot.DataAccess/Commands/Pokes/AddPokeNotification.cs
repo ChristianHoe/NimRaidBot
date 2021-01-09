@@ -4,10 +4,9 @@ using System.Collections.Generic;
 
 namespace EventBot.DataAccess.Commands.Pokes
 {
-    public class AddPokeNotificationRequest
-    {
-        public IEnumerable<PogoRelPokesChats> Notifications;
-    }
+    public record AddPokeNotificationRequest(
+        IEnumerable<PogoRelPokesChats> Notifications
+    );
 
     public interface IAddPokeNotificationCommand : ICommand<AddPokeNotificationRequest>
     {

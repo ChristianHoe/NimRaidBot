@@ -4,11 +4,10 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Farm
 {
-    public class HasDailyFarmRequest
-    {
-        public long ChatId;
-        public DateTime Day;
-    }
+    public record HasDailyFarmRequest(
+        long ChatId,
+        DateTime Day
+    );
 
     public interface IHasDailyFarm : IQuery<HasDailyFarmRequest, bool>
     {

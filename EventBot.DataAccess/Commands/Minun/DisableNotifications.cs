@@ -3,11 +3,10 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Minun
 {
-    public class DisableNotificationsRequest
-    {
-        public long UserId;
-        public long BotId;
-    }
+    public record DisableNotificationsRequest(
+        long UserId,
+        long BotId
+    );
 
     public interface IDisableNotificationsCommand : ICommand<DisableNotificationsRequest>
     {

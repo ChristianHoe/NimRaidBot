@@ -4,11 +4,10 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.PoGo
 {
-    public class ActivePollRequest
-    {
-        public long ChatId;
-        public long MessageId;
-    }
+    public record ActivePollRequest(
+        long ChatId,
+        long MessageId
+    );
 
     public interface IActivePoll : IQuery<ActivePollRequest, ActivePolls>
     {

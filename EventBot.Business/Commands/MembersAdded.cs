@@ -46,7 +46,7 @@ namespace EventBot.Business.Commands
                         this.addChatCommand.Execute(new AddChatRequest(ChatId: chatId, Name: message.Chat.Title));
                     }
 
-                    this.addBotCommand.Execute(new BotAddRequest { ChatId = chatId, BotId = botId });
+                    this.addBotCommand.Execute(new BotAddRequest(ChatId: chatId, BotId: botId));
 
                     // you do not get a list of all current members, so just take the admins
                     var admins = await proxy.GetChatAdministratorsAsync(message.Chat.Id);

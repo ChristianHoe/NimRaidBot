@@ -2,11 +2,10 @@
 
 namespace EventBot.Business.Commands.Raid
 {
-    public class UserRemoveRequest
-    {
-        public long UserId;
-        public long ChatId;
-    }
+    public record UserRemoveRequest(
+        long UserId,
+        long ChatId
+    );
 
     public interface IUserRemove
     {
@@ -26,7 +25,7 @@ namespace EventBot.Business.Commands.Raid
 
         public void Execute(UserRemoveRequest request)
         {
-            this.userChannelRelationRemoveCommand.Execute(new UserChannelRelationRemoveRequest { UserId = request.UserId, ChatId = request.ChatId });
+            this.userChannelRelationRemoveCommand.Execute(new UserChannelRelationRemoveRequest(UserId: request.UserId, ChatId: request.ChatId));
         }
     }
 }

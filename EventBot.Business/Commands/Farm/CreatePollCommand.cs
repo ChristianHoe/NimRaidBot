@@ -34,7 +34,7 @@ namespace EventBot.Business.Commands.Farm
 
         public async Task<bool> Execute(CreatePollRequest request, long chatId, TelegramBotClient bot)
         {
-            var poll = this.getActivePollByEventId.Execute(new DataAccess.Queries.Farm.GetActivePollByEventIdRequest { ChatId = chatId, EventId = request.EventId });
+            var poll = this.getActivePollByEventId.Execute(new DataAccess.Queries.Farm.GetActivePollByEventIdRequest(ChatId: chatId, EventId: request.EventId));
             if (poll != null)
             {
                 await Helper.Operator.SendMessage(bot, $"CreatePoll für existierend Poll/Event aufgerufen Chat: {chatId} Event: {request.EventId}").ConfigureAwait(false);
@@ -43,7 +43,7 @@ namespace EventBot.Business.Commands.Farm
             {
                 var msg = await bot.SendTextMessageAsync(chatId, request.Text, parseMode: request.ParseMode, replyMarkup: request.InlineKeyboardMarkup).ConfigureAwait(false);
 
-                this.newPollCommand.Execute(new DataAccess.Commands.PoGo.NewPollRequest { ChatId = msg.Chat.Id, MessageId = msg.MessageId, EventId = request.EventId });
+                this.newPollCommand.Execute(new DataAccess.Commands.PoGo.NewPollRequest(ChatId: msg.Chat.Id, MessageId: msg.MessageId, EventId: request.EventId));
             }
             return true;
         }

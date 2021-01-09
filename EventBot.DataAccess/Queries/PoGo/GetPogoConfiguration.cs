@@ -4,9 +4,7 @@ using EventBot.DataAccess.Models;
 
 namespace EventBot.DataAccess.Queries.PoGo
 {
-    public class GetPogoConfigurationRequest
-    {
-    }
+    public record GetPogoConfigurationRequest();
 
     public interface IGetPogoConfiguration : IQuery<GetPogoConfigurationRequest, PogoConfigurations>
     {

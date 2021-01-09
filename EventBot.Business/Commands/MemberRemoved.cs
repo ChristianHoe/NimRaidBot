@@ -31,15 +31,15 @@ namespace EventBot.Business.Commands
         {
             if (message.LeftChatMember.Id == botId)
             {
-                this.removeBotCommand.Execute(new BotRemoveRequest { ChatId = message.Chat.Id, BotId = botId });
+                this.removeBotCommand.Execute(new BotRemoveRequest(ChatId: message.Chat.Id, BotId: botId));
                 var botsCount = this.numberOfBotsInChatQuery.Execute(new NumberOfBotsInChatRequest(ChatId: message.Chat.Id));
 
                 if (botsCount == 0)
-                    this.userChannelRelationRemoveAllCommand.Execute(new UserChannelRelationRemoveAllRequest { ChatId = message.Chat.Id });
+                    this.userChannelRelationRemoveAllCommand.Execute(new UserChannelRelationRemoveAllRequest(ChatId: message.Chat.Id));
             }
             else
             {
-                this.userRemove.Execute(new Commands.Raid.UserRemoveRequest { UserId = message.LeftChatMember.Id, ChatId = message.Chat.Id });
+                this.userRemove.Execute(new Commands.Raid.UserRemoveRequest(UserId: message.LeftChatMember.Id, ChatId: message.Chat.Id));
             }
 
             return Task.CompletedTask;

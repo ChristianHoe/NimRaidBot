@@ -3,10 +3,9 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Minun
 {
-    public class EnableNotificationsRequest
-    {
-        public long UserId;
-    }
+    public record EnableNotificationsRequest(
+        long UserId
+    );
 
     public interface IEnableNotificationsCommand : ICommand<EnableNotificationsRequest>
     {

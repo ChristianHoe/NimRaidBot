@@ -1,16 +1,12 @@
 ﻿using EventBot.DataAccess.Database;
 using EventBot.DataAccess.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace EventBot.DataAccess.Queries.Farm
 {
-    public class GetEventByIdRequest
-    {
-        public int EventId;
-    }
+    public record GetEventByIdRequest(
+        int EventId
+    );
 
     public interface IGetEventById : IQuery<GetEventByIdRequest, IngrEvents>
     {

@@ -229,7 +229,7 @@ namespace EventBot.Business.NimRaidBot
                 catch (ApiRequestException ex)
                 {
                     if (ex.ErrorCode == 403) // blocked by user
-                        this.deactiveMinunUserCommand.Execute(new DeactiveMinunUserRequest { UserId = notification.ChatId, BotId = notification.BotId });
+                        this.deactiveMinunUserCommand.Execute(new DeactiveMinunUserRequest(UserId: notification.ChatId, BotId: notification.BotId));
                     else
                         await Operator.SendMessage(this.proxy, string.Format("NimRaidBot: Es ist ein Fehler für Gruppe {1} aufgetreten: {0}", ex.Message, notification.ChatId));
                  }

@@ -6,9 +6,7 @@ using System.IO;
 
 namespace EventBot.DataAccess.Queries.Base
 {
-    public record GetRocketMapMovesRequest
-    {
-    }
+    public record GetRocketMapMovesRequest();
 
     public interface IGetRocketMapMovesQuery : IQuery<GetRocketMapMovesRequest, Dictionary<int, Move>>
     {

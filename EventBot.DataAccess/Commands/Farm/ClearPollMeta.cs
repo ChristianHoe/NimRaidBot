@@ -4,9 +4,7 @@ using System;
 
 namespace EventBot.DataAccess.Commands.Farm
 {
-    public class ClearPollMetaRequest
-    {
-    }
+    public record ClearPollMetaRequest();
 
     public interface IClearPollMetaCommand : ICommand<ClearPollMetaRequest>
     {

@@ -136,7 +136,7 @@ namespace EventBot.Business.Tasks.NimGoMapBot
         {
             try
             {
-                var areas = this.getActiveAreas.Execute(new GetActiveAreasRequest { MapId = this.Configuration.MAP_ID });
+                var areas = this.getActiveAreas.Execute(new GetActiveAreasRequest(MapId: this.Configuration.MAP_ID));
                 if (areas.Count() <= 0)
                     return;
 
@@ -237,7 +237,7 @@ namespace EventBot.Business.Tasks.NimGoMapBot
 
                     if (newPokes.Count > 0)
                     {
-                        this.addPokesCommand.Execute(new AddPokesRequest { Pokes = newPokes });
+                        this.addPokesCommand.Execute(new AddPokesRequest(Pokes: newPokes));
                         foreach (var poke in newPokes)
                         {
                             pokeQueue.Enqueue(poke);
@@ -246,7 +246,7 @@ namespace EventBot.Business.Tasks.NimGoMapBot
 
                     if (updatedPokes.Count > 0)
                     {
-                        this.updatePokesCommand.Execute(new UpdatePokesRequest { Pokes = updatedPokes });
+                        this.updatePokesCommand.Execute(new UpdatePokesRequest(Pokes: updatedPokes));
                         foreach (var poke in updatedPokes)
                         {
                             pokeQueue.Enqueue(poke);

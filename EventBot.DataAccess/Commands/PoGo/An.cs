@@ -1,15 +1,12 @@
 ﻿using EventBot.DataAccess.Database;
-using EventBot.DataAccess.Models;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace EventBot.DataAccess.Commands.PoGo
 {
-    public class AnRequest
-    {
-        public long UserId;
-        public long BotId;
-    }
+    public record AnRequest(
+        long UserId,
+        long BotId
+    );
 
     public interface IAnCommand : ICommand<AnRequest>
     {

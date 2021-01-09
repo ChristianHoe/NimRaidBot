@@ -4,9 +4,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Farm
 {
-    public class GetNextEventToProcessRequest
-    {
-    }
+    public record GetNextEventToProcessRequest();
 
     public interface IGetNextEventToProcessQuery : IQuery<GetNextEventToProcessRequest, IngrEvents>
     {

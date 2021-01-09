@@ -3,11 +3,10 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Base
 {
-    public class BotRemoveRequest
-    {
-        public long ChatId;
-        public long BotId;
-    }
+    public record BotRemoveRequest(
+        long ChatId,
+        long BotId
+    );
 
     public interface IBotRemoveCommand : ICommand<BotRemoveRequest>
     {

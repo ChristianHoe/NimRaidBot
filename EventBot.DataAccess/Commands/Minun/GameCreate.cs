@@ -4,26 +4,22 @@ using EventBot.DataAccess.Models;
 
 namespace EventBot.DataAccess.Commands.Minun
 {
-    public class GameCreateRequest
-    {
-        public long ChatId;
-        public int MessageId;
-
-        public int Difficulty;
-
-        public DateTime Finish;
-
-        public int Poke1Id;
-        public int Poke1Move;
-        public int Poke2Id;
-        public int Poke2Move;
-        public int Poke3Id;
-        public int Poke3Move;
-        public int Poke4Id;
-        public int Poke4Move;
-        public int Poke5Id;
-        public int Poke5Move;
-    }
+    public record GameCreateRequest(
+        long ChatId,
+        int MessageId,
+        int Difficulty,
+        DateTime Finish,
+        int Poke1Id,
+        int Poke1Move,
+        int Poke2Id,
+        int Poke2Move,
+        int Poke3Id,
+        int Poke3Move,
+        int Poke4Id,
+        int Poke4Move,
+        int Poke5Id,
+        int Poke5Move
+    );
 
     public interface IGameCreateCommand : ICommand<GameCreateRequest>
     {

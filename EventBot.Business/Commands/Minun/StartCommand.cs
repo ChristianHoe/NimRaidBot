@@ -34,7 +34,7 @@ namespace EventBot.Business.Commands.Minun
 
         public override async Task ExecuteAsync(Message message, string text, TelegramBotClient bot)
         {
-            this.botAddCommand.Execute(new BotAddRequest { ChatId = base.GetChatId(message), BotId = bot.BotId });
+            this.botAddCommand.Execute(new BotAddRequest(ChatId: base.GetChatId(message), BotId: bot.BotId));
             this.addMinunUserCommand.Execute(new AddUserRequest(UserId: base.GetUserId(message), FirstName: message.From.Username));
             try
             {
@@ -43,7 +43,7 @@ namespace EventBot.Business.Commands.Minun
             catch(ApiRequestException ex)
             {
                 if (ex.ErrorCode == 403) // blocked by user
-                    this.deactiveMinunUserCommand.Execute(new DeactiveMinunUserRequest { UserId = base.GetUserId(message), BotId = bot.BotId });
+                    this.deactiveMinunUserCommand.Execute(new DeactiveMinunUserRequest(UserId: base.GetUserId(message), BotId: bot.BotId));
                 else
                     throw;
             }

@@ -4,10 +4,9 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Farm
 {
-    public class EventLocationByIdRequest
-    {
-        public long EventId;
-    }
+    public record EventLocationByIdRequest(
+        long EventId
+    );
 
     public interface IEventLocationByIdQuery : IQuery<EventLocationByIdRequest, Locations>
     {

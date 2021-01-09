@@ -4,11 +4,10 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Farm
 {
-    public class GetActivePollByEventIdRequest
-    {
-        public int EventId;
-        public long ChatId;
-    }
+    public record GetActivePollByEventIdRequest(
+        int EventId,
+        long ChatId
+    );
 
     public interface IGetActivePollByEventId : IQuery<GetActivePollByEventIdRequest, ActivePolls>
     {

@@ -3,11 +3,10 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Minun
 {
-    public class PreferencedBossAddRequest
-    {
-        public long ChatId;
-        public int PokeId;
-    }
+    public record PreferencedBossAddRequest(
+        long ChatId,
+        int PokeId
+    );
 
     public interface IPreferencedBossAddCommand : ICommand<PreferencedBossAddRequest>
     {

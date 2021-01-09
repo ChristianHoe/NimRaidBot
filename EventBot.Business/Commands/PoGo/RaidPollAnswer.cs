@@ -37,7 +37,7 @@ namespace EventBot.Business.Commands.PoGo
 
         public override bool CanExecute(CallbackQuery message)
         {
-            return this.isActivePoll.Execute(new DataAccess.Queries.PoGo.IsActivePollRequest { ChatId = this.GetChatId(message), MessageId = this.GetMessageId(message) });
+            return this.isActivePoll.Execute(new DataAccess.Queries.PoGo.IsActivePollRequest(ChatId: this.GetChatId(message), MessageId: this.GetMessageId(message)));
         }
 
         public override async Task<AnswerResult> ExecuteAsync(CallbackQuery message, string text, TelegramBotClient bot)

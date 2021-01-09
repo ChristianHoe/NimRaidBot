@@ -4,11 +4,10 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Base
 {
-    public class BotAddRequest
-    {
-        public long ChatId;
-        public long BotId;
-    }
+    public record BotAddRequest(
+        long ChatId,
+        long BotId
+    );
 
     public interface IBotAddCommand : ICommand<BotAddRequest>
     {

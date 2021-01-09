@@ -4,10 +4,9 @@ using MySqlConnector;
 
 namespace EventBot.DataAccess.Queries.Farm
 {
-    public class MarkPollAsProcessingRequest
-    {
-        public int Id;
-    }
+    public record MarkPollAsProcessingRequest(
+        int Id
+    );
 
     public interface IMarkPollAsProcessingQuery : IQuery<MarkPollAsProcessingRequest, bool>
     {

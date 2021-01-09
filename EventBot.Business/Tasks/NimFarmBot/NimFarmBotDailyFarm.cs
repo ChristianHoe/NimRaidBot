@@ -47,10 +47,10 @@ namespace EventBot.Business.Tasks.NimFarmBot
 
                 foreach(var group in groups)
                 {
-                    if (this.hasDailyFarm.Execute(new HasDailyFarmRequest { ChatId = group.ChatId, Day = currentFarm }))
+                    if (this.hasDailyFarm.Execute(new HasDailyFarmRequest(ChatId: group.ChatId, Day: currentFarm)))
                         continue;
 
-                    this.createEventCommand.Execute(new CreateEventRequest { ChatId = group.ChatId, Start = currentFarm, LocationId = null, EventTypeId = 1 });
+                    this.createEventCommand.Execute(new CreateEventRequest(ChatId: group.ChatId, Start: currentFarm, Finished: null, LocationId: null, EventTypeId: 1));
                 }
             }
             catch (Exception ex)

@@ -5,9 +5,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.PoGo
 {
-    public class ActiveUsersRequest
-    {
-    }
+    public record ActiveUsersRequest();
 
     public interface IActiveUsers : IQuery<ActiveUsersRequest, IEnumerable<PogoUser>>
     {

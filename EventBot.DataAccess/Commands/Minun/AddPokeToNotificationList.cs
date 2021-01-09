@@ -4,13 +4,12 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Minun
 {
-    public class AddPokeToNotificationListRequest
-    {
-        public long ChatId;
-        public int PokeId;
-        public char? Gender;
-        public int? IV;
-    }
+    public record AddPokeToNotificationListRequest(
+        long ChatId,
+        int PokeId,
+        char? Gender,
+        int? IV
+    );
 
     public interface IAddPokeToNotificationListCommand : ICommand<AddPokeToNotificationListRequest>
     {

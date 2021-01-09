@@ -4,10 +4,9 @@ using System.Collections.Generic;
 
 namespace EventBot.DataAccess.Commands.Pokes
 {
-    public class AddPokesRequest
-    {
-        public IEnumerable<PogoPokes> Pokes;
-    }
+    public record AddPokesRequest(
+        IEnumerable<PogoPokes> Pokes
+    );
 
     public interface IAddPokesCommand : ICommand<AddPokesRequest>
     {

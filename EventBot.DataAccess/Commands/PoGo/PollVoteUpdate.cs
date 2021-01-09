@@ -4,17 +4,16 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.PoGo
 {
-    public class PollVoteUpdateRequest
-    {
-        public long ChatId;
-        public long MessageId;
-        public long UserId;
-        public int Attendee;
-        public string? Time;
-        public int? Comment;
+    public record PollVoteUpdateRequest(
+        long ChatId,
+        long MessageId,
+        long UserId,
+        int Attendee,
+        string? Time,
+        int? Comment,
 
-        public ActivePolls Poll;
-    }
+        ActivePolls Poll
+    );
 
     public interface IPollVoteUpdateCommand : ICommand<PollVoteUpdateRequest>
     {

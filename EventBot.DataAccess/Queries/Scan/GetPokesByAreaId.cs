@@ -5,10 +5,9 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Scan
 {
-    public class GetPokesByAreaIdRequest
-    {
-        public long ScanAreaId;
-    }
+    public record GetPokesByAreaIdRequest(
+        long ScanAreaId
+    );
 
     public interface IGetPokesByAreaId : IQuery<GetPokesByAreaIdRequest, IEnumerable<PogoChatPoke>>
     {

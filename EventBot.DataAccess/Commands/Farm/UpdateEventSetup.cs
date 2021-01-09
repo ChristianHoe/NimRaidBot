@@ -4,10 +4,9 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Farm
 {
-    public class UpdateEventSetupRequest
-    {
-        public EventSetups EventSetup;
-    }
+    public record UpdateEventSetupRequest(
+        EventSetups EventSetup
+    );
 
     public interface IUpdateEventSetupCommand : ICommand<UpdateEventSetupRequest>
     {

@@ -6,9 +6,7 @@ using System.IO;
 
 namespace EventBot.DataAccess.Queries.Base
 {
-    public record GetPokeBaseValuesRequest
-    {
-    }
+    public record GetPokeBaseValuesRequest();
 
     public interface IGetPokeBaseValuesQuery : IQuery<GetPokeBaseValuesRequest, Dictionary<int, BaseValue>>
     {

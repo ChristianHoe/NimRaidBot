@@ -92,13 +92,13 @@ namespace EventBot.Business.Commands.Minun
             await bot.SendTextMessageAsync(chatId, "30 Sek. Eine Bewertung von 0.0 ist neutraler Schaden. Positive Werte bedeuten, dass Schaden gemacht wird.").ConfigureAwait(false);
 
             var gamemessage = await bot.SendTextMessageAsync(chatId, "... initialisiere ...").ConfigureAwait(false);
-            this.gameCreateCommand.Execute(new GameCreateRequest {ChatId = chatId, MessageId = gamemessage.MessageId, Difficulty = actionId, Finish = finish,
-                Poke1Id = pokes[0].Item1, Poke1Move =  pokes[0].Item2,
-                Poke2Id = pokes[1].Item1, Poke2Move =  pokes[1].Item2,
-                Poke3Id = pokes[2].Item1, Poke3Move =  pokes[2].Item2,
-                Poke4Id = pokes[3].Item1, Poke4Move =  pokes[3].Item2,
-                Poke5Id = pokes[4].Item1, Poke5Move =  pokes[4].Item2
-                 });
+            this.gameCreateCommand.Execute(new GameCreateRequest(ChatId: chatId, MessageId: gamemessage.MessageId, Difficulty: actionId, Finish: finish,
+                Poke1Id: pokes[0].Item1, Poke1Move: pokes[0].Item2,
+                Poke2Id: pokes[1].Item1, Poke2Move: pokes[1].Item2,
+                Poke3Id: pokes[2].Item1, Poke3Move: pokes[2].Item2,
+                Poke4Id: pokes[3].Item1, Poke4Move: pokes[3].Item2,
+                Poke5Id: pokes[4].Item1, Poke5Move: pokes[4].Item2
+            ));
 
             return StateResult.Finished;
         }

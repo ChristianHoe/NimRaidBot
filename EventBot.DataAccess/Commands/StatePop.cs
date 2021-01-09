@@ -3,15 +3,9 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands
 {
-    public class StatePopRequest
-    {
-        public State State { get; }
-
-        public StatePopRequest(State state)
-        {
-            State = state;
-        }
-    }
+    public record StatePopRequest(
+        State State
+    );
 
     public interface IStatePopCommand : ICommand<StatePopRequest>
     {

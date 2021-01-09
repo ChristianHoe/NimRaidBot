@@ -45,7 +45,7 @@ namespace EventBot.Business.Commands.Farm
 
         public override bool CanExecute(CallbackQuery message)
         {
-            return this.isActiveEventSetupQuery.Execute(new IsActiveEventSetupRequest { ChatId = this.GetChatId(message), MessageId = this.GetMessageId(message) });
+            return this.isActiveEventSetupQuery.Execute(new IsActiveEventSetupRequest(ChatId: this.GetChatId(message), MessageId: this.GetMessageId(message)));
         }
 
         public override async Task<AnswerResult> ExecuteAsync(CallbackQuery message, string text, TelegramBotClient bot)
@@ -63,7 +63,7 @@ namespace EventBot.Business.Commands.Farm
                 return new AnswerResult();
             }
 
-            var oldPoll = this.eventSetupQuery.Execute(new EventSetupRequest { ChatId = chatId, MessageId = messageId });
+            var oldPoll = this.eventSetupQuery.Execute(new EventSetupRequest(ChatId: chatId, MessageId: messageId));
             if (oldPoll == null)
             {
                 await Operator.SendMessage(bot, $"EventSetupAnswer: Kein gültiger Poll gefunden für Chat {chatId} Nachricht {messageId}");
@@ -98,7 +98,7 @@ namespace EventBot.Business.Commands.Farm
                 {
                     if (int.TryParse(answer[1], out int next))
                     {
-                       var location = this.eventLocationByIdQuery.Execute(new EventLocationByIdRequest { EventId = locationId.Value });
+                       var location = this.eventLocationByIdQuery.Execute(new EventLocationByIdRequest(EventId: locationId.Value));
 
                         var locations = this.eventLocationsQuery.Execute(new EventLocationsRequest(Name: location.Name));
 
@@ -174,7 +174,7 @@ namespace EventBot.Business.Commands.Farm
 
             if (answer[0] == "c")
             {
-                this.createEventCommand.Execute(new CreateEventRequest { ChatId = oldPoll.TargetChatId, Start = oldPoll.Start, LocationId = oldPoll.LocationId, EventTypeId = oldPoll.Type.Value });
+                this.createEventCommand.Execute(new CreateEventRequest(ChatId: oldPoll.TargetChatId, Start: oldPoll.Start, Finished: null, LocationId: oldPoll.LocationId, EventTypeId: oldPoll.Type.Value));
                 return new AnswerResult();
             }
 
@@ -187,7 +187,7 @@ namespace EventBot.Business.Commands.Farm
             oldPoll.Type = type;
             oldPoll.Modified = true;
 
-            this.updateEventSetup.Execute(new UpdateEventSetupRequest { EventSetup = oldPoll });
+            this.updateEventSetup.Execute(new UpdateEventSetupRequest(EventSetup: oldPoll));
 
             return new AnswerResult();
         }

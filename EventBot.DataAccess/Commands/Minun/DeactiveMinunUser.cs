@@ -1,17 +1,12 @@
 ﻿using EventBot.DataAccess.Database;
-using EventBot.DataAccess.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace EventBot.DataAccess.Commands.Minun
 {
-    public class DeactiveMinunUserRequest
-    {
-        public long UserId;
-        public long BotId;
-    }
+    public record DeactiveMinunUserRequest(
+        long UserId,
+        long BotId
+    );
 
     public interface IDeactiveMinunUserCommand : ICommand<DeactiveMinunUserRequest>
     {

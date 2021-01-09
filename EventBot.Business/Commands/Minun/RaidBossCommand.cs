@@ -88,12 +88,12 @@ namespace EventBot.Business.Commands.Minun
                 var currentBosses = this.getRaidBossPreferencesQuery.Execute(new GetRaidBossPreferencesRequest(ChatId: chatId));
                 if (currentBosses.Any(x => x.PokeId == pokeId))
                 {
-                    this.preferencedBossRemoveCommand.Execute(new PreferencedBossRemoveRequest { ChatId = chatId, PokeId = pokeId });
+                    this.preferencedBossRemoveCommand.Execute(new PreferencedBossRemoveRequest(ChatId: chatId, PokeId: pokeId));
                     await bot.SendTextMessageAsync(chatId, $"Boss {pokeId} entfernt.");
                 }
                 else
                 {
-                    this.preferencedBossAddCommand.Execute(new PreferencedBossAddRequest { ChatId = chatId, PokeId = pokeId });
+                    this.preferencedBossAddCommand.Execute(new PreferencedBossAddRequest(ChatId: chatId, PokeId: pokeId));
                     await bot.SendTextMessageAsync(chatId, $"Boss {pokeId} hinzugefügt.");
                 }
             }

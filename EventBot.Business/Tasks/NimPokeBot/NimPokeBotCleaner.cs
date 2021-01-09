@@ -46,7 +46,7 @@ namespace EventBot.Business.NimPokeBot
                     DateTime cleanUpTime = DateTime.UtcNow.AddMinutes(-1);
                     var pokesToBeRemoved = this.getPokesToCleanUpQuery.Execute(new GetPokesToCleanUpRequest(ChatId: user.ChatId, ExpiredBefore: cleanUpTime));
 
-                    this.removeNotificationsByIdsCommand.Execute(new RemoveNoficationsByIdsRequest { Ids = pokesToBeRemoved.Select(x => x.Id).ToArray() });
+                    this.removeNotificationsByIdsCommand.Execute(new RemoveNoficationsByIdsRequest(Ids: pokesToBeRemoved.Select(x => x.Id).ToArray()));
 
                     foreach (var poll in pokesToBeRemoved)
                     {

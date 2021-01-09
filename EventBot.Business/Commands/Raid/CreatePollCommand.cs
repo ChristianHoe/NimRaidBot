@@ -45,7 +45,7 @@ namespace EventBot.Business.Commands.Raid
             {
                 var msg = await bot.SendTextMessageAsync(chatId, request.Text, parseMode: request.ParseMode, replyMarkup: request.InlineKeyboardMarkup, disableWebPagePreview: true).ConfigureAwait(false);
 
-                this.newPollCommand.Execute(new DataAccess.Commands.PoGo.NewPollRequest { ChatId = msg.Chat.Id, MessageId = msg.MessageId, RaidId = request.Raid.Id, TimeOffsetId = request.TimeOffsetId });
+                this.newPollCommand.Execute(new DataAccess.Commands.PoGo.NewPollRequest(ChatId: msg.Chat.Id, MessageId: msg.MessageId, RaidId: request.Raid.Id, TimeOffsetId: request.TimeOffsetId));
             }
             return true;
         }

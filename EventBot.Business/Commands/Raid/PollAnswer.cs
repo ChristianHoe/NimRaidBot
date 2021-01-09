@@ -46,7 +46,7 @@ namespace EventBot.Business.Commands.Raid
 
         public override bool CanExecute(CallbackQuery message)
         {
-            return this.isActivePoll.Execute(new DataAccess.Queries.PoGo.IsActivePollRequest { ChatId = this.GetChatId(message), MessageId = this.GetMessageId(message) });
+            return this.isActivePoll.Execute(new DataAccess.Queries.PoGo.IsActivePollRequest(ChatId: this.GetChatId(message), MessageId: this.GetMessageId(message)));
         }
 
         public async override Task<AnswerResult> ExecuteAsync(CallbackQuery message, string text, TelegramBotClient bot)
@@ -64,7 +64,7 @@ namespace EventBot.Business.Commands.Raid
                 return new AnswerResult();
             }
 
-            var poll = this.activePoll.Execute(new DataAccess.Queries.PoGo.ActivePollRequest { ChatId = chatId, MessageId = messageId });
+            var poll = this.activePoll.Execute(new DataAccess.Queries.PoGo.ActivePollRequest(ChatId: chatId, MessageId: messageId));
             if (poll == null)
             {
                 await Operator.SendMessage(bot, $"PollAnswer: Kein gültiger Poll gefunden für Chat {chatId} Nachricht {messageId}");
@@ -157,7 +157,7 @@ namespace EventBot.Business.Commands.Raid
             if (oldVote != null && oldVote.Time == time && oldVote.Attendee == attendee && oldVote.Comment == comments)
                 return new AnswerResult();
 
-            this.pollVoteUpdateCommand.Execute(new DataAccess.Commands.PoGo.PollVoteUpdateRequest { ChatId = chatId, MessageId = messageId, UserId = message.From.Id, Poll = poll, Attendee = attendee, Time = time, Comment = (int?)comments });
+            this.pollVoteUpdateCommand.Execute(new DataAccess.Commands.PoGo.PollVoteUpdateRequest(ChatId: chatId, MessageId: messageId, UserId: message.From.Id, Poll: poll, Attendee: attendee, Time: time, Comment: (int?)comments));
 
             this.updateMembershipAccessCommand.Execute(new DataAccess.Commands.Raid.UpdateMembershipAccessRequest(GroupId: chatId, UserId: GetUserId(message)));
 

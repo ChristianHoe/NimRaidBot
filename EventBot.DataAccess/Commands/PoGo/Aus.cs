@@ -3,10 +3,9 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.PoGo
 {
-    public class AusRequest
-    {
-        public long UserId;
-    }
+    public record AusRequest(
+        long UserId
+    );
 
     public interface IAusCommand : ICommand<AusRequest>
     {

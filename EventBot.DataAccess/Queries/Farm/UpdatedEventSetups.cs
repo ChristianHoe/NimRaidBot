@@ -5,9 +5,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Farm
 {
-    public class UpdatedEventSetupsRequest
-    {
-    }
+    public record UpdatedEventSetupsRequest();
 
     public interface IUpdatedEventSetupsQuery : IQuery<UpdatedEventSetupsRequest, IEnumerable<EventSetups>>
     {

@@ -206,7 +206,7 @@ namespace EventBot.Business.NimPokeBot
 
                 if (newNotifications.Count() > 0)
                 {
-                    this.addPokeNotificationCommand.Execute(new DataAccess.Commands.Pokes.AddPokeNotificationRequest { Notifications = newNotifications });
+                    this.addPokeNotificationCommand.Execute(new DataAccess.Commands.Pokes.AddPokeNotificationRequest(Notifications: newNotifications));
                 }
 
                 var isProcessed = this.markAsProcessedQuery.Execute(new DataAccess.Queries.Pokes.MarkAsProcessedRequest(Id: poke.Id));

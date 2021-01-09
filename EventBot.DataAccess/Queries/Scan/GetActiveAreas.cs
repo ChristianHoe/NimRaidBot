@@ -5,11 +5,9 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Scan
 {
-    public class GetActiveAreasRequest
-    {
-        public long UserId;
-        public int MapId;
-    }
+    public record GetActiveAreasRequest(
+        int MapId
+    );
 
     public interface IGetActiveAreas : IQuery<GetActiveAreasRequest, IEnumerable<PogoScanArea>>
     {

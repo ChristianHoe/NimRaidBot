@@ -1,14 +1,12 @@
 ﻿using EventBot.DataAccess.Database;
-using EventBot.DataAccess.Models;
 using System.Linq;
 
 namespace EventBot.DataAccess.Queries.PoGo
 {
-    public class IsActivePollRequest
-    {
-        public long ChatId;
-        public long MessageId;
-    }
+    public record IsActivePollRequest(
+        long ChatId,
+        long MessageId
+    );
 
     public interface IIsActivePoll : IQuery<IsActivePollRequest, bool>
     {

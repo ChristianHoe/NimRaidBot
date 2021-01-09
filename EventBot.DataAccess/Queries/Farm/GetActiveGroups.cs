@@ -5,9 +5,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Farm
 {
-    public class GetActiveGroupsRequest
-    {
-    }
+    public record GetActiveGroupsRequest();
 
     public interface IGetActiveGroups : IQuery<GetActiveGroupsRequest, IEnumerable<PogoRaidUsers>>
     {

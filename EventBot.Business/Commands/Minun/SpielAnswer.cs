@@ -30,7 +30,7 @@ namespace EventBot.Business.Commands.Minun {
             var pokeId = int.Parse(text);
             
 
-            this.gameAnswerCommand.Execute(new GameAnswerRequest{UserId = userId, UserName = userName.Length <= 25 ? userName : userName.Substring(0, 25), Choice = pokeId, MessageId = messageId, ChatId = chatId });
+            this.gameAnswerCommand.Execute(new GameAnswerRequest(UserId: userId, UserName: userName.Length <= 25 ? userName : userName.Substring(0, 25), Choice: pokeId, MessageId: messageId, ChatId: chatId));
             return new AnswerResult(EventBot.Models.GoMap.Helper.PokeNames[pokeId]);
         }
     }

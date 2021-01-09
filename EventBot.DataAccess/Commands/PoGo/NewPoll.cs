@@ -3,14 +3,13 @@ using EventBot.DataAccess.Models;
 
 namespace EventBot.DataAccess.Commands.PoGo
 {
-    public class NewPollRequest
-    {
-        public long ChatId;
-        public long MessageId;
-        public int? RaidId;
-        public int? EventId;
-        public int? TimeOffsetId;
-    }
+    public record NewPollRequest(
+        long ChatId,
+        long MessageId,
+        int? RaidId = null,
+        int? EventId = null,
+        int? TimeOffsetId = null
+    );
 
     public interface INewPollCommand : ICommand<NewPollRequest>
     {

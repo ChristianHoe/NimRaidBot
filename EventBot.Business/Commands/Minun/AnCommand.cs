@@ -25,7 +25,7 @@ namespace EventBot.Business.Commands.Minun
 
         public override async Task ExecuteAsync(Message message, string text, TelegramBotClient bot)
         {
-            this.anCommand.Execute(new DataAccess.Commands.PoGo.AnRequest { UserId = GetUserId(message), BotId = bot.BotId });
+            this.anCommand.Execute(new DataAccess.Commands.PoGo.AnRequest(UserId: GetUserId(message), BotId: bot.BotId));
             await bot.SendTextMessageAsync(GetChatId(message), "Benachrichtigungen eingeschaltet").ConfigureAwait(false);
 
             return;

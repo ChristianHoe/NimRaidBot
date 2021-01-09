@@ -27,7 +27,7 @@ namespace EventBot.Business.Queries
 
         public State? Execute(Message message)
         {
-            var result = this.query.Execute(new QueryCurrentStateRequest { ChatId = message.Chat.Id });
+            var result = this.query.Execute(new QueryCurrentStateRequest(ChatId: message.Chat.Id));
             if (result == null)
                 return null;
 

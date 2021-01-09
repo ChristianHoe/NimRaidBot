@@ -60,7 +60,7 @@ namespace EventBot.Business.Commands.Raid
 
                 if (tmpiv < 0)
                 {
-                    this.removePokeCommand.Execute(new RemovePokeFromNotificationListRequest { ChatId = chatId, PokeId = pokeId });
+                    this.removePokeCommand.Execute(new RemovePokeFromNotificationListRequest(ChatId: chatId, PokeId: pokeId));
                     await bot.SendTextMessageAsync(chatId, $"Benachrichtigungen für {pokeId} deaktiviert.").ConfigureAwait(false);
 
                     return;
@@ -94,7 +94,7 @@ namespace EventBot.Business.Commands.Raid
                 }
             }
 
-            this.addPokeCommand.Execute(new AddPokeToNotificationListRequest { ChatId = chatId, Gender = gender, IV = iv, PokeId = pokeId });
+            this.addPokeCommand.Execute(new AddPokeToNotificationListRequest(ChatId: chatId, Gender: gender, IV: iv, PokeId: pokeId));
 
             await bot.SendTextMessageAsync(chatId, $"Benachrichtigungen für {pokeId} {iv} {gender} aktiviert.").ConfigureAwait(false);
 

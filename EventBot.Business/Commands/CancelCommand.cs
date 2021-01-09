@@ -32,7 +32,7 @@ namespace EventBot.Business.Commands
 
         public override async Task ExecuteAsync(Message message, string text, TelegramBotClient bot)
         {
-            this.stateClearCommand.Execute(new StateClearRequest { ChatId = message.Chat.Id });
+            this.stateClearCommand.Execute(new StateClearRequest(ChatId: message.Chat.Id));
             await bot.SendTextMessageAsync(message.Chat.Id, "Verarbeitung abgebrochen.");
             return;
         }

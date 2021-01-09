@@ -21,13 +21,9 @@ namespace EventBot.DataAccess.Commands {
         public int Step { get; }
     }
 
-    public class StatePushRequest {
-        public State State { get; }
-
-        public StatePushRequest (State state) {
-            State = state;
-        }
-    }
+    public record StatePushRequest(
+        State State
+    );
 
     public interface IStatePushCommand : ICommand<StatePushRequest> { }
 

@@ -43,7 +43,7 @@ namespace EventBot.Business.Commands.PoGo
 
             var msg = await bot.SendTextMessageAsync(message.Chat.Id, text, replyMarkup: inlineKeyboard).ConfigureAwait(false);
 
-            this.newPollCommand.Execute(new DataAccess.Commands.PoGo.NewPollRequest { ChatId = msg.Chat.Id, MessageId = msg.MessageId });
+            this.newPollCommand.Execute(new DataAccess.Commands.PoGo.NewPollRequest(ChatId: msg.Chat.Id, MessageId: msg.MessageId));
 
             return;
         }

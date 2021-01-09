@@ -4,9 +4,7 @@ using System;
 
 namespace EventBot.DataAccess.Commands.Farm
 {
-    public class ClearRaidMetaRequest
-    {
-    }
+    public record ClearRaidMetaRequest();
 
     public interface IClearRaidMetaCommand : ICommand<ClearRaidMetaRequest>
     {
