@@ -15,7 +15,7 @@ namespace EventBot.DataAccess.Queries.Raid
     public class GetRaidTimeOffsets : IGetRaidTimeOffsetsQuery
     {
         readonly DatabaseFactory databaseFactory;
-        private ILookup<int, int> _cache;
+        private ILookup<int, int>? _cache;
 
 
         public GetRaidTimeOffsets(DatabaseFactory databaseFactory)

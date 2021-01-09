@@ -30,11 +30,7 @@ namespace EventBot.Scheduler
             
             foreach (var scheduledTask in scheduledTasks)
             {
-                _scheduledTasks.Add(new SchedulerTaskWrapper
-                {
-                    Task = scheduledTask,
-                    NextRunTime = referenceTime
-                });
+                _scheduledTasks.Add(new SchedulerTaskWrapper(Task: scheduledTask, NextRunTime: referenceTime));
             }
         }
 
@@ -96,14 +92,15 @@ namespace EventBot.Scheduler
             }
         }
 
-        private class SchedulerTaskWrapper
+        private record SchedulerTaskWrapper(
+            IScheduledTask Task,
+            DateTime NextRunTime
+        )
         {
-            public IScheduledTask Task { get; set; }
+            public DateTime LastRunTime { get; private set; }
+            public DateTime NextRunTime { get; private set; } = NextRunTime;
 
-            public DateTime LastRunTime { get; set; }
-            public DateTime NextRunTime { get; set; }
-
-            public CancellationTokenSource CancellationTokenSource { get; set; }
+            public CancellationTokenSource? CancellationTokenSource { get; set; }
 
             public void Increment()
             {

@@ -14,7 +14,7 @@ namespace EventBot.DataAccess.Queries.Base
 
     public class GetPokeBaseValues : IGetPokeBaseValuesQuery
     {
-        private Dictionary<int, BaseValue> _cache;
+        private Dictionary<int, BaseValue>? _cache;
 
         public GetPokeBaseValues()
         {

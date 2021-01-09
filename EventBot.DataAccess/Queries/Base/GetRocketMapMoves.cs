@@ -14,7 +14,7 @@ namespace EventBot.DataAccess.Queries.Base
 
     public class GetRocketMapMoves : IGetRocketMapMovesQuery
     {
-        private Dictionary<int, Move> _cache;
+        private Dictionary<int, Move>? _cache;
 
         public GetRocketMapMoves()
         {

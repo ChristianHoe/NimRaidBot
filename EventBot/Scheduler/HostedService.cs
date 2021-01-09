@@ -8,8 +8,8 @@ namespace EventBot.Scheduler
     {
         // Example untested base class code kindly provided by David Fowler: https://gist.github.com/davidfowl/a7dd5064d9dcf35b6eae1a7953d615e3
 
-        private Task _executingTask;
-        private CancellationTokenSource _cts;
+        private Task? _executingTask;
+        private CancellationTokenSource? _cts;
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
@@ -32,7 +32,7 @@ namespace EventBot.Scheduler
             }
 
             // Signal cancellation to the executing method
-            _cts.Cancel();
+            _cts?.Cancel();
 
             // Wait until the task completes or the stop token triggers
             await Task.WhenAny(_executingTask, Task.Delay(-1, cancellationToken));
