@@ -162,7 +162,7 @@ namespace EventBot.Business.Commands.Minun
                     return StateResult.TryAgain;
                 }
 
-                if (level < 1 || 40 < level)
+                if (level < 1 || 50 < level)
                 {
                     await bot.SendTextMessageAsync(chatId, "Das Level konnte nicht erkannt werden, bitte probiere es noch einmal.");
                     return StateResult.TryAgain;
