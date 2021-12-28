@@ -24,6 +24,7 @@ namespace EventBot
         {
             // Set to false. This will be the default in v5.x and going forward.
             container.Options.ResolveUnregisteredConcreteTypes = false;
+            container.Options.Container.Options.DefaultLifestyle = SimpleInjector.Lifestyle.Singleton;
 
             this.Configuration = configuration;
         }
@@ -43,9 +44,6 @@ namespace EventBot
             // cross wiring.
             services.AddSimpleInjector(container, options =>
             {  
-                options.Container.Options.DefaultLifestyle = SimpleInjector.Lifestyle.Singleton;
-
-
                 // AddAspNetCore() wraps web requests in a Simple Injector scope and
                 // allows request-scoped framework services to be resolved.
                 options.AddAspNetCore()
