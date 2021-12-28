@@ -1,8 +1,8 @@
 ﻿using EventBot.Models.PokeAlarm;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.Json;
 
 namespace EventBot.DataAccess.Queries.Base
 {
@@ -27,7 +27,7 @@ namespace EventBot.DataAccess.Queries.Base
 
             var fileContent = File.ReadAllText(Path.Combine(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "PokeAlarm"), "basevalues.json"));
 
-            return _cache = JsonConvert.DeserializeObject<Dictionary<int, BaseValue>>(fileContent);
+            return _cache = JsonSerializer.Deserialize<Dictionary<int, BaseValue>>(fileContent);
         }
     }
 }

@@ -1,8 +1,8 @@
 ﻿using EventBot.Models.RocketMap;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.Json;
 
 namespace EventBot.DataAccess.Queries.Base
 {
@@ -27,7 +27,7 @@ namespace EventBot.DataAccess.Queries.Base
 
             var fileContent = File.ReadAllText(Path.Combine(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "RocketMap"), "moves.json"));
 
-            _cache = JsonConvert.DeserializeObject<Dictionary<int, Move>>(fileContent);
+            _cache = JsonSerializer.Deserialize<Dictionary<int, Move>>(fileContent);
             return _cache;
         }
     }

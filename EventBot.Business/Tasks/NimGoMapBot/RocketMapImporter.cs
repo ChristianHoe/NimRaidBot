@@ -10,15 +10,12 @@ using EventBot.DataAccess.Queries.Pokes;
 using EventBot.DataAccess.Queries.Raid;
 using EventBot.DataAccess.Queries.Scan;
 using EventBot.Models.RocketMap;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
-using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Telegram.Bot;
@@ -157,23 +154,8 @@ namespace EventBot.Business.Tasks.NimGoMapBot
                     start++;
 
 
-                    Pokes2 result = null;
-
-                    using (Stream s = await httpClient.GetStreamAsync(url))
-                    using (StreamReader sr = new StreamReader(s))
-                    using (JsonReader reader = new JsonTextReader(sr))
-                    {
-                        JsonSerializer serializer = new JsonSerializer();
-                        // {
-                        //     DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate,
-
-                        //     MissingMemberHandling = MissingMemberHandling.Ignore
-                        // };
-
-                        // var xy = sr.ReadToEnd();
-                        result = serializer.Deserialize<Pokes2>(reader);
-                    }
-
+                    Pokes2? result = await JsonSerializer.DeserializeAsync<Pokes2>(await httpClient.GetStreamAsync(url));
+                    
                     // TODO: leere Quests gar nicht erst importieren
                     foreach(var pokestop in result.pokestops)
                     {
