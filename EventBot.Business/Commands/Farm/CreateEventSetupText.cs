@@ -8,7 +8,7 @@ using Telegram.Bot.Types.ReplyMarkups;
 namespace EventBot.Business.Commands.Farm
 {
     public record CreateEventSetupTextRequest(
-        Locations Locations,
+        Location Locations,
         DateTime? Start,
         Eventtypes Eventtypes
     );

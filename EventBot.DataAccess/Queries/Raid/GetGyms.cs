@@ -9,7 +9,7 @@ namespace EventBot.DataAccess.Queries.Raid
     {
     }
 
-    public interface IGetGymsQuery : IQuery<GetGymsRequest, IEnumerable<PogoGyms>>
+    public interface IGetGymsQuery : IQuery<GetGymsRequest, IEnumerable<PogoGym>>
     {
     }
 
@@ -23,7 +23,7 @@ namespace EventBot.DataAccess.Queries.Raid
         }
 
 
-        public IEnumerable<PogoGyms> Execute(GetGymsRequest request)
+        public IEnumerable<PogoGym> Execute(GetGymsRequest request)
         {
             using (var db = databaseFactory.CreateNew())
             {

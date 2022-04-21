@@ -9,7 +9,7 @@ namespace EventBot.DataAccess.Queries.Farm
         long MessageId
     );
 
-    public interface IEventSetupQuery : IQuery<EventSetupRequest, EventSetups>
+    public interface IEventSetupQuery : IQuery<EventSetupRequest, DataAccess.Models.EventSetup?>
     {
     }
 
@@ -23,7 +23,7 @@ namespace EventBot.DataAccess.Queries.Farm
         }
 
 
-        public EventSetups Execute(EventSetupRequest request)
+        public DataAccess.Models.EventSetup? Execute(EventSetupRequest request)
         {
             using (var db = databaseFactory.CreateNew())
             {

@@ -10,7 +10,7 @@ namespace EventBot.DataAccess.Queries.Farm
         string Name
     );
 
-    public interface IEventLocationsQuery : IQuery<EventLocationsRequest, IEnumerable<Locations>>
+    public interface IEventLocationsQuery : IQuery<EventLocationsRequest, IEnumerable<Models.Location>>
     {
     }
 
@@ -24,7 +24,7 @@ namespace EventBot.DataAccess.Queries.Farm
         }
 
 
-        public IEnumerable<Locations> Execute(EventLocationsRequest request)
+        public IEnumerable<Models.Location> Execute(EventLocationsRequest request)
         {
             using (var db = databaseFactory.CreateNew())
             {

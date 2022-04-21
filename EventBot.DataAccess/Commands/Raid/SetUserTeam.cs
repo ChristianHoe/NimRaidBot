@@ -33,7 +33,7 @@ namespace EventBot.DataAccess.Commands.Raid
         {
             using (var db = databaseFactory.CreateNew())
             {
-                var result = db.PogoUser.SingleOrDefault(x => x.UserId == request.UserId);
+                var result = db.PogoUsers.SingleOrDefault(x => x.UserId == request.UserId);
 
                 if (result != null)
                 {

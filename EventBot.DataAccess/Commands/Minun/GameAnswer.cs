@@ -29,7 +29,7 @@ namespace EventBot.DataAccess.Commands.Minun
         {
             using (var db = databaseFactory.CreateNew())
             {
-                var answers = new PogoGamePokesAnswers {
+                var answers = new PogoGamePokesAnswer {
                     ChatId = request.ChatId,
                     MessageId = request.MessageId,
                     UserId = request.UserId,

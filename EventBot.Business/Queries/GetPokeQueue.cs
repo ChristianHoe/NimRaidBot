@@ -7,12 +7,12 @@ namespace EventBot.Business.Queries
 
     public interface IGetPokeQueueQuery
     {
-        ConcurrentQueue<PogoPokes> Execute(GetPokeQueueRequest request);
+        ConcurrentQueue<PogoPoke> Execute(GetPokeQueueRequest request);
     }
 
     public class GetPokeQueue : IGetPokeQueueQuery
     {
-        private ConcurrentQueue<PogoPokes> cache;
+        private ConcurrentQueue<PogoPoke> cache;
 
         private readonly DataAccess.Queries.Pokes.IGetNextNewPokeQuery getNextNewPokeQuery;
 
@@ -23,12 +23,12 @@ namespace EventBot.Business.Queries
             this.getNextNewPokeQuery = getNextNewPokeQuery;
         }
 
-        public ConcurrentQueue<PogoPokes> Execute(GetPokeQueueRequest request)
+        public ConcurrentQueue<PogoPoke> Execute(GetPokeQueueRequest request)
         {
             if (cache != null)
                 return cache;
 
-            cache = new ConcurrentQueue<PogoPokes>();
+            cache = new ConcurrentQueue<PogoPoke>();
 
             var waitingPokes = this.getNextNewPokeQuery.Execute(new DataAccess.Queries.Pokes.GetNextNewPokeRequest { });
 

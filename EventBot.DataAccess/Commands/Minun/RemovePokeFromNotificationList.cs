@@ -26,11 +26,11 @@ namespace EventBot.DataAccess.Commands.Minun
         {
             using (var db = databaseFactory.CreateNew())
             {
-                var result = db.PogoChatPoke.SingleOrDefault(x => x.ChatId == request.ChatId && x.PokeId == request.PokeId);
+                var result = db.PogoChatPokes.SingleOrDefault(x => x.ChatId == request.ChatId && x.PokeId == request.PokeId);
 
                 if (result != null)
                 {
-                    db.PogoChatPoke.Remove(result);
+                    db.PogoChatPokes.Remove(result);
                     db.SaveChanges();
                 }
             }

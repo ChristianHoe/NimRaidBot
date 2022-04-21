@@ -27,7 +27,7 @@ namespace EventBot.DataAccess.Queries.Minun
         {
             using (var db = databaseFactory.CreateNew())
             {
-                return db.PogoRaidPreference.Where(x => x.ChatId == request.ChatId).ToList();
+                return db.PogoRaidPreferences.Where(x => x.ChatId == request.ChatId).ToList();
             }
         }
     }

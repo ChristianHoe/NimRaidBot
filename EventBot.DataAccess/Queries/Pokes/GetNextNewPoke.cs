@@ -9,7 +9,7 @@ namespace EventBot.DataAccess.Queries.Pokes
     {
     }
 
-    public interface IGetNextNewPokeQuery : IQuery<GetNextNewPokeRequest, IEnumerable<PogoPokes>>
+    public interface IGetNextNewPokeQuery : IQuery<GetNextNewPokeRequest, IEnumerable<PogoPoke>>
     {
     }
 
@@ -23,7 +23,7 @@ namespace EventBot.DataAccess.Queries.Pokes
         }
 
 
-        public IEnumerable<PogoPokes> Execute(GetNextNewPokeRequest request)
+        public IEnumerable<PogoPoke> Execute(GetNextNewPokeRequest request)
         {
             using (var db = databaseFactory.CreateNew())
             {

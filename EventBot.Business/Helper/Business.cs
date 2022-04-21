@@ -12,7 +12,7 @@ namespace EventBot.Business.Helper
 {
     public class Business
     {
-        public static async Task SendGymList(IEnumerable<PogoGyms> gyms, IEnumerable<NotifyLocation> notifications, long chatId, TelegramBotClient bot)
+        public static async Task SendGymList(IEnumerable<PogoGym> gyms, IEnumerable<NotifyLocation> notifications, long chatId, TelegramBotClient bot)
         {
             const string CHECK = "\u2705";
 
@@ -37,7 +37,7 @@ namespace EventBot.Business.Helper
         }
 
  
-        public static async Task<int?> GetGymId(string text, IEnumerable<PogoGyms> gyms, ChatId chatId, TelegramBotClient bot)
+        public static async Task<int?> GetGymId(string text, IEnumerable<PogoGym> gyms, ChatId chatId, TelegramBotClient bot)
         {
             if (!int.TryParse(text, NumberStyles.Any, CultureInfo.InvariantCulture, out int gymIndex))
             {

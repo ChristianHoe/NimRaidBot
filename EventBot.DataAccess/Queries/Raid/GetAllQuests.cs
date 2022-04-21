@@ -10,7 +10,7 @@ namespace EventBot.DataAccess.Queries.Raid
         //public DateTime Date;
     }
 
-    public interface IGetAllQuestsQuery : IQuery<GetAllQuestsRequest, IEnumerable<PogoQuests>>
+    public interface IGetAllQuestsQuery : IQuery<GetAllQuestsRequest, IEnumerable<PogoQuest>>
     {
     }
 
@@ -24,7 +24,7 @@ namespace EventBot.DataAccess.Queries.Raid
         }
 
 
-        public IEnumerable<PogoQuests> Execute(GetAllQuestsRequest request)
+        public IEnumerable<PogoQuest> Execute(GetAllQuestsRequest request)
         {
             using (var db = databaseFactory.CreateNew())
             {

@@ -27,7 +27,7 @@ namespace EventBot.DataAccess.Commands.Location
             using (var db = databaseFactory.CreateNew())
             {
                 var notifyLocation = new NotifyLocation { ChatId = request.ChatId, LocationId = request.LocationId };
-                db.NotifyLocation.Add(notifyLocation);
+                db.NotifyLocations.Add(notifyLocation);
                 db.SaveChanges();
             }
         }

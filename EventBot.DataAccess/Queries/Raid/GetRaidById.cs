@@ -1,4 +1,5 @@
-﻿using EventBot.DataAccess.Database;
+﻿using System;
+using EventBot.DataAccess.Database;
 using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Raid
@@ -7,7 +8,7 @@ namespace EventBot.DataAccess.Queries.Raid
         long RaidId
     );
 
-    public interface IGetRaidByIdQuery : IQuery<GetRaidByIdRequest, Raid>
+    public interface IGetRaidByIdQuery : IQuery<GetRaidByIdRequest, Raid?>
     {
     }
 
@@ -21,7 +22,7 @@ namespace EventBot.DataAccess.Queries.Raid
         }
 
 
-        public Raid Execute(GetRaidByIdRequest request)
+        public Raid? Execute(GetRaidByIdRequest request)
         {
             using (var db = databaseFactory.CreateNew())
             {

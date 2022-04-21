@@ -9,7 +9,7 @@ namespace EventBot.DataAccess.Queries.Raid
         long[] ChatIds
     );
 
-    public interface IGetSpecialGymsForChatsQuery : IQuery<GetSpecialGymsForChatsRequest, IEnumerable<PogoSpecialGyms>>
+    public interface IGetSpecialGymsForChatsQuery : IQuery<GetSpecialGymsForChatsRequest, IEnumerable<PogoSpecialGym>>
     {
     }
 
@@ -23,7 +23,7 @@ namespace EventBot.DataAccess.Queries.Raid
         }
 
 
-        public IEnumerable<PogoSpecialGyms> Execute(GetSpecialGymsForChatsRequest request)
+        public IEnumerable<PogoSpecialGym> Execute(GetSpecialGymsForChatsRequest request)
         {
             using (var db = databaseFactory.CreateNew())
             {

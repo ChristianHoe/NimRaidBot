@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace EventBot.DataAccess.Models
 {
-    public partial class EventSetups
+    public partial class EventSetup
     {
         public long ChatId { get; set; }
         public long MessageId { get; set; }

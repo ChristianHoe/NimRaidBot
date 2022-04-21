@@ -8,7 +8,7 @@ namespace EventBot.DataAccess.Queries
         long ChatId
     );
 
-    public interface IQueryCurrentState : IQuery<QueryCurrentStateRequest, States>
+    public interface IQueryCurrentState : IQuery<QueryCurrentStateRequest, State?>
     {
     }
 
@@ -22,7 +22,7 @@ namespace EventBot.DataAccess.Queries
         }
 
 
-        public States Execute(QueryCurrentStateRequest request)
+        public State? Execute(QueryCurrentStateRequest request)
         {
             using (var db = databaseFactory.CreateNew())
             {

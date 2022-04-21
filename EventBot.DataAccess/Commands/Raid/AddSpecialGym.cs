@@ -34,7 +34,7 @@ namespace EventBot.DataAccess.Commands.Raid
 
                 if (result == null)
                 {
-                    db.PogoSpecialGyms.Add(new PogoSpecialGyms { ChatId = request.ChatId, GymId = request.GymId, Type = (int)request.Type });
+                    db.PogoSpecialGyms.Add(new PogoSpecialGym { ChatId = request.ChatId, GymId = request.GymId, Type = (int)request.Type });
                     db.SaveChanges();
                 }
             }

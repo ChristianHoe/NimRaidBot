@@ -6,7 +6,7 @@ namespace EventBot.DataAccess.Queries.PoGo
 {
     public record GetPogoConfigurationRequest();
 
-    public interface IGetPogoConfiguration : IQuery<GetPogoConfigurationRequest, PogoConfigurations>
+    public interface IGetPogoConfiguration : IQuery<GetPogoConfigurationRequest, PogoConfiguration>
     {
     }
 
@@ -19,7 +19,7 @@ namespace EventBot.DataAccess.Queries.PoGo
             this.databaseFactory = databaseFactory;
         }
 
-        public PogoConfigurations Execute(GetPogoConfigurationRequest request)
+        public PogoConfiguration Execute(GetPogoConfigurationRequest request)
         {
             using (var db = databaseFactory.CreateNew())
             {

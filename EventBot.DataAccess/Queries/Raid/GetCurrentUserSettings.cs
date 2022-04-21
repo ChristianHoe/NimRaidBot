@@ -8,7 +8,7 @@ namespace EventBot.DataAccess.Queries.Raid
         long UserId
     );
 
-    public interface IGetCurrentUserSettingsQuery : IQuery<GetCurrentUserSettingsRequest, PogoUser>
+    public interface IGetCurrentUserSettingsQuery : IQuery<GetCurrentUserSettingsRequest, PogoUser?>
     {
     }
 
@@ -22,11 +22,11 @@ namespace EventBot.DataAccess.Queries.Raid
         }
 
 
-        public PogoUser Execute(GetCurrentUserSettingsRequest request)
+        public PogoUser? Execute(GetCurrentUserSettingsRequest request)
         {
             using (var db = databaseFactory.CreateNew())
             {
-                return db.PogoUser.SingleOrDefault(x => x.UserId == request.UserId);
+                return db.PogoUsers.SingleOrDefault(x => x.UserId == request.UserId);
             }
         }
     }

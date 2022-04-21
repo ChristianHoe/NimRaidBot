@@ -25,7 +25,7 @@ namespace EventBot.DataAccess.Queries.PoGo
         {
             using (var db = databaseFactory.CreateNew())
             {
-                return db.PogoUser.Where(x => x.Active).ToList();
+                return db.PogoUsers.Where(x => x.Active).ToList();
             }
         }
     }

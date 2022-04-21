@@ -8,7 +8,7 @@ namespace EventBot.DataAccess.Queries.Farm
         int EventId
     );
 
-    public interface IGetEventById : IQuery<GetEventByIdRequest, IngrEvents>
+    public interface IGetEventById : IQuery<GetEventByIdRequest, IngrEvent>
     {
     }
 
@@ -22,7 +22,7 @@ namespace EventBot.DataAccess.Queries.Farm
         }
 
 
-        public IngrEvents Execute(GetEventByIdRequest request)
+        public IngrEvent Execute(GetEventByIdRequest request)
         {
             using (var db = databaseFactory.CreateNew())
             {

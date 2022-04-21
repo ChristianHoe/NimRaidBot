@@ -70,7 +70,7 @@ namespace EventBot.Business.Commands.Raid
 
             if (text1.Count() == 1)
             {
-                this.updateRaidsCommand.Execute(new UpdateRaidsRequest(Raids: new [] { new PogoRaids { Id = raid.Id, PokeId = text1.First().Key, PokeForm = form }}));
+                this.updateRaidsCommand.Execute(new UpdateRaidsRequest(Raids: new [] { new PogoRaid { Id = raid.Id, PokeId = text1.First().Key, PokeForm = form }}));
                 
                 try
                 {

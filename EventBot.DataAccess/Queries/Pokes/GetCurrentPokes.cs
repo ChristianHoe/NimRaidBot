@@ -10,7 +10,7 @@ namespace EventBot.DataAccess.Queries.Pokes
         int MapId
     );
 
-    public interface IGetCurrentPokesQuery : IQuery<GetCurrentPokesRequest, IEnumerable<PogoPokes>>
+    public interface IGetCurrentPokesQuery : IQuery<GetCurrentPokesRequest, IEnumerable<PogoPoke>>
     {
     }
 
@@ -24,7 +24,7 @@ namespace EventBot.DataAccess.Queries.Pokes
         }
 
 
-        public IEnumerable<PogoPokes> Execute(GetCurrentPokesRequest request)
+        public IEnumerable<PogoPoke> Execute(GetCurrentPokesRequest request)
         {
             using (var db = databaseFactory.CreateNew())
             {

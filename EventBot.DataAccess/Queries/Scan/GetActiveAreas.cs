@@ -27,7 +27,7 @@ namespace EventBot.DataAccess.Queries.Scan
         {
             using (var db = databaseFactory.CreateNew())
             {
-                return db.PogoScanArea.Where(x => x.Active == true && x.MapId == request.MapId).ToArray();
+                return db.PogoScanAreas.Where(x => x.Active == true && x.MapId == request.MapId).ToArray();
             }
         }
     }

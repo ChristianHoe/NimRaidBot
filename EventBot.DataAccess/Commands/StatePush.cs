@@ -39,7 +39,7 @@ namespace EventBot.DataAccess.Commands {
                 var currentLevel = db.States.Where (x => x.UserId == request.State.ChatId).OrderByDescending (x => x.Level).Select (x => x.Level).FirstOrDefault ();
                 currentLevel++;
 
-                db.States.Add (new States { UserId = request.State.ChatId, Command = request.State.Command, Level = currentLevel, Step = request.State.Step });
+                db.States.Add (new DataAccess.Models.State { UserId = request.State.ChatId, Command = request.State.Command, Level = currentLevel, Step = request.State.Step });
 
                 db.SaveChanges ();
             }

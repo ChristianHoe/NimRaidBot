@@ -27,7 +27,7 @@ namespace EventBot.DataAccess.Queries.Pokes
         {
             using (var db = databaseFactory.CreateNew())
             {
-                return db.PogoChatPoke.Where(x => x.ChatId == request.ChatId).ToList();
+                return db.PogoChatPokes.Where(x => x.ChatId == request.ChatId).ToList();
             }
         }
     }

@@ -6,10 +6,10 @@ using EventBot.DataAccess.Database;
 namespace EventBot.DataAccess.Queries.Raid
 {
     public record GetGymsByChatRequest(
-        PogoRaidUsers Chat
+        PogoRaidUser Chat
     );
 
-    public interface IGetGymsByChatQuery : IQuery<GetGymsByChatRequest, IEnumerable<PogoGyms>>
+    public interface IGetGymsByChatQuery : IQuery<GetGymsByChatRequest, IEnumerable<PogoGym>>
     {
     }
 
@@ -23,7 +23,7 @@ namespace EventBot.DataAccess.Queries.Raid
         }
 
 
-        public IEnumerable<PogoGyms> Execute(GetGymsByChatRequest request)
+        public IEnumerable<PogoGym> Execute(GetGymsByChatRequest request)
         {
             using (var db = databaseFactory.CreateNew())
             {

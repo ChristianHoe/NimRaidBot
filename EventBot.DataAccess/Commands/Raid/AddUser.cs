@@ -27,11 +27,11 @@ namespace EventBot.DataAccess.Commands.Raid
         {
             using (var db = databaseFactory.CreateNew())
             {
-                var result = db.PogoUser.SingleOrDefault(x => x.UserId == request.UserId);
+                var result = db.PogoUsers.SingleOrDefault(x => x.UserId == request.UserId);
 
                 if (result == null)
                 {
-                    db.PogoUser.Add(new PogoUser { UserId = request.UserId, Active = false, FirstName = request.FirstName });
+                    db.PogoUsers.Add(new PogoUser { UserId = request.UserId, Active = false, FirstName = request.FirstName });
                     db.SaveChanges();
                 }
             }

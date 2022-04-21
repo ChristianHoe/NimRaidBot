@@ -10,7 +10,7 @@ namespace EventBot.DataAccess.Queries.Minun
         DateTime Until
     );
 
-    public interface IGetCurrentGamesQuery : IQuery<GetCurrentGamesRequest, IEnumerable<PogoGamePokes>>
+    public interface IGetCurrentGamesQuery : IQuery<GetCurrentGamesRequest, IEnumerable<PogoGamePoke>>
     {
     }
 
@@ -24,7 +24,7 @@ namespace EventBot.DataAccess.Queries.Minun
         }
 
 
-        public IEnumerable<PogoGamePokes> Execute(GetCurrentGamesRequest request)
+        public IEnumerable<PogoGamePoke> Execute(GetCurrentGamesRequest request)
         {
             using (var db = databaseFactory.CreateNew())
             {

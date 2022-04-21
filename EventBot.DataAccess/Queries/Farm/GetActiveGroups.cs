@@ -7,7 +7,7 @@ namespace EventBot.DataAccess.Queries.Farm
 {
     public record GetActiveGroupsRequest();
 
-    public interface IGetActiveGroups : IQuery<GetActiveGroupsRequest, IEnumerable<PogoRaidUsers>>
+    public interface IGetActiveGroups : IQuery<GetActiveGroupsRequest, IEnumerable<PogoRaidUser>>
     {
     }
 
@@ -21,7 +21,7 @@ namespace EventBot.DataAccess.Queries.Farm
         }
 
 
-        public IEnumerable<PogoRaidUsers> Execute(GetActiveGroupsRequest request)
+        public IEnumerable<PogoRaidUser> Execute(GetActiveGroupsRequest request)
         {
             using (var db = databaseFactory.CreateNew())
             {

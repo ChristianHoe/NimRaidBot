@@ -10,7 +10,7 @@ namespace EventBot.DataAccess.Queries.Farm
         long ChatId
     );
 
-    public interface IGetEventsQuery : IQuery<GetEventsRequest, IEnumerable<IngrEvents>>
+    public interface IGetEventsQuery : IQuery<GetEventsRequest, IEnumerable<IngrEvent>>
     {
     }
 
@@ -24,7 +24,7 @@ namespace EventBot.DataAccess.Queries.Farm
         }
 
 
-        public IEnumerable<IngrEvents> Execute(GetEventsRequest request)
+        public IEnumerable<IngrEvent> Execute(GetEventsRequest request)
         {
             using (var db = databaseFactory.CreateNew())
             {

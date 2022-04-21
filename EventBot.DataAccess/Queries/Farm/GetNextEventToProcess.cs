@@ -6,7 +6,7 @@ namespace EventBot.DataAccess.Queries.Farm
 {
     public record GetNextEventToProcessRequest();
 
-    public interface IGetNextEventToProcessQuery : IQuery<GetNextEventToProcessRequest, IngrEvents>
+    public interface IGetNextEventToProcessQuery : IQuery<GetNextEventToProcessRequest, IngrEvent?>
     {
     }
 
@@ -20,7 +20,7 @@ namespace EventBot.DataAccess.Queries.Farm
         }
 
 
-        public IngrEvents Execute(GetNextEventToProcessRequest request)
+        public IngrEvent? Execute(GetNextEventToProcessRequest request)
         {
             using (var db = databaseFactory.CreateNew())
             {

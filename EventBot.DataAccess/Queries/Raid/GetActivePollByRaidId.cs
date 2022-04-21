@@ -9,7 +9,7 @@ namespace EventBot.DataAccess.Queries.Raid
         long ChatId
     );
 
-    public interface IGetActivePollByRaidId : IQuery<GetActivePollByRaidRequest, ActivePolls>
+    public interface IGetActivePollByRaidId : IQuery<GetActivePollByRaidRequest, ActivePoll?>
     {
     }
 
@@ -23,7 +23,7 @@ namespace EventBot.DataAccess.Queries.Raid
         }
 
 
-        public ActivePolls Execute(GetActivePollByRaidRequest request)
+        public ActivePoll? Execute(GetActivePollByRaidRequest request)
         {
             using (var db = databaseFactory.CreateNew())
             {

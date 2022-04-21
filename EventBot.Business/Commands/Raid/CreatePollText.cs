@@ -17,7 +17,7 @@ namespace EventBot.Business.Commands.Raid
         IEnumerable<PollVoteResponse> Votes,
         DataAccess.Queries.Raid.Raid Raid,
         Dictionary<int, string> PokeNames,
-        IEnumerable<PogoSpecialGyms> SpecialGymSettings,
+        IEnumerable<PogoSpecialGym> SpecialGymSettings,
         IEnumerable<PogoRaidPreference>? RaidPreferences,
         IEnumerable<int> TimeOffsets
     );

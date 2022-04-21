@@ -6,7 +6,7 @@ using System.Linq;
 namespace EventBot.DataAccess.Commands.Pokes
 {
     public record UpdatePokesRequest(
-        IEnumerable<PogoPokes> Pokes
+        IEnumerable<PogoPoke> Pokes
     );
 
     public interface IUpdatePokesCommand : ICommand<UpdatePokesRequest>

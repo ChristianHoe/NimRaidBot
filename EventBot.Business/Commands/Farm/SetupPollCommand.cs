@@ -35,7 +35,7 @@ namespace EventBot.Business.Commands.Farm
 
             var msg = await bot.SendTextMessageAsync(chatId, "Initialize").ConfigureAwait(false);
 
-            var eventSetup = new EventSetups { ChatId = chatId, MessageId = msg.MessageId, TargetChatId = -1001372009436, Type = 2, Modified = true };
+            var eventSetup = new DataAccess.Models.EventSetup { ChatId = chatId, MessageId = msg.MessageId, TargetChatId = -1001372009436, Type = 2, Modified = true };
             updateEventSetupCommand.Execute(new UpdateEventSetupRequest(EventSetup: eventSetup));
 
             return;

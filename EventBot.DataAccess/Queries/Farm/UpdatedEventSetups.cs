@@ -7,7 +7,7 @@ namespace EventBot.DataAccess.Queries.Farm
 {
     public record UpdatedEventSetupsRequest();
 
-    public interface IUpdatedEventSetupsQuery : IQuery<UpdatedEventSetupsRequest, IEnumerable<EventSetups>>
+    public interface IUpdatedEventSetupsQuery : IQuery<UpdatedEventSetupsRequest, IEnumerable<Models.EventSetup>>
     {
     }
 
@@ -21,7 +21,7 @@ namespace EventBot.DataAccess.Queries.Farm
         }
 
 
-        public IEnumerable<EventSetups> Execute(UpdatedEventSetupsRequest request)
+        public IEnumerable<Models.EventSetup> Execute(UpdatedEventSetupsRequest request)
         {
             using (var db = databaseFactory.CreateNew())
             { 

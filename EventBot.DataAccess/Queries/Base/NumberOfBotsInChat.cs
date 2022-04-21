@@ -25,7 +25,7 @@ namespace EventBot.DataAccess.Queries.Base
         {
             using (var db = databaseFactory.CreateNew())
             {
-                return db.RelChatBot.Count(x => x.ChatId == request.ChatId);
+                return db.RelChatBots.Count(x => x.ChatId == request.ChatId);
             }
         }
     }

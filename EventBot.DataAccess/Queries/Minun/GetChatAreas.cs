@@ -9,7 +9,7 @@ namespace EventBot.DataAccess.Queries.Minun
         long[] ChatIds
     );
 
-    public interface IGetChatAreas : IQuery<GetChatAreasRequest, IEnumerable<PogoRaidUsers>>    {
+    public interface IGetChatAreas : IQuery<GetChatAreasRequest, IEnumerable<PogoRaidUser>>    {
     }
 
     public class GetChatAreas : IGetChatAreas
@@ -22,7 +22,7 @@ namespace EventBot.DataAccess.Queries.Minun
         }
 
 
-        public IEnumerable<PogoRaidUsers> Execute(GetChatAreasRequest request)
+        public IEnumerable<PogoRaidUser> Execute(GetChatAreasRequest request)
         {
             using (var db = databaseFactory.CreateNew())
             {

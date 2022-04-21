@@ -10,12 +10,12 @@ namespace EventBot.Business.Queries
 
     public interface IGetCurrentPokesQuery
     {
-        ConcurrentDictionary<ulong, PogoPokes> Execute(GetCurrentPokesRequest request);
+        ConcurrentDictionary<ulong, PogoPoke> Execute(GetCurrentPokesRequest request);
     }
 
     public class GetCurrentPokes : IGetCurrentPokesQuery
     {
-        private ConcurrentDictionary<int, ConcurrentDictionary<ulong, PogoPokes>> cache = new ConcurrentDictionary<int, ConcurrentDictionary<ulong, PogoPokes>>();
+        private ConcurrentDictionary<int, ConcurrentDictionary<ulong, PogoPoke>> cache = new ConcurrentDictionary<int, ConcurrentDictionary<ulong, PogoPoke>>();
 
         private readonly DataAccess.Queries.Pokes.IGetCurrentPokesQuery getCurrentPokesQuery;
 
@@ -26,13 +26,13 @@ namespace EventBot.Business.Queries
             this.getCurrentPokesQuery = getCurrentPokesQuery;
         }
 
-        public ConcurrentDictionary<ulong, PogoPokes> Execute(GetCurrentPokesRequest request)
+        public ConcurrentDictionary<ulong, PogoPoke> Execute(GetCurrentPokesRequest request)
         {
             if (cache.TryGetValue(request.MapId, out var result))
                 return result;
 
 
-            var pokelist = new ConcurrentDictionary<ulong, PogoPokes>();
+            var pokelist = new ConcurrentDictionary<ulong, PogoPoke>();
             var pokes = this.getCurrentPokesQuery.Execute(new DataAccess.Queries.Pokes.GetCurrentPokesRequest(MapId: request.MapId));
 
             foreach(var poke in pokes)

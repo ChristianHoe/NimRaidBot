@@ -6,7 +6,7 @@ using System.Linq;
 namespace EventBot.DataAccess.Commands.Raid
 {
     public record UpdateQuestsRequest(
-        IEnumerable<PogoQuests> Quests
+        IEnumerable<PogoQuest> Quests
     );
 
     public interface IUpdateQuestsCommand : ICommand<UpdateQuestsRequest>

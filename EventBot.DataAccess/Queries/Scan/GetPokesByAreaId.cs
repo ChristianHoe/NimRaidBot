@@ -27,13 +27,13 @@ namespace EventBot.DataAccess.Queries.Scan
         {
             using (var db = databaseFactory.CreateNew())
             {
-                return db.PogoRelScanChat
+                return db.PogoRelScanChats
                     .Where(x => x.ScanAreaId == request.ScanAreaId)
                     .Join(db.PogoRaidUsers,
                         s => s.ChatId,
                         c => c.ChatId,
                         (s, c) => c)
-                    .Join(db.PogoChatPoke,
+                    .Join(db.PogoChatPokes,
                         c => c.ChatId,
                         p => p.ChatId,
                         (c, p) => p)

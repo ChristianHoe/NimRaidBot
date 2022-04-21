@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace EventBot.DataAccess.Models
 {
-    public partial class PogoRelPokesChats
+    public partial class PogoRelPokesChat
     {
         public int Id { get; set; }
         public long ChatId { get; set; }

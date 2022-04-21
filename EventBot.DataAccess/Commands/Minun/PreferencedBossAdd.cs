@@ -25,10 +25,10 @@ namespace EventBot.DataAccess.Commands.Minun
         {
             using (var db = databaseFactory.CreateNew())
             {
-                var preferences = db.PogoRaidPreference.FirstOrDefault(x => x.ChatId == request.ChatId && x.PokeId == request.PokeId);
+                var preferences = db.PogoRaidPreferences.FirstOrDefault(x => x.ChatId == request.ChatId && x.PokeId == request.PokeId);
                 if (preferences == null)
                 {
-                    db.PogoRaidPreference.Add(new Models.PogoRaidPreference { ChatId = request.ChatId, PokeId = request.PokeId });
+                    db.PogoRaidPreferences.Add(new Models.PogoRaidPreference { ChatId = request.ChatId, PokeId = request.PokeId });
                     db.SaveChanges();
                 }
             }

@@ -25,7 +25,7 @@ namespace EventBot.DataAccess.Queries.PoGo
         {
             using (var db = databaseFactory.CreateNew())
             {
-                return db.PogoRelScanChat.ToList();
+                return db.PogoRelScanChats.ToList();
             }
         }
     }

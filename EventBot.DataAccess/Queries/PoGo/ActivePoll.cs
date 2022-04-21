@@ -9,7 +9,7 @@ namespace EventBot.DataAccess.Queries.PoGo
         long MessageId
     );
 
-    public interface IActivePoll : IQuery<ActivePollRequest, ActivePolls>
+    public interface IActivePoll : IQuery<ActivePollRequest, DataAccess.Models.ActivePoll?>
     {
     }
 
@@ -23,7 +23,7 @@ namespace EventBot.DataAccess.Queries.PoGo
         }
 
 
-        public ActivePolls Execute(ActivePollRequest request)
+        public DataAccess.Models.ActivePoll? Execute(ActivePollRequest request)
         {
             using (var db = databaseFactory.CreateNew())
             {

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 namespace EventBot.DataAccess.Models
 {
-    public partial class PogoPokesMeta
+    public partial class PogoQuestsMetum
     {
-        public int PogoPokeId { get; set; }
+        public int StopId { get; set; }
         public DateTime Created { get; set; }
-        public bool? Poke { get; set; }
+        public bool? Processed { get; set; }
     }
 }

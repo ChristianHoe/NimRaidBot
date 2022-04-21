@@ -6,12 +6,12 @@ namespace EventBot.Business.Queries
 
     public interface IGetPogoConfigurationQuery
     {
-        PogoConfigurations Execute(GetPogoConfigurationRequest request);
+        PogoConfiguration Execute(GetPogoConfigurationRequest request);
     }
 
     public class GetPogoConfiguration : IGetPogoConfigurationQuery
     {
-        private PogoConfigurations? cache;
+        private PogoConfiguration? cache;
 
         private readonly DataAccess.Queries.PoGo.IGetPogoConfiguration getPogoConfigurationQuery;
 
@@ -22,7 +22,7 @@ namespace EventBot.Business.Queries
             this.getPogoConfigurationQuery = getPogoConfigurationQuery;
         }
 
-        public PogoConfigurations Execute(GetPogoConfigurationRequest request)
+        public PogoConfiguration Execute(GetPogoConfigurationRequest request)
         {
             if (cache != null)
                 return cache;

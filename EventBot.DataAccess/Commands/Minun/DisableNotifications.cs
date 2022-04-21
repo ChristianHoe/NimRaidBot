@@ -26,7 +26,7 @@ namespace EventBot.DataAccess.Commands.Minun
         {
             using (var db = databaseFactory.CreateNew())
             {
-                var result = db.PogoUser.SingleOrDefault(x => x.UserId == request.UserId);
+                var result = db.PogoUsers.SingleOrDefault(x => x.UserId == request.UserId);
 
                 if (result != null)
                 {
@@ -34,7 +34,7 @@ namespace EventBot.DataAccess.Commands.Minun
                     db.SaveChanges();
                 }
 
-                var active = db.RelChatBot.SingleOrDefault(x => x.ChatId == request.UserId && x.BotId == request.BotId);
+                var active = db.RelChatBots.SingleOrDefault(x => x.ChatId == request.UserId && x.BotId == request.BotId);
                 if (active != null)
                 {
                     active.AllowNotification = false;

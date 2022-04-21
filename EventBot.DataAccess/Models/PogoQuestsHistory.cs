@@ -7,7 +7,7 @@ namespace EventBot.DataAccess.Models
     {
         public int StopId { get; set; }
         public DateTime Created { get; set; }
-        public string? Task { get; set; }
-        public string? Reward { get; set; }
+        public string Task { get; set; } = null!;
+        public string Reward { get; set; } = null!;
     }
 }

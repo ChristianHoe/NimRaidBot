@@ -9,7 +9,7 @@ namespace EventBot.DataAccess.Queries.Location
         IEnumerable<long> ChatIds
     );
 
-    public interface IGetActiveGymsForChatQuery : IQuery<GetActiveGymsForChatRequest, IEnumerable<PogoGyms>>
+    public interface IGetActiveGymsForChatQuery : IQuery<GetActiveGymsForChatRequest, IEnumerable<PogoGym>>
     {
     }
 
@@ -23,11 +23,11 @@ namespace EventBot.DataAccess.Queries.Location
         }
 
 
-        public IEnumerable<PogoGyms> Execute(GetActiveGymsForChatRequest request)
+        public IEnumerable<PogoGym> Execute(GetActiveGymsForChatRequest request)
         {
             using (var db = databaseFactory.CreateNew())
             {
-                return db.NotifyLocation
+                return db.NotifyLocations
                 .Where(x => request.ChatIds.Contains(x.ChatId))
                 .Join(
                     db.PogoGyms,

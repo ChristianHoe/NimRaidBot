@@ -48,7 +48,7 @@ namespace EventBot.DataAccess.Queries.PoGo
                 if (z != null)
                 {
                     return db.UserVotes.Where(x => x.PollId == z.Id).Join(
-                        db.PogoUser,
+                        db.PogoUsers,
                         v => v.UserId,
                         u => u.UserId,
                         (v, u) => new PollVoteResponse(u.UserId, u.FirstName, u.IngameName, u.IngressName, u.Level, (Commands.Raid.TeamType?)u.Team, v.Attendee, v.Time, (PogoUserVoteComments?)v.Comment )

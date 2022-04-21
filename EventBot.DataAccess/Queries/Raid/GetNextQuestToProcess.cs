@@ -8,7 +8,7 @@ namespace EventBot.DataAccess.Queries.Raid
     {
     }
 
-    public interface IGetNextQuestToProcessQuery : IQuery<GetNextQuestToProcessRequest, PogoQuests>
+    public interface IGetNextQuestToProcessQuery : IQuery<GetNextQuestToProcessRequest, PogoQuest?>
     {
     }
 
@@ -22,7 +22,7 @@ namespace EventBot.DataAccess.Queries.Raid
         }
 
 
-        public PogoQuests Execute(GetNextQuestToProcessRequest request)
+        public PogoQuest? Execute(GetNextQuestToProcessRequest request)
         {
             using (var db = databaseFactory.CreateNew())
             {

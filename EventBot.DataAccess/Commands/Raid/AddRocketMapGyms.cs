@@ -29,7 +29,7 @@ namespace EventBot.DataAccess.Commands.Raid
         {
             using (var db = databaseFactory.CreateNew())
             {
-                var gyms = request.Gyms.Select(x => new PogoGyms { Latitude = Math.Round(x.latitude, 4), Longitude = Math.Round(x.longitude, 4), Name = x.name.Length > 200 ? x.name.Substring(0, 200) : x.name }).ToList();
+                var gyms = request.Gyms.Select(x => new PogoGym { Latitude = Math.Round(x.latitude, 4), Longitude = Math.Round(x.longitude, 4), Name = x.name.Length > 200 ? x.name.Substring(0, 200) : x.name }).ToList();
 
                 db.PogoGyms.AddRange(gyms);
                 db.SaveChanges();

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace EventBot.DataAccess.Models
 {
-    public partial class IngrEvents
+    public partial class IngrEvent
     {
         public int Id { get; set; }
         public int? LocationId { get; set; }

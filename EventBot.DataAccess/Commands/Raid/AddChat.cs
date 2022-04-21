@@ -31,7 +31,7 @@ namespace EventBot.DataAccess.Commands.Raid
 
                 if (result == null)
                 {
-                    db.PogoRaidUsers.Add(new PogoRaidUsers { ChatId = request.ChatId, Ingress = false, RaidLevel = 1, Active = true, Name = request.Name.Length > 100 ? request.Name.Substring(0, 100) : request.Name });
+                    db.PogoRaidUsers.Add(new PogoRaidUser { ChatId = request.ChatId, Ingress = false, RaidLevel = 1, Active = true, Name = request.Name.Length > 100 ? request.Name.Substring(0, 100) : request.Name });
                     db.SaveChanges();
                 }
             }

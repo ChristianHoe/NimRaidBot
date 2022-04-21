@@ -31,7 +31,7 @@ namespace EventBot.DataAccess.Queries.Raid
             {
                 return db.Memberships
                 .Where(x => x.GroupId == request.GroupId && x.Created < request.Threshold)
-                .Join(db.PogoUser.Where(y => y.IngameName == null && y.Team == null && y.Level == null), 
+                .Join(db.PogoUsers.Where(y => y.IngameName == null && y.Team == null && y.Level == null), 
                 m => m.UserId, 
                 u => u.UserId, 
                 (m, u) => u).ToList();

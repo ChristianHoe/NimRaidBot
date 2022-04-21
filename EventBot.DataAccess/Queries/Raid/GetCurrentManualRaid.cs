@@ -8,7 +8,7 @@ namespace EventBot.DataAccess.Queries.Raid
         long UserId
     );
 
-    public interface IGetCurrentManualRaidQuery : IQuery<GetCurrentManualRaidRequest, PogoUserRaids>
+    public interface IGetCurrentManualRaidQuery : IQuery<GetCurrentManualRaidRequest, PogoUserRaid?>
     {
     }
 
@@ -22,7 +22,7 @@ namespace EventBot.DataAccess.Queries.Raid
         }
 
 
-        public PogoUserRaids Execute(GetCurrentManualRaidRequest request)
+        public PogoUserRaid? Execute(GetCurrentManualRaidRequest request)
         {
             using (var db = databaseFactory.CreateNew())
             {

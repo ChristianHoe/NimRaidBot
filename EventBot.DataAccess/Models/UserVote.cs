@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace EventBot.DataAccess.Models
 {
-    public partial class UserVotes
+    public partial class UserVote
     {
         public int PollId { get; set; }
         public long UserId { get; set; }

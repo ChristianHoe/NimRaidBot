@@ -12,7 +12,7 @@ namespace EventBot.DataAccess.Commands.PoGo
         string? Time,
         int? Comment,
 
-        ActivePolls Poll
+        ActivePoll Poll
     );
 
     public interface IPollVoteUpdateCommand : ICommand<PollVoteUpdateRequest>
@@ -42,7 +42,7 @@ namespace EventBot.DataAccess.Commands.PoGo
                 }
                 else
                 {
-                    db.UserVotes.Add(new UserVotes { PollId = request.Poll.Id, UserId = request.UserId, Attendee = request.Attendee, Time = request.Time, Comment = request.Comment });
+                    db.UserVotes.Add(new UserVote { PollId = request.Poll.Id, UserId = request.UserId, Attendee = request.Attendee, Time = request.Time, Comment = request.Comment });
                 }
 
                 db.SaveChanges();

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace EventBot.DataAccess.Models
 {
-    public partial class PogoPokes : ICoordinate
+    public partial class PogoPoke : ICoordinate
     {
     }
 }

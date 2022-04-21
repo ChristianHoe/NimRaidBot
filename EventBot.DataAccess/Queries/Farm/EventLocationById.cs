@@ -8,7 +8,7 @@ namespace EventBot.DataAccess.Queries.Farm
         long EventId
     );
 
-    public interface IEventLocationByIdQuery : IQuery<EventLocationByIdRequest, Locations>
+    public interface IEventLocationByIdQuery : IQuery<EventLocationByIdRequest, DataAccess.Models.Location>
     {
     }
 
@@ -22,7 +22,7 @@ namespace EventBot.DataAccess.Queries.Farm
         }
 
 
-        public Locations Execute(EventLocationByIdRequest request)
+        public DataAccess.Models.Location Execute(EventLocationByIdRequest request)
         {
             using (var db = databaseFactory.CreateNew())
             {

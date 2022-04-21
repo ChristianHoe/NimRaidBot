@@ -27,8 +27,8 @@ namespace EventBot.DataAccess.Queries.Minun
         {
             using (var db = databaseFactory.CreateNew())
             {
-                return db.PogoUser.Where(x => x.Active)
-                    .Join(db.RelChatBot.Where(x => x.BotId == request.BotId),
+                return db.PogoUsers.Where(x => x.Active)
+                    .Join(db.RelChatBots.Where(x => x.BotId == request.BotId),
                     u => u.UserId,
                     b => b.ChatId,
                     (u, b) => u

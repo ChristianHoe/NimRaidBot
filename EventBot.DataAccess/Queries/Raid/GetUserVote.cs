@@ -10,10 +10,10 @@ namespace EventBot.DataAccess.Queries.Raid
         long ChatId,
         long MessageId,
         long UserId,
-        ActivePolls Poll
+        EventBot.DataAccess.Models.ActivePoll Poll
     );
 
-    public interface IGetUserVoteQuery : IQuery<GetUserVoteRequest, PollVoteResponse>
+    public interface IGetUserVoteQuery : IQuery<GetUserVoteRequest, PollVoteResponse?>
     {
     }
 
@@ -27,14 +27,14 @@ namespace EventBot.DataAccess.Queries.Raid
         }
 
 
-        public PollVoteResponse Execute(GetUserVoteRequest request)
+        public PollVoteResponse? Execute(GetUserVoteRequest request)
         {
             using (var db = databaseFactory.CreateNew())
             {
                 if (request.Poll != null)
                 {
                     return db.UserVotes.Where(x => x.PollId == request.Poll.Id && x.UserId == request.UserId).Join(
-                        db.PogoUser,
+                        db.PogoUsers,
                         v => v.UserId,
                         u => u.UserId,
                         (v, u) => new PollVoteResponse(u.UserId, u.FirstName, u.IngameName, u.IngressName, u.Level, (Commands.Raid.TeamType?)u.Team, v.Attendee, v.Time, (PogoUserVoteComments?) v.Comment)

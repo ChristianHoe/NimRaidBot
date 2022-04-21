@@ -87,7 +87,7 @@ namespace EventBot.Business.NimPokeBot
 
             while (!cancellationToken.IsCancellationRequested)
             {
-                queue.TryDequeue(out PogoPokes? poke);
+                queue.TryDequeue(out PogoPoke? poke);
                 if (poke == null)
                 {
                     await Task.Delay(TimeSpan.FromMilliseconds(100)).ConfigureAwait(false);
@@ -104,7 +104,7 @@ namespace EventBot.Business.NimPokeBot
                 var text2 = $"{until.ToString("HH:mm:ss")}";
                 var text2Advanced = $"{(poke.Cp.HasValue ? $" (CP {poke.Cp})" : "")}";
 
-                var newNotifications = new List<PogoRelPokesChats>();
+                var newNotifications = new List<PogoRelPokesChat>();
 
                 foreach (var group in chats.Where(x => x.LatMin <= poke.Latitude && poke.Latitude <= x.LatMax && x.LonMin <= poke.Longitude && poke.Longitude <= x.LonMax))
                 {
@@ -195,7 +195,7 @@ namespace EventBot.Business.NimPokeBot
 
                         var msg = await proxy.SendVenueAsync(group.ChatId, (float)poke.Latitude, (float)poke.Longitude, t1, t2).ConfigureAwait(false);
 
-                        var newNOtification = new PogoRelPokesChats { ChatId = msg.Chat.Id, MessageId = msg.MessageId, PokeId = poke.Id };
+                        var newNOtification = new PogoRelPokesChat { ChatId = msg.Chat.Id, MessageId = msg.MessageId, PokeId = poke.Id };
                         newNotifications.Add(newNOtification);
                     }
                     catch (Exception ex)
@@ -218,7 +218,7 @@ namespace EventBot.Business.NimPokeBot
             }
         }
 
-        private TelegramBotClient GetProxy(DataAccess.Queries.Raid.PogoRaidUsersEx chat)
+        private TelegramBotClient GetProxy(DataAccess.Queries.Raid.PogoRaidUserEx chat)
         {
             if (this.proxy.BotId == chat.BotId)
                 return this.proxy;

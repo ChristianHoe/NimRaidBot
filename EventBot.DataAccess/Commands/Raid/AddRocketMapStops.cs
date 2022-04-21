@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace EventBot.DataAccess.Commands.Raid
 {
     public record AddRocketMapStopsRequest(
-        IEnumerable<PogoStops> Stops
+        IEnumerable<PogoStop> Stops
     );
 
     public interface IAddRocketMapStopsCommand : ICommand<AddRocketMapStopsRequest>

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 namespace EventBot.DataAccess.Models
 {
-    public partial class PogoRaidsMeta
+    public partial class IngrEventsMetum
     {
-        public int RaidId { get; set; }
+        public int EventId { get; set; }
         public DateTime Created { get; set; }
-        public bool? Raid { get; set; }
+        public bool? Farm { get; set; }
     }
 }

@@ -10,7 +10,7 @@ namespace EventBot.DataAccess.Queries.Raid
         long BotId
     );
 
-    public interface IGetActiveChatsForUser : IQuery<GetActiveChatsForUserRequest, PogoRaidUsers[]>
+    public interface IGetActiveChatsForUser : IQuery<GetActiveChatsForUserRequest, PogoRaidUser[]>
     {
     }
 
@@ -24,7 +24,7 @@ namespace EventBot.DataAccess.Queries.Raid
         }
 
 
-        public PogoRaidUsers[] Execute(GetActiveChatsForUserRequest request)
+        public PogoRaidUser[] Execute(GetActiveChatsForUserRequest request)
         {
             using (var db = databaseFactory.CreateNew())
             {
@@ -33,7 +33,7 @@ namespace EventBot.DataAccess.Queries.Raid
                     rel => rel.GroupId,
                     c => c.ChatId,
                     (rel, c) => c
-                    ).Join(db.RelChatBot.Where(x => x.BotId == request.BotId),
+                    ).Join(db.RelChatBots.Where(x => x.BotId == request.BotId),
                     c => c.ChatId,
                     b => b.ChatId,
                     (c, b) => c

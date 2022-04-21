@@ -36,7 +36,7 @@ namespace EventBot.DataAccess.Commands.Raid
                 }
                 else
                 {
-                    db.Memberships.Add(new Memberships { GroupId = request.GroupId, UserId = request.UserId, LastAccess = DateTime.UtcNow});
+                    db.Memberships.Add(new Membership { GroupId = request.GroupId, UserId = request.UserId, LastAccess = DateTime.UtcNow});
                 }
 
                 db.SaveChanges();

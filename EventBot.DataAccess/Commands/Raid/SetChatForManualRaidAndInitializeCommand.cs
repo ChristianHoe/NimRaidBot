@@ -31,7 +31,7 @@ namespace EventBot.DataAccess.Commands.Raid
 
                 if (result == null)
                 {
-                    db.PogoUserRaids.Add(new PogoUserRaids { UserId = request.UserId, ChatId = request.ChatId });
+                    db.PogoUserRaids.Add(new PogoUserRaid { UserId = request.UserId, ChatId = request.ChatId });
                 }
                 else
                 {

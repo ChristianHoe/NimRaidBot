@@ -13,8 +13,8 @@ namespace EventBot.Business.Commands.Minun
 {
     public record GamePokeCreateTextRequest(
         DateTime Now,
-        PogoGamePokes Game,
-        IEnumerable<PogoGamePokesAnswers> Votes
+        PogoGamePoke Game,
+        IEnumerable<PogoGamePokesAnswer> Votes
     );
 
     public record GamePokeCreateTextResponse(

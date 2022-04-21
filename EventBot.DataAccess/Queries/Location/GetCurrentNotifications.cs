@@ -36,17 +36,17 @@ namespace EventBot.DataAccess.Queries.Location
                     m => m.GroupId,
                     (g, m) => m
                 ).Join(
-                    db.NotifyLocation,
+                    db.NotifyLocations,
                     m => m.GroupId,
                     n1 => n1.ChatId,
                     (m, n1) => new { m, n1 }
                 ).Join(
-                    db.NotifyLocation,
+                    db.NotifyLocations,
                     x => x.m.UserId,
                     n2 => n2.ChatId,
                     (x,  n2) => new { x.m,  x.n1, n2}
                 ).Join(
-                    db.RelChatBot,
+                    db.RelChatBots,
                     x => x.n2.ChatId,
                     b => b.ChatId,
                     (x, b) => new {x.m, x.n1, x.n2, b}
@@ -57,12 +57,12 @@ namespace EventBot.DataAccess.Queries.Location
                 ).Concat(
                     db.PogoRaidUsers
                     .Join(
-                        db.NotifyLocation,
+                        db.NotifyLocations,
                         g => g.ChatId,
                         n2 => n2.ChatId,
                         (g, n2) => n2
                     ).Join(
-                        db.RelChatBot,
+                        db.RelChatBots,
                         n2 => n2.ChatId,
                         b => b.ChatId,
                         (n2, b) => new { n2, b }

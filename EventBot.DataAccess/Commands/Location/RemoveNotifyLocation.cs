@@ -26,10 +26,10 @@ namespace EventBot.DataAccess.Commands.Location
         {
             using (var db = databaseFactory.CreateNew())
             {
-                var remove = db.NotifyLocation.SingleOrDefault(x => x.ChatId == request.ChatId && x.LocationId == request.LocationId);
+                var remove = db.NotifyLocations.SingleOrDefault(x => x.ChatId == request.ChatId && x.LocationId == request.LocationId);
                 if (remove != null)
                 {
-                    db.NotifyLocation.Remove(remove);
+                    db.NotifyLocations.Remove(remove);
                     db.SaveChanges();
                 }
             }

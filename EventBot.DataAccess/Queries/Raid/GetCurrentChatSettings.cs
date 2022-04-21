@@ -8,7 +8,7 @@ namespace EventBot.DataAccess.Queries.Raid
         long ChatId
     );
 
-    public interface IGetCurrentChatSettingsQuery    : IQuery<GetCurrentChatSettingsRequest, PogoRaidUsers>
+    public interface IGetCurrentChatSettingsQuery    : IQuery<GetCurrentChatSettingsRequest, PogoRaidUser?>
     {
     }
 
@@ -22,7 +22,7 @@ namespace EventBot.DataAccess.Queries.Raid
         }
 
 
-        public PogoRaidUsers Execute(GetCurrentChatSettingsRequest request)
+        public PogoRaidUser? Execute(GetCurrentChatSettingsRequest request)
         {
             using (var db = databaseFactory.CreateNew())
             {

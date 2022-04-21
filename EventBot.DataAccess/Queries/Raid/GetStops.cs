@@ -9,7 +9,7 @@ namespace EventBot.DataAccess.Queries.Raid
     {
     }
 
-    public interface IGetStopsQuery : IQuery<GetStopsRequest, IEnumerable<PogoStops>>
+    public interface IGetStopsQuery : IQuery<GetStopsRequest, IEnumerable<PogoStop>>
     {
     }
 
@@ -23,7 +23,7 @@ namespace EventBot.DataAccess.Queries.Raid
         }
 
 
-        public IEnumerable<PogoStops> Execute(GetStopsRequest request)
+        public IEnumerable<PogoStop> Execute(GetStopsRequest request)
         {
             using (var db = databaseFactory.CreateNew())
             {

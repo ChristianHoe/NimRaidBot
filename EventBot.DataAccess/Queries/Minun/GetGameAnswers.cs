@@ -10,7 +10,7 @@ namespace EventBot.DataAccess.Queries.Minun
         int MessageId
     );
 
-    public interface IGetGameAnswersQuery : IQuery<GetGameAnswersRequest, IEnumerable<PogoGamePokesAnswers>>
+    public interface IGetGameAnswersQuery : IQuery<GetGameAnswersRequest, IEnumerable<PogoGamePokesAnswer>>
     {
     }
 
@@ -24,7 +24,7 @@ namespace EventBot.DataAccess.Queries.Minun
         }
 
 
-        public IEnumerable<PogoGamePokesAnswers> Execute(GetGameAnswersRequest request)
+        public IEnumerable<PogoGamePokesAnswer> Execute(GetGameAnswersRequest request)
         {
             using (var db = databaseFactory.CreateNew())
             {

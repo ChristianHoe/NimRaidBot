@@ -11,7 +11,7 @@ namespace EventBot.DataAccess.Queries.Pokes
         DateTime ExpiredBefore
     );
 
-    public interface IGetPokesToCleanUpQuery : IQuery<GetPokesToCleanUpRequest, IEnumerable<PogoRelPokesChats>>
+    public interface IGetPokesToCleanUpQuery : IQuery<GetPokesToCleanUpRequest, IEnumerable<PogoRelPokesChat>>
     {
     }
 
@@ -25,7 +25,7 @@ namespace EventBot.DataAccess.Queries.Pokes
         }
 
 
-        public IEnumerable<PogoRelPokesChats> Execute(GetPokesToCleanUpRequest request)
+        public IEnumerable<PogoRelPokesChat> Execute(GetPokesToCleanUpRequest request)
         {
             using (var db = databaseFactory.CreateNew())
             {

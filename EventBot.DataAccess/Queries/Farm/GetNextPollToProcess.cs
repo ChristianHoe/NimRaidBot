@@ -6,7 +6,7 @@ namespace EventBot.DataAccess.Queries.Farm
 {
     public record GetNextPollToProcessRequest();
 
-    public interface IGetNextPollToProcessQuery : IQuery<GetNextPollToProcessRequest, ActivePolls>
+    public interface IGetNextPollToProcessQuery : IQuery<GetNextPollToProcessRequest, ActivePoll?>
     {
     }
 
@@ -20,7 +20,7 @@ namespace EventBot.DataAccess.Queries.Farm
         }
 
 
-        public ActivePolls Execute(GetNextPollToProcessRequest request)
+        public ActivePoll? Execute(GetNextPollToProcessRequest request)
         {
             using (var db = databaseFactory.CreateNew())
             {

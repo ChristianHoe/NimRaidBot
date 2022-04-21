@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace EventBot.DataAccess.Commands.Pokes
 {
     public record AddPokesRequest(
-        IEnumerable<PogoPokes> Pokes
+        IEnumerable<PogoPoke> Pokes
     );
 
     public interface IAddPokesCommand : ICommand<AddPokesRequest>

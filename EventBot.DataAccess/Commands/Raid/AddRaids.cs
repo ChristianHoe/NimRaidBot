@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace EventBot.DataAccess.Commands.Raid
 {
     public record AddRaidsRequest(
-        IEnumerable<PogoRaids> Raids
+        IEnumerable<PogoRaid> Raids
     );
 
     public interface IAddRaidsCommand : ICommand<AddRaidsRequest>

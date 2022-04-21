@@ -1,4 +1,7 @@
-﻿namespace EventBot.DataAccess.Models
+﻿using System;
+using System.Collections.Generic;
+
+namespace EventBot.DataAccess.Models
 {
     public partial class NotifyLocation
     {

@@ -30,7 +30,7 @@ namespace EventBot.DataAccess.Commands.Farm
         {
             using (var db = databaseFactory.CreateNew())
             {
-                var ev = new IngrEvents { ChatId = request.ChatId, Start = request.Start, Finished = request.Finished, LocationId = request.LocationId, TypeId = request.EventTypeId };
+                var ev = new IngrEvent { ChatId = request.ChatId, Start = request.Start, Finished = request.Finished, LocationId = request.LocationId, TypeId = request.EventTypeId };
                 db.IngrEvents.Add(ev);
                 db.SaveChanges();
             }

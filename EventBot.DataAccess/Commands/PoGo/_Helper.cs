@@ -9,7 +9,7 @@ namespace EventBot.DataAccess.Commands.PoGo
         public static PogoUser CreateNewUser(telegramEntities db, long userId)
         {
             var result = InitializeNewUser(userId);
-            db.PogoUser.Add(result);
+            db.PogoUsers.Add(result);
 
             return result;
         }

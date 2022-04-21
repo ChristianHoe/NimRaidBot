@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace EventBot.DataAccess.Models
 {
-    public partial class PogoRaidUsers
+    public partial class PogoRaidUser
     {
         public long ChatId { get; set; }
         public bool? Active { get; set; }

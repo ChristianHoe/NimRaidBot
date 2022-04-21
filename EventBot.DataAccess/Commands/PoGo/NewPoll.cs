@@ -28,7 +28,7 @@ namespace EventBot.DataAccess.Commands.PoGo
         {
             using (var db = databaseFactory.CreateNew())
             {
-                var poll = new ActivePolls { ChatId = request.ChatId, MessageId = request.MessageId, Deleted = false, TimeOffsetId = request.TimeOffsetId };
+                var poll = new ActivePoll { ChatId = request.ChatId, MessageId = request.MessageId, Deleted = false, TimeOffsetId = request.TimeOffsetId };
                 if (request.EventId != null)
                     poll.EventId = request.EventId;
                 else

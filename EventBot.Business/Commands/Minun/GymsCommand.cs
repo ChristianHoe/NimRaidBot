@@ -75,7 +75,7 @@ namespace EventBot.Business.Commands.Minun
             return StateResult.ContinueWith(1);
         }
 
-        private IEnumerable<PogoGyms> GetCurrentGyms(long chatId)
+        private IEnumerable<PogoGym> GetCurrentGyms(long chatId)
         {
             var chats = this.getActiveChatsForUser.Execute(new GetActiveChatsForUserRequest(BotId: nimRaidBot.BotId, UserId: chatId));
             var gyms = this.getActiveGymsForChatQuery.Execute(new GetActiveGymsForChatRequest(ChatIds: chats.Select(x => x.ChatId)));

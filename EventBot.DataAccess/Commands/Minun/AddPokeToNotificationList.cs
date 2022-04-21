@@ -29,7 +29,7 @@ namespace EventBot.DataAccess.Commands.Minun
         {
             using (var db = databaseFactory.CreateNew())
             {
-                var result = db.PogoChatPoke.SingleOrDefault(x => x.ChatId == request.ChatId && x.PokeId == request.PokeId);
+                var result = db.PogoChatPokes.SingleOrDefault(x => x.ChatId == request.ChatId && x.PokeId == request.PokeId);
 
                 if (result == null)
                 {
@@ -41,7 +41,7 @@ namespace EventBot.DataAccess.Commands.Minun
                         Iv = request.IV,
                     };
 
-                    db.PogoChatPoke.Add(add);
+                    db.PogoChatPokes.Add(add);
                     db.SaveChanges();
                 }
             }

@@ -8,7 +8,7 @@ namespace EventBot.DataAccess.Queries.Raid
     {
     }
 
-    public interface IGetNextPollToProcessQuery : IQuery<GetNextPollToProcessRequest, ActivePolls>
+    public interface IGetNextPollToProcessQuery : IQuery<GetNextPollToProcessRequest, ActivePoll?>
     {
     }
 
@@ -22,7 +22,7 @@ namespace EventBot.DataAccess.Queries.Raid
         }
 
 
-        public ActivePolls Execute(GetNextPollToProcessRequest request)
+        public ActivePoll? Execute(GetNextPollToProcessRequest request)
         {
             using (var db = databaseFactory.CreateNew())
             {

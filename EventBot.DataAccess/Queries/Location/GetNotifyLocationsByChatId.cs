@@ -28,7 +28,7 @@ namespace EventBot.DataAccess.Queries.Location
         {
             using (var db = databaseFactory.CreateNew())
             {
-                return db.NotifyLocation
+                return db.NotifyLocations
                     .Where(x => request.ChatIds.Contains(x.ChatId))
                     .ToList();
             }

@@ -26,11 +26,11 @@ namespace EventBot.DataAccess.Commands.Base
         {
             using (var db = databaseFactory.CreateNew())
             {
-                var result = db.RelChatBot.SingleOrDefault(x => x.ChatId == request.ChatId && x.BotId == request.BotId);
+                var result = db.RelChatBots.SingleOrDefault(x => x.ChatId == request.ChatId && x.BotId == request.BotId);
 
                 if (result != null)
                 {
-                    db.RelChatBot.Remove(result);
+                    db.RelChatBots.Remove(result);
                     db.SaveChanges();
                 }
             }

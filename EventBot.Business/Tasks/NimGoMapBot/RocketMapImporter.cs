@@ -33,7 +33,7 @@ namespace EventBot.Business.Tasks.NimGoMapBot
         private class GymMap
         {
             public PokeMapGym GoMapGym;
-            public PogoGyms PogoGym;
+            public PogoGym PogoGym;
         }
 
         private class StopMap
@@ -177,8 +177,8 @@ namespace EventBot.Business.Tasks.NimGoMapBot
                     var knownPokes2 = this.getCurrentPokesQuery2.Execute(new Queries.GetCurrentPokesRequest(MapId: this.Configuration.MAP_ID));
                     var pokeQueue = this.getPokeQueueQuery.Execute(new Queries.GetPokeQueueRequest { });
 
-                    var newPokes = new List<PogoPokes>();
-                    var updatedPokes = new List<PogoPokes>();
+                    var newPokes = new List<PogoPoke>();
+                    var updatedPokes = new List<PogoPoke>();
 
                     foreach (var poke in distinctPokes)
                     {
@@ -186,7 +186,7 @@ namespace EventBot.Business.Tasks.NimGoMapBot
                         int? iv = iiv == null ? (int?)null : (int)((iiv.Value / 45d) * 100);
                         int? level = CalculateLevel(poke.cp_multiplier);
 
-                        var databasePoke = new PogoPokes { MapId = this.Configuration.MAP_ID, Finished = DateTimeOffset.FromUnixTimeMilliseconds(poke.disappear_time).UtcDateTime, Iv = iv, Cp = poke.cp, Gender = poke.gender, Level = level, Latitude = Math.Round(poke.latitude, 7), Longitude = Math.Round(poke.longitude, 7), /* Modified = true, */ PokeId = poke.pokemon_id, WeatherBoosted = poke.weather_boosted_condition };
+                        var databasePoke = new PogoPoke { MapId = this.Configuration.MAP_ID, Finished = DateTimeOffset.FromUnixTimeMilliseconds(poke.disappear_time).UtcDateTime, Iv = iv, Cp = poke.cp, Gender = poke.gender, Level = level, Latitude = Math.Round(poke.latitude, 7), Longitude = Math.Round(poke.longitude, 7), /* Modified = true, */ PokeId = poke.pokemon_id, WeatherBoosted = poke.weather_boosted_condition };
                         var hash = Models.Utils.S2.GetPokeCell(databasePoke);
                         knownPokes2.TryGetValue(hash, out var known);
 
@@ -270,20 +270,20 @@ namespace EventBot.Business.Tasks.NimGoMapBot
                         var knownRaids = this.getRaids.Execute(new GetAllRaidsRequest(Date: utc));
                         var currentRaids = mappedGyms.Where(x => x.GoMapGym.raid != null && x.PogoGym != null && x.GoMapGym.raid?.level > 0 && Models.GoMap.Helper.TimeWithoutMilliseconds(Models.GoMap.Helper.PokeMapTimeToUtc(x.GoMapGym.raid.end)) >= Models.GoMap.Helper.TimeWithoutMilliseconds(utc)).ToList();
 
-                        var newRaids = new List<PogoRaids>();
-                        var updateRaids = new List<PogoRaids>();
+                        var newRaids = new List<PogoRaid>();
+                        var updateRaids = new List<PogoRaid>();
                         foreach (var gym in currentRaids)
                         {
                             var currentRaid = knownRaids.FirstOrDefault(x => x.GymId == gym.PogoGym.Id && Models.GoMap.Helper.TimeWithoutMilliseconds(Models.GoMap.Helper.PokeMapTimeToUtc(gym.GoMapGym.raid.end)) == Models.GoMap.Helper.TimeWithoutMilliseconds(x.Finished));
                             if (currentRaid == null)
                             {
-                                newRaids.Add(new PogoRaids { GymId = gym.PogoGym.Id, Start = Models.GoMap.Helper.TimeWithoutMilliseconds(Models.GoMap.Helper.PokeMapTimeToUtc(gym.GoMapGym.raid.start)), Finished = Models.GoMap.Helper.TimeWithoutMilliseconds(Models.GoMap.Helper.PokeMapTimeToUtc(gym.GoMapGym.raid.end)), Level = gym.GoMapGym.raid.level, PokeId = (gym.GoMapGym.raid.pokemon_id ?? 0), Move2 = gym.GoMapGym.raid.move_2 });
+                                newRaids.Add(new PogoRaid { GymId = gym.PogoGym.Id, Start = Models.GoMap.Helper.TimeWithoutMilliseconds(Models.GoMap.Helper.PokeMapTimeToUtc(gym.GoMapGym.raid.start)), Finished = Models.GoMap.Helper.TimeWithoutMilliseconds(Models.GoMap.Helper.PokeMapTimeToUtc(gym.GoMapGym.raid.end)), Level = gym.GoMapGym.raid.level, PokeId = (gym.GoMapGym.raid.pokemon_id ?? 0), Move2 = gym.GoMapGym.raid.move_2 });
                             }
                             else
                             {
                                 if (currentRaid.PokeId != gym.GoMapGym.raid.pokemon_id && (gym.GoMapGym.raid.pokemon_id ?? 0) != 0)
                                 {
-                                    updateRaids.Add(new PogoRaids { Id = currentRaid.Id, PokeId = (gym.GoMapGym.raid.pokemon_id ?? 0), Move2 = gym.GoMapGym.raid.move_2 });
+                                    updateRaids.Add(new PogoRaid { Id = currentRaid.Id, PokeId = (gym.GoMapGym.raid.pokemon_id ?? 0), Move2 = gym.GoMapGym.raid.move_2 });
                                 }
                             }
                         }
@@ -319,7 +319,7 @@ namespace EventBot.Business.Tasks.NimGoMapBot
                         var remberId = 0;
                         if (newStops.Count() > 0)
                         {
-                            var request = new AddRocketMapStopsRequest(Stops: newStops.Select(x => new PogoStops{ Latitude = x.GoMapStop.latitude, Longitude = x.GoMapStop.longitude, Name = x.GoMapStop.name }).ToList());
+                            var request = new AddRocketMapStopsRequest(Stops: newStops.Select(x => new PogoStop { Latitude = x.GoMapStop.latitude, Longitude = x.GoMapStop.longitude, Name = x.GoMapStop.name }).ToList());
                             this.addRocketMapStopsCommand.Execute(request);
 
                             foreach(var newStop in request.Stops)
@@ -337,8 +337,8 @@ namespace EventBot.Business.Tasks.NimGoMapBot
 
                         var currentQuests = mappedStops.Where(x => x.GoMapStop.quest_raw != null && x.Quest != null).ToList();
 
-                        var newQuests = new List<PogoQuests>();
-                        var updateQuests = new List<PogoQuests>();
+                        var newQuests = new List<PogoQuest>();
+                        var updateQuests = new List<PogoQuest>();
                         foreach (var quest in currentQuests)
                         {
 var reward_text = $"{quest.GoMapStop.quest_raw.item_type} : {(quest.GoMapStop.quest_raw.item_type == "Pokemon" ? quest.GoMapStop.quest_raw.quest_pokemon_name : quest.GoMapStop.quest_raw.item_amount?.ToString())}";
@@ -346,13 +346,13 @@ var reward_text = $"{quest.GoMapStop.quest_raw.item_type} : {(quest.GoMapStop.qu
                             var currentQuest = string.IsNullOrWhiteSpace(quest.Quest?.Reward) ? null : quest.Quest;
                             if (currentQuest == null)
                             {
-                                newQuests.Add(new PogoQuests { StopId = quest.Quest.Value.Id, Created = utc, Task = quest.GoMapStop.quest_raw.quest_task, Reward = reward_text });
+                                newQuests.Add(new PogoQuest { StopId = quest.Quest.Value.Id, Created = utc, Task = quest.GoMapStop.quest_raw.quest_task, Reward = reward_text });
                             }
                             else
                             {
                                 if (currentQuest.Value.Task != quest.GoMapStop.quest_raw.quest_task && currentQuest.Value.Reward != reward_text)
                                 {
-                                    updateQuests.Add(new PogoQuests { StopId = currentQuest.Value.Id, Created = utc, Task = quest.GoMapStop.quest_raw.quest_task, Reward = reward_text });
+                                    updateQuests.Add(new PogoQuest { StopId = currentQuest.Value.Id, Created = utc, Task = quest.GoMapStop.quest_raw.quest_task, Reward = reward_text });
                                 }
                             }
                         }

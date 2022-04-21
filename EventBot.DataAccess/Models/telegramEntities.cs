@@ -1,6 +1,5 @@
-﻿#nullable disable
-
-using System;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -17,41 +16,41 @@ namespace EventBot.DataAccess.Models
         {
         }
 
-        public virtual DbSet<ActivePolls> ActivePolls { get; set; }
-        public virtual DbSet<ActivePollsMeta> ActivePollsMeta { get; set; }
-        public virtual DbSet<BotFarm> BotFarm { get; set; }
-        public virtual DbSet<EventSetups> EventSetups { get; set; }
-        public virtual DbSet<IngrEvents> IngrEvents { get; set; }
-        public virtual DbSet<IngrEventsMeta> IngrEventsMeta { get; set; }
-        public virtual DbSet<Locations> Locations { get; set; }
-        public virtual DbSet<Memberships> Memberships { get; set; }
-        public virtual DbSet<NotifyLocation> NotifyLocation { get; set; }
-        public virtual DbSet<PogoChatPoke> PogoChatPoke { get; set; }
-        public virtual DbSet<PogoConfigurations> PogoConfigurations { get; set; }
-        public virtual DbSet<PogoGamePokes> PogoGamePokes { get; set; }
-        public virtual DbSet<PogoGamePokesAnswers> PogoGamePokesAnswers { get; set; }
-        public virtual DbSet<PogoGamePokesMeta> PogoGamePokesMeta { get; set; }
-        public virtual DbSet<PogoGyms> PogoGyms { get; set; }
-        public virtual DbSet<PogoPokes> PogoPokes { get; set; }
-        public virtual DbSet<PogoPokesMeta> PogoPokesMeta { get; set; }
-        public virtual DbSet<PogoQuests> PogoQuests { get; set; }
-        public virtual DbSet<PogoQuestsHistory> PogoQuestsHistory { get; set; }
-        public virtual DbSet<PogoQuestsMeta> PogoQuestsMeta { get; set; }
-        public virtual DbSet<PogoRaidPreference> PogoRaidPreference { get; set; }
-        public virtual DbSet<PogoRaidTimeOffsets> PogoRaidTimeOffsets { get; set; }
-        public virtual DbSet<PogoRaidUsers> PogoRaidUsers { get; set; }
-        public virtual DbSet<PogoRaids> PogoRaids { get; set; }
-        public virtual DbSet<PogoRaidsMeta> PogoRaidsMeta { get; set; }
-        public virtual DbSet<PogoRelPokesChats> PogoRelPokesChats { get; set; }
-        public virtual DbSet<PogoRelScanChat> PogoRelScanChat { get; set; }
-        public virtual DbSet<PogoScanArea> PogoScanArea { get; set; }
-        public virtual DbSet<PogoSpecialGyms> PogoSpecialGyms { get; set; }
-        public virtual DbSet<PogoStops> PogoStops { get; set; }
-        public virtual DbSet<PogoUser> PogoUser { get; set; }
-        public virtual DbSet<PogoUserRaids> PogoUserRaids { get; set; }
-        public virtual DbSet<RelChatBot> RelChatBot { get; set; }
-        public virtual DbSet<States> States { get; set; }
-        public virtual DbSet<UserVotes> UserVotes { get; set; }
+        public virtual DbSet<ActivePoll> ActivePolls { get; set; } = null!;
+        public virtual DbSet<ActivePollsMetum> ActivePollsMeta { get; set; } = null!;
+        public virtual DbSet<BotFarm> BotFarms { get; set; } = null!;
+        public virtual DbSet<EventSetup> EventSetups { get; set; } = null!;
+        public virtual DbSet<IngrEvent> IngrEvents { get; set; } = null!;
+        public virtual DbSet<IngrEventsMetum> IngrEventsMeta { get; set; } = null!;
+        public virtual DbSet<Location> Locations { get; set; } = null!;
+        public virtual DbSet<Membership> Memberships { get; set; } = null!;
+        public virtual DbSet<NotifyLocation> NotifyLocations { get; set; } = null!;
+        public virtual DbSet<PogoChatPoke> PogoChatPokes { get; set; } = null!;
+        public virtual DbSet<PogoConfiguration> PogoConfigurations { get; set; } = null!;
+        public virtual DbSet<PogoGamePoke> PogoGamePokes { get; set; } = null!;
+        public virtual DbSet<PogoGamePokesAnswer> PogoGamePokesAnswers { get; set; } = null!;
+        public virtual DbSet<PogoGamePokesMetum> PogoGamePokesMeta { get; set; } = null!;
+        public virtual DbSet<PogoGym> PogoGyms { get; set; } = null!;
+        public virtual DbSet<PogoPoke> PogoPokes { get; set; } = null!;
+        public virtual DbSet<PogoPokesMetum> PogoPokesMeta { get; set; } = null!;
+        public virtual DbSet<PogoQuest> PogoQuests { get; set; } = null!;
+        public virtual DbSet<PogoQuestsHistory> PogoQuestsHistories { get; set; } = null!;
+        public virtual DbSet<PogoQuestsMetum> PogoQuestsMeta { get; set; } = null!;
+        public virtual DbSet<PogoRaid> PogoRaids { get; set; } = null!;
+        public virtual DbSet<PogoRaidPreference> PogoRaidPreferences { get; set; } = null!;
+        public virtual DbSet<PogoRaidTimeOffset> PogoRaidTimeOffsets { get; set; } = null!;
+        public virtual DbSet<PogoRaidUser> PogoRaidUsers { get; set; } = null!;
+        public virtual DbSet<PogoRaidsMetum> PogoRaidsMeta { get; set; } = null!;
+        public virtual DbSet<PogoRelPokesChat> PogoRelPokesChats { get; set; } = null!;
+        public virtual DbSet<PogoRelScanChat> PogoRelScanChats { get; set; } = null!;
+        public virtual DbSet<PogoScanArea> PogoScanAreas { get; set; } = null!;
+        public virtual DbSet<PogoSpecialGym> PogoSpecialGyms { get; set; } = null!;
+        public virtual DbSet<PogoStop> PogoStops { get; set; } = null!;
+        public virtual DbSet<PogoUser> PogoUsers { get; set; } = null!;
+        public virtual DbSet<PogoUserRaid> PogoUserRaids { get; set; } = null!;
+        public virtual DbSet<RelChatBot> RelChatBots { get; set; } = null!;
+        public virtual DbSet<State> States { get; set; } = null!;
+        public virtual DbSet<UserVote> UserVotes { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -59,38 +58,41 @@ namespace EventBot.DataAccess.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ActivePolls>(entity =>
+            modelBuilder.UseCollation("utf8_general_ci")
+                .HasCharSet("utf8");
+
+            modelBuilder.Entity<ActivePoll>(entity =>
             {
                 entity.ToTable("ACTIVE_POLLS");
 
                 entity.Property(e => e.Id)
-                    .HasColumnName("ID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("ID");
 
                 entity.Property(e => e.ChatId)
-                    .HasColumnName("CHAT_ID")
-                    .HasColumnType("bigint(20)");
+                    .HasColumnType("bigint(20)")
+                    .HasColumnName("CHAT_ID");
 
                 entity.Property(e => e.Deleted).HasColumnName("DELETED");
 
                 entity.Property(e => e.EventId)
-                    .HasColumnName("EVENT_ID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("EVENT_ID");
 
                 entity.Property(e => e.MessageId)
-                    .HasColumnName("MESSAGE_ID")
-                    .HasColumnType("bigint(20)");
+                    .HasColumnType("bigint(20)")
+                    .HasColumnName("MESSAGE_ID");
 
                 entity.Property(e => e.RaidId)
-                    .HasColumnName("RAID_ID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("RAID_ID");
 
                 entity.Property(e => e.TimeOffsetId)
-                    .HasColumnName("TIME_OFFSET_ID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("TIME_OFFSET_ID");
             });
 
-            modelBuilder.Entity<ActivePollsMeta>(entity =>
+            modelBuilder.Entity<ActivePollsMetum>(entity =>
             {
                 entity.HasKey(e => e.PollId)
                     .HasName("PRIMARY");
@@ -98,8 +100,9 @@ namespace EventBot.DataAccess.Models
                 entity.ToTable("ACTIVE_POLLS_META");
 
                 entity.Property(e => e.PollId)
-                    .HasColumnName("POLL_ID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .ValueGeneratedNever()
+                    .HasColumnName("POLL_ID");
 
                 entity.Property(e => e.Created).HasColumnName("CREATED");
 
@@ -113,76 +116,77 @@ namespace EventBot.DataAccess.Models
                 entity.ToTable("BOT_FARM");
 
                 entity.Property(e => e.Id)
-                    .HasColumnName("ID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("ID");
 
                 entity.Property(e => e.BoardId)
-                    .HasColumnName("BOARD_ID")
-                    .HasColumnType("bigint(20)");
+                    .HasColumnType("bigint(20)")
+                    .HasColumnName("BOARD_ID");
 
                 entity.Property(e => e.ChatId)
-                    .HasColumnName("CHAT_ID")
-                    .HasColumnType("bigint(20)");
+                    .HasColumnType("bigint(20)")
+                    .HasColumnName("CHAT_ID");
             });
 
-            modelBuilder.Entity<EventSetups>(entity =>
+            modelBuilder.Entity<EventSetup>(entity =>
             {
                 entity.HasKey(e => new { e.ChatId, e.MessageId })
-                    .HasName("PRIMARY");
+                    .HasName("PRIMARY")
+                    .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
 
                 entity.ToTable("EVENT_SETUPS");
 
                 entity.Property(e => e.ChatId)
-                    .HasColumnName("CHAT_ID")
-                    .HasColumnType("bigint(20)");
+                    .HasColumnType("bigint(20)")
+                    .HasColumnName("CHAT_ID");
 
                 entity.Property(e => e.MessageId)
-                    .HasColumnName("MESSAGE_ID")
-                    .HasColumnType("bigint(20)");
+                    .HasColumnType("bigint(20)")
+                    .HasColumnName("MESSAGE_ID");
 
                 entity.Property(e => e.LocationId)
-                    .HasColumnName("LOCATION_ID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("LOCATION_ID");
 
                 entity.Property(e => e.Modified).HasColumnName("MODIFIED");
 
                 entity.Property(e => e.Start).HasColumnName("START");
 
                 entity.Property(e => e.TargetChatId)
-                    .HasColumnName("TARGET_CHAT_ID")
-                    .HasColumnType("bigint(20)");
+                    .HasColumnType("bigint(20)")
+                    .HasColumnName("TARGET_CHAT_ID");
 
                 entity.Property(e => e.Type)
-                    .HasColumnName("TYPE")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("TYPE");
             });
 
-            modelBuilder.Entity<IngrEvents>(entity =>
+            modelBuilder.Entity<IngrEvent>(entity =>
             {
                 entity.ToTable("INGR_EVENTS");
 
                 entity.Property(e => e.Id)
-                    .HasColumnName("ID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("ID");
 
                 entity.Property(e => e.ChatId)
-                    .HasColumnName("CHAT_ID")
-                    .HasColumnType("bigint(20)");
+                    .HasColumnType("bigint(20)")
+                    .HasColumnName("CHAT_ID");
 
                 entity.Property(e => e.Finished).HasColumnName("FINISHED");
 
                 entity.Property(e => e.LocationId)
-                    .HasColumnName("LOCATION_ID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("LOCATION_ID");
 
                 entity.Property(e => e.Start).HasColumnName("START");
 
                 entity.Property(e => e.TypeId)
-                    .HasColumnName("TYPE_ID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("TYPE_ID");
             });
 
-            modelBuilder.Entity<IngrEventsMeta>(entity =>
+            modelBuilder.Entity<IngrEventsMetum>(entity =>
             {
                 entity.HasKey(e => e.EventId)
                     .HasName("PRIMARY");
@@ -190,314 +194,311 @@ namespace EventBot.DataAccess.Models
                 entity.ToTable("INGR_EVENTS_META");
 
                 entity.Property(e => e.EventId)
-                    .HasColumnName("EVENT_ID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .ValueGeneratedNever()
+                    .HasColumnName("EVENT_ID");
 
                 entity.Property(e => e.Created).HasColumnName("CREATED");
 
                 entity.Property(e => e.Farm).HasColumnName("FARM");
             });
 
-            modelBuilder.Entity<Locations>(entity =>
+            modelBuilder.Entity<Location>(entity =>
             {
                 entity.ToTable("LOCATIONS");
 
                 entity.Property(e => e.Id)
-                    .HasColumnName("ID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("ID");
 
                 entity.Property(e => e.Latitude)
-                    .HasColumnName("LATITUDE")
-                    .HasColumnType("decimal(12,9)");
+                    .HasPrecision(12, 9)
+                    .HasColumnName("LATITUDE");
 
                 entity.Property(e => e.Longitude)
-                    .HasColumnName("LONGITUDE")
-                    .HasColumnType("decimal(12,9)");
+                    .HasPrecision(12, 9)
+                    .HasColumnName("LONGITUDE");
 
                 entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasColumnName("NAME")
-                    .HasColumnType("varchar(200)")
-                    .HasCharSet("utf8")
-                    .HasCollation("utf8_general_ci");
+                    .HasMaxLength(200)
+                    .HasColumnName("NAME");
 
                 entity.Property(e => e.Order)
-                    .HasColumnName("ORDER")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("ORDER");
 
                 entity.Property(e => e.Type)
-                    .HasColumnName("TYPE")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("TYPE");
             });
 
-            modelBuilder.Entity<Memberships>(entity =>
+            modelBuilder.Entity<Membership>(entity =>
             {
                 entity.HasKey(e => new { e.GroupId, e.UserId })
-                    .HasName("PRIMARY");
+                    .HasName("PRIMARY")
+                    .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
 
                 entity.ToTable("MEMBERSHIPS");
 
                 entity.Property(e => e.GroupId)
-                    .HasColumnName("GROUP_ID")
-                    .HasColumnType("bigint(20)");
+                    .HasColumnType("bigint(20)")
+                    .HasColumnName("GROUP_ID");
 
                 entity.Property(e => e.UserId)
-                    .HasColumnName("USER_ID")
-                    .HasColumnType("bigint(20)");
+                    .HasColumnType("bigint(20)")
+                    .HasColumnName("USER_ID");
 
                 entity.Property(e => e.Created).HasColumnName("CREATED");
 
                 entity.Property(e => e.LastAccess).HasColumnName("LAST_ACCESS");
 
                 entity.Property(e => e.SecurityLevel)
-                    .HasColumnName("SECURITY_LEVEL")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("SECURITY_LEVEL");
             });
 
             modelBuilder.Entity<NotifyLocation>(entity =>
             {
                 entity.HasKey(e => new { e.ChatId, e.LocationId })
-                    .HasName("PRIMARY");
+                    .HasName("PRIMARY")
+                    .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
 
                 entity.ToTable("NOTIFY_LOCATION");
 
                 entity.Property(e => e.ChatId)
-                    .HasColumnName("CHAT_ID")
-                    .HasColumnType("bigint(20)");
+                    .HasColumnType("bigint(20)")
+                    .HasColumnName("CHAT_ID");
 
                 entity.Property(e => e.LocationId)
-                    .HasColumnName("LOCATION_ID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("LOCATION_ID");
             });
 
             modelBuilder.Entity<PogoChatPoke>(entity =>
             {
                 entity.HasKey(e => new { e.ChatId, e.PokeId })
-                    .HasName("PRIMARY");
+                    .HasName("PRIMARY")
+                    .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
 
                 entity.ToTable("POGO_CHAT_POKE");
 
                 entity.Property(e => e.ChatId)
-                    .HasColumnName("CHAT_ID")
-                    .HasColumnType("bigint(20)");
+                    .HasColumnType("bigint(20)")
+                    .HasColumnName("CHAT_ID");
 
                 entity.Property(e => e.PokeId)
-                    .HasColumnName("POKE_ID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("POKE_ID");
 
                 entity.Property(e => e.Gender)
+                    .HasMaxLength(1)
                     .HasColumnName("GENDER")
-                    .HasColumnType("char(1)")
-                    .HasCharSet("utf8")
-                    .HasCollation("utf8_general_ci");
+                    .IsFixedLength();
 
                 entity.Property(e => e.Iv)
-                    .HasColumnName("IV")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("IV");
             });
 
-            modelBuilder.Entity<PogoConfigurations>(entity =>
+            modelBuilder.Entity<PogoConfiguration>(entity =>
             {
                 entity.ToTable("POGO_CONFIGURATIONS");
 
                 entity.Property(e => e.Id)
-                    .HasColumnName("ID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("ID");
 
                 entity.Property(e => e.RaidDurationInMin)
-                    .HasColumnName("RAID_DURATION_IN_MIN")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("RAID_DURATION_IN_MIN");
             });
 
-            modelBuilder.Entity<PogoGamePokes>(entity =>
+            modelBuilder.Entity<PogoGamePoke>(entity =>
             {
                 entity.HasKey(e => new { e.ChatId, e.MessageId })
-                    .HasName("PRIMARY");
+                    .HasName("PRIMARY")
+                    .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
 
                 entity.ToTable("POGO_GAME_POKES");
 
                 entity.Property(e => e.ChatId)
-                    .HasColumnName("CHAT_ID")
-                    .HasColumnType("bigint(20)");
+                    .HasColumnType("bigint(20)")
+                    .HasColumnName("CHAT_ID");
 
                 entity.Property(e => e.MessageId)
-                    .HasColumnName("MESSAGE_ID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("MESSAGE_ID");
 
                 entity.Property(e => e.Choice1PokeId)
-                    .HasColumnName("CHOICE_1_POKE_ID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("CHOICE_1_POKE_ID");
 
                 entity.Property(e => e.Choice1PokeMoveTyp)
-                    .HasColumnName("CHOICE_1_POKE_MOVE_TYP")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("CHOICE_1_POKE_MOVE_TYP");
 
                 entity.Property(e => e.Choice2PokeId)
-                    .HasColumnName("CHOICE_2_POKE_ID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("CHOICE_2_POKE_ID");
 
                 entity.Property(e => e.Choice2PokeMoveTyp)
-                    .HasColumnName("CHOICE_2_POKE_MOVE_TYP")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("CHOICE_2_POKE_MOVE_TYP");
 
                 entity.Property(e => e.Choice3PokeId)
-                    .HasColumnName("CHOICE_3_POKE_ID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("CHOICE_3_POKE_ID");
 
                 entity.Property(e => e.Choice3PokeMoveTyp)
-                    .HasColumnName("CHOICE_3_POKE_MOVE_TYP")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("CHOICE_3_POKE_MOVE_TYP");
 
                 entity.Property(e => e.Choice4PokeId)
-                    .HasColumnName("CHOICE_4_POKE_ID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("CHOICE_4_POKE_ID");
 
                 entity.Property(e => e.Choice4PokeMoveTyp)
-                    .HasColumnName("CHOICE_4_POKE_MOVE_TYP")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("CHOICE_4_POKE_MOVE_TYP");
 
                 entity.Property(e => e.Difficulty)
-                    .HasColumnName("DIFFICULTY")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("DIFFICULTY");
 
                 entity.Property(e => e.Finish).HasColumnName("FINISH");
 
                 entity.Property(e => e.TargetPokeId)
-                    .HasColumnName("TARGET_POKE_ID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("TARGET_POKE_ID");
 
                 entity.Property(e => e.TargetPokeMoveTyp)
-                    .HasColumnName("TARGET_POKE_MOVE_TYP")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("TARGET_POKE_MOVE_TYP");
             });
 
-            modelBuilder.Entity<PogoGamePokesAnswers>(entity =>
+            modelBuilder.Entity<PogoGamePokesAnswer>(entity =>
             {
                 entity.HasKey(e => new { e.ChatId, e.MessageId, e.UserId })
-                    .HasName("PRIMARY");
+                    .HasName("PRIMARY")
+                    .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0, 0 });
 
                 entity.ToTable("POGO_GAME_POKES_ANSWERS");
 
                 entity.Property(e => e.ChatId)
-                    .HasColumnName("CHAT_ID")
-                    .HasColumnType("bigint(20)");
+                    .HasColumnType("bigint(20)")
+                    .HasColumnName("CHAT_ID");
 
                 entity.Property(e => e.MessageId)
-                    .HasColumnName("MESSAGE_ID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("MESSAGE_ID");
 
                 entity.Property(e => e.UserId)
-                    .HasColumnName("USER_ID")
-                    .HasColumnType("bigint(20)");
+                    .HasColumnType("bigint(20)")
+                    .HasColumnName("USER_ID");
 
                 entity.Property(e => e.Choice)
-                    .HasColumnName("CHOICE")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("CHOICE");
 
                 entity.Property(e => e.Created).HasColumnName("CREATED");
 
                 entity.Property(e => e.UserName)
-                    .IsRequired()
-                    .HasColumnName("USER_NAME")
-                    .HasColumnType("varchar(25)")
-                    .HasCharSet("utf8")
-                    .HasCollation("utf8_general_ci");
+                    .HasMaxLength(25)
+                    .HasColumnName("USER_NAME");
             });
 
-            modelBuilder.Entity<PogoGamePokesMeta>(entity =>
+            modelBuilder.Entity<PogoGamePokesMetum>(entity =>
             {
                 entity.HasKey(e => new { e.ChatId, e.MessageId })
-                    .HasName("PRIMARY");
+                    .HasName("PRIMARY")
+                    .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
 
                 entity.ToTable("POGO_GAME_POKES_META");
 
                 entity.Property(e => e.ChatId)
-                    .HasColumnName("CHAT_ID")
-                    .HasColumnType("bigint(20)");
+                    .HasColumnType("bigint(20)")
+                    .HasColumnName("CHAT_ID");
 
                 entity.Property(e => e.MessageId)
-                    .HasColumnName("MESSAGE_ID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("MESSAGE_ID");
 
                 entity.Property(e => e.Created).HasColumnName("CREATED");
 
                 entity.Property(e => e.State)
-                    .HasColumnName("STATE")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("STATE");
             });
 
-            modelBuilder.Entity<PogoGyms>(entity =>
+            modelBuilder.Entity<PogoGym>(entity =>
             {
                 entity.ToTable("POGO_GYMS");
 
                 entity.Property(e => e.Id)
-                    .HasColumnName("ID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("ID");
 
                 entity.Property(e => e.Latitude)
-                    .HasColumnName("LATITUDE")
-                    .HasColumnType("decimal(12,9)");
+                    .HasPrecision(12, 9)
+                    .HasColumnName("LATITUDE");
 
                 entity.Property(e => e.Longitude)
-                    .HasColumnName("LONGITUDE")
-                    .HasColumnType("decimal(12,9)");
+                    .HasPrecision(12, 9)
+                    .HasColumnName("LONGITUDE");
 
                 entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasColumnName("NAME")
-                    .HasColumnType("varchar(200)")
-                    .HasCharSet("utf8")
-                    .HasCollation("utf8_general_ci");
+                    .HasMaxLength(200)
+                    .HasColumnName("NAME");
             });
 
-            modelBuilder.Entity<PogoPokes>(entity =>
+            modelBuilder.Entity<PogoPoke>(entity =>
             {
                 entity.ToTable("POGO_POKES");
 
                 entity.Property(e => e.Id)
-                    .HasColumnName("ID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("ID");
 
                 entity.Property(e => e.Cp)
-                    .HasColumnName("CP")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("CP");
 
                 entity.Property(e => e.Finished).HasColumnName("FINISHED");
 
                 entity.Property(e => e.Gender)
-                    .HasColumnName("GENDER")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("GENDER");
 
                 entity.Property(e => e.Iv)
-                    .HasColumnName("IV")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("IV");
 
                 entity.Property(e => e.Latitude)
-                    .HasColumnName("LATITUDE")
-                    .HasColumnType("decimal(15,13)");
+                    .HasPrecision(15, 13)
+                    .HasColumnName("LATITUDE");
 
                 entity.Property(e => e.Level)
-                    .HasColumnName("LEVEL")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("LEVEL");
 
                 entity.Property(e => e.Longitude)
-                    .HasColumnName("LONGITUDE")
-                    .HasColumnType("decimal(15,13)");
+                    .HasPrecision(15, 13)
+                    .HasColumnName("LONGITUDE");
 
                 entity.Property(e => e.MapId)
-                    .HasColumnName("MAP_ID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("MAP_ID");
 
                 entity.Property(e => e.PokeId)
-                    .HasColumnName("POKE_ID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("POKE_ID");
 
                 entity.Property(e => e.WeatherBoosted)
-                    .HasColumnName("WEATHER_BOOSTED")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("WEATHER_BOOSTED");
             });
 
-            modelBuilder.Entity<PogoPokesMeta>(entity =>
+            modelBuilder.Entity<PogoPokesMetum>(entity =>
             {
                 entity.HasKey(e => e.PogoPokeId)
                     .HasName("PRIMARY");
@@ -505,15 +506,16 @@ namespace EventBot.DataAccess.Models
                 entity.ToTable("POGO_POKES_META");
 
                 entity.Property(e => e.PogoPokeId)
-                    .HasColumnName("POGO_POKE_ID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .ValueGeneratedNever()
+                    .HasColumnName("POGO_POKE_ID");
 
                 entity.Property(e => e.Created).HasColumnName("CREATED");
 
                 entity.Property(e => e.Poke).HasColumnName("POKE");
             });
 
-            modelBuilder.Entity<PogoQuests>(entity =>
+            modelBuilder.Entity<PogoQuest>(entity =>
             {
                 entity.HasKey(e => e.StopId)
                     .HasName("PRIMARY");
@@ -521,55 +523,45 @@ namespace EventBot.DataAccess.Models
                 entity.ToTable("POGO_QUESTS");
 
                 entity.Property(e => e.StopId)
-                    .HasColumnName("STOP_ID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .ValueGeneratedNever()
+                    .HasColumnName("STOP_ID");
 
                 entity.Property(e => e.Created).HasColumnName("CREATED");
 
                 entity.Property(e => e.Reward)
-                    .IsRequired()
-                    .HasColumnName("REWARD")
-                    .HasColumnType("varchar(200)")
-                    .HasCharSet("utf8")
-                    .HasCollation("utf8_general_ci");
+                    .HasMaxLength(200)
+                    .HasColumnName("REWARD");
 
                 entity.Property(e => e.Task)
-                    .IsRequired()
-                    .HasColumnName("TASK")
-                    .HasColumnType("varchar(200)")
-                    .HasCharSet("utf8")
-                    .HasCollation("utf8_general_ci");
+                    .HasMaxLength(200)
+                    .HasColumnName("TASK");
             });
 
             modelBuilder.Entity<PogoQuestsHistory>(entity =>
             {
                 entity.HasKey(e => new { e.StopId, e.Created })
-                    .HasName("PRIMARY");
+                    .HasName("PRIMARY")
+                    .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
 
                 entity.ToTable("POGO_QUESTS_HISTORY");
 
                 entity.Property(e => e.StopId)
-                    .HasColumnName("STOP_ID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("STOP_ID");
 
                 entity.Property(e => e.Created).HasColumnName("CREATED");
 
                 entity.Property(e => e.Reward)
-                    .IsRequired()
-                    .HasColumnName("REWARD")
-                    .HasColumnType("varchar(200)")
-                    .HasCharSet("utf8")
-                    .HasCollation("utf8_general_ci");
+                    .HasMaxLength(200)
+                    .HasColumnName("REWARD");
 
                 entity.Property(e => e.Task)
-                    .IsRequired()
-                    .HasColumnName("TASK")
-                    .HasColumnType("varchar(200)")
-                    .HasCharSet("utf8")
-                    .HasCollation("utf8_general_ci");
+                    .HasMaxLength(200)
+                    .HasColumnName("TASK");
             });
 
-            modelBuilder.Entity<PogoQuestsMeta>(entity =>
+            modelBuilder.Entity<PogoQuestsMetum>(entity =>
             {
                 entity.HasKey(e => e.StopId)
                     .HasName("PRIMARY");
@@ -577,51 +569,99 @@ namespace EventBot.DataAccess.Models
                 entity.ToTable("POGO_QUESTS_META");
 
                 entity.Property(e => e.StopId)
-                    .HasColumnName("STOP_ID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .ValueGeneratedNever()
+                    .HasColumnName("STOP_ID");
 
                 entity.Property(e => e.Created).HasColumnName("CREATED");
 
                 entity.Property(e => e.Processed).HasColumnName("PROCESSED");
             });
 
+            modelBuilder.Entity<PogoRaid>(entity =>
+            {
+                entity.ToTable("POGO_RAIDS");
+
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("ID");
+
+                entity.Property(e => e.ChatId)
+                    .HasColumnType("bigint(20)")
+                    .HasColumnName("CHAT_ID");
+
+                entity.Property(e => e.Finished).HasColumnName("FINISHED");
+
+                entity.Property(e => e.GymId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("GYM_ID");
+
+                entity.Property(e => e.Level)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("LEVEL");
+
+                entity.Property(e => e.Move2)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("MOVE2");
+
+                entity.Property(e => e.OwnerId)
+                    .HasColumnType("bigint(20)")
+                    .HasColumnName("OWNER_ID");
+
+                entity.Property(e => e.PokeForm)
+                    .HasMaxLength(1)
+                    .HasColumnName("POKE_FORM");
+
+                entity.Property(e => e.PokeId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("POKE_ID");
+
+                entity.Property(e => e.Start).HasColumnName("START");
+
+                entity.Property(e => e.Title)
+                    .HasMaxLength(40)
+                    .HasColumnName("TITLE");
+            });
+
             modelBuilder.Entity<PogoRaidPreference>(entity =>
             {
                 entity.HasKey(e => new { e.ChatId, e.PokeId })
-                    .HasName("PRIMARY");
+                    .HasName("PRIMARY")
+                    .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
 
                 entity.ToTable("POGO_RAID_PREFERENCE");
 
                 entity.Property(e => e.ChatId)
-                    .HasColumnName("CHAT_ID")
-                    .HasColumnType("bigint(20)");
+                    .HasColumnType("bigint(20)")
+                    .HasColumnName("CHAT_ID");
 
                 entity.Property(e => e.PokeId)
-                    .HasColumnName("POKE_ID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("POKE_ID");
             });
 
-            modelBuilder.Entity<PogoRaidTimeOffsets>(entity =>
+            modelBuilder.Entity<PogoRaidTimeOffset>(entity =>
             {
                 entity.HasKey(e => new { e.SettingId, e.Order })
-                    .HasName("PRIMARY");
+                    .HasName("PRIMARY")
+                    .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
 
                 entity.ToTable("POGO_RAID_TIME_OFFSETS");
 
                 entity.Property(e => e.SettingId)
-                    .HasColumnName("SETTING_ID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("SETTING_ID");
 
                 entity.Property(e => e.Order)
-                    .HasColumnName("ORDER")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("ORDER");
 
                 entity.Property(e => e.OffsetInMinutes)
-                    .HasColumnName("OFFSET_IN_MINUTES")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("OFFSET_IN_MINUTES");
             });
 
-            modelBuilder.Entity<PogoRaidUsers>(entity =>
+            modelBuilder.Entity<PogoRaidUser>(entity =>
             {
                 entity.HasKey(e => e.ChatId)
                     .HasName("PRIMARY");
@@ -629,14 +669,15 @@ namespace EventBot.DataAccess.Models
                 entity.ToTable("POGO_RAID_USERS");
 
                 entity.Property(e => e.ChatId)
-                    .HasColumnName("CHAT_ID")
-                    .HasColumnType("bigint(20)");
+                    .HasColumnType("bigint(20)")
+                    .ValueGeneratedNever()
+                    .HasColumnName("CHAT_ID");
 
                 entity.Property(e => e.Active).HasColumnName("ACTIVE");
 
                 entity.Property(e => e.CleanUp)
-                    .HasColumnName("CLEAN_UP")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("CLEAN_UP");
 
                 entity.Property(e => e.Ingress)
                     .IsRequired()
@@ -646,94 +687,43 @@ namespace EventBot.DataAccess.Models
                 entity.Property(e => e.KickInactive).HasColumnName("KICK_INACTIVE");
 
                 entity.Property(e => e.LatMax)
-                    .HasColumnName("LAT_MAX")
-                    .HasColumnType("decimal(12,9)");
+                    .HasPrecision(12, 9)
+                    .HasColumnName("LAT_MAX");
 
                 entity.Property(e => e.LatMin)
-                    .HasColumnName("LAT_MIN")
-                    .HasColumnType("decimal(12,9)");
+                    .HasPrecision(12, 9)
+                    .HasColumnName("LAT_MIN");
 
                 entity.Property(e => e.LonMax)
-                    .HasColumnName("LON_MAX")
-                    .HasColumnType("decimal(12,9)");
+                    .HasPrecision(12, 9)
+                    .HasColumnName("LON_MAX");
 
                 entity.Property(e => e.LonMin)
-                    .HasColumnName("LON_MIN")
-                    .HasColumnType("decimal(12,9)");
+                    .HasPrecision(12, 9)
+                    .HasColumnName("LON_MIN");
 
                 entity.Property(e => e.MinPokeLevel)
-                    .HasColumnName("MIN_POKE_LEVEL")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("MIN_POKE_LEVEL");
 
                 entity.Property(e => e.Name)
-                    .HasColumnName("NAME")
-                    .HasColumnType("varchar(100)")
-                    .HasCharSet("utf8")
-                    .HasCollation("utf8_general_ci");
+                    .HasMaxLength(100)
+                    .HasColumnName("NAME");
 
                 entity.Property(e => e.RaidLevel)
-                    .HasColumnName("RAID_LEVEL")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("RAID_LEVEL");
 
                 entity.Property(e => e.RoundToMinute)
-                    .HasColumnName("ROUND_TO_MINUTE")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("ROUND_TO_MINUTE");
 
                 entity.Property(e => e.TimeOffsetId)
-                    .HasColumnName("TIME_OFFSET_ID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("TIME_OFFSET_ID");
             });
 
-            modelBuilder.Entity<PogoRaids>(entity =>
-            {
-                entity.ToTable("POGO_RAIDS");
-
-                entity.Property(e => e.Id)
-                    .HasColumnName("ID")
-                    .HasColumnType("int(11)");
-
-                entity.Property(e => e.ChatId)
-                    .HasColumnName("CHAT_ID")
-                    .HasColumnType("bigint(20)");
-
-                entity.Property(e => e.Finished).HasColumnName("FINISHED");
-
-                entity.Property(e => e.GymId)
-                    .HasColumnName("GYM_ID")
-                    .HasColumnType("int(11)");
-
-                entity.Property(e => e.Level)
-                    .HasColumnName("LEVEL")
-                    .HasColumnType("int(11)");
-
-                entity.Property(e => e.Move2)
-                    .HasColumnName("MOVE2")
-                    .HasColumnType("int(11)");
-
-                entity.Property(e => e.OwnerId)
-                    .HasColumnName("OWNER_ID")
-                    .HasColumnType("bigint(20)");
-
-                entity.Property(e => e.PokeForm)
-                    .HasColumnName("POKE_FORM")
-                    .HasColumnType("varchar(1)")
-                    .HasCharSet("utf8")
-                    .HasCollation("utf8_general_ci");
-
-                entity.Property(e => e.PokeId)
-                    .HasColumnName("POKE_ID")
-                    .HasColumnType("int(11)");
-
-                entity.Property(e => e.Start).HasColumnName("START");
-
-                entity.Property(e => e.Title)
-                    .HasColumnName("TITLE")
-                    .HasColumnType("varchar(40)")
-                    .HasCharSet("utf8")
-                    .HasCollation("utf8_general_ci");
-            });
-
-            modelBuilder.Entity<PogoRaidsMeta>(entity =>
+            modelBuilder.Entity<PogoRaidsMetum>(entity =>
             {
                 entity.HasKey(e => e.RaidId)
                     .HasName("PRIMARY");
@@ -741,25 +731,26 @@ namespace EventBot.DataAccess.Models
                 entity.ToTable("POGO_RAIDS_META");
 
                 entity.Property(e => e.RaidId)
-                    .HasColumnName("RAID_ID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .ValueGeneratedNever()
+                    .HasColumnName("RAID_ID");
 
                 entity.Property(e => e.Created).HasColumnName("CREATED");
 
                 entity.Property(e => e.Raid).HasColumnName("RAID");
             });
 
-            modelBuilder.Entity<PogoRelPokesChats>(entity =>
+            modelBuilder.Entity<PogoRelPokesChat>(entity =>
             {
                 entity.ToTable("POGO_REL_POKES_CHATS");
 
                 entity.Property(e => e.Id)
-                    .HasColumnName("ID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("ID");
 
                 entity.Property(e => e.ChatId)
-                    .HasColumnName("CHAT_ID")
-                    .HasColumnType("bigint(20)");
+                    .HasColumnType("bigint(20)")
+                    .HasColumnName("CHAT_ID");
 
                 entity.Property(e => e.Deleted)
                     .IsRequired()
@@ -767,28 +758,29 @@ namespace EventBot.DataAccess.Models
                     .HasDefaultValueSql("b'0'");
 
                 entity.Property(e => e.MessageId)
-                    .HasColumnName("MESSAGE_ID")
-                    .HasColumnType("bigint(20)");
+                    .HasColumnType("bigint(20)")
+                    .HasColumnName("MESSAGE_ID");
 
                 entity.Property(e => e.PokeId)
-                    .HasColumnName("POKE_ID")
-                    .HasColumnType("bigint(20)");
+                    .HasColumnType("bigint(20)")
+                    .HasColumnName("POKE_ID");
             });
 
             modelBuilder.Entity<PogoRelScanChat>(entity =>
             {
                 entity.HasKey(e => new { e.ScanAreaId, e.ChatId })
-                    .HasName("PRIMARY");
+                    .HasName("PRIMARY")
+                    .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
 
                 entity.ToTable("POGO_REL_SCAN_CHAT");
 
                 entity.Property(e => e.ScanAreaId)
-                    .HasColumnName("SCAN_AREA_ID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("SCAN_AREA_ID");
 
                 entity.Property(e => e.ChatId)
-                    .HasColumnName("CHAT_ID")
-                    .HasColumnType("bigint(20)");
+                    .HasColumnType("bigint(20)")
+                    .HasColumnName("CHAT_ID");
             });
 
             modelBuilder.Entity<PogoScanArea>(entity =>
@@ -796,8 +788,8 @@ namespace EventBot.DataAccess.Models
                 entity.ToTable("POGO_SCAN_AREA");
 
                 entity.Property(e => e.Id)
-                    .HasColumnName("ID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("ID");
 
                 entity.Property(e => e.Active)
                     .IsRequired()
@@ -805,74 +797,70 @@ namespace EventBot.DataAccess.Models
                     .HasDefaultValueSql("b'0'");
 
                 entity.Property(e => e.LatMax)
-                    .HasColumnName("LAT_MAX")
-                    .HasColumnType("decimal(12,9)");
+                    .HasPrecision(12, 9)
+                    .HasColumnName("LAT_MAX");
 
                 entity.Property(e => e.LatMin)
-                    .HasColumnName("LAT_MIN")
-                    .HasColumnType("decimal(12,9)");
+                    .HasPrecision(12, 9)
+                    .HasColumnName("LAT_MIN");
 
                 entity.Property(e => e.LonMax)
-                    .HasColumnName("LON_MAX")
-                    .HasColumnType("decimal(12,9)");
+                    .HasPrecision(12, 9)
+                    .HasColumnName("LON_MAX");
 
                 entity.Property(e => e.LonMin)
-                    .HasColumnName("LON_MIN")
-                    .HasColumnType("decimal(12,9)");
+                    .HasPrecision(12, 9)
+                    .HasColumnName("LON_MIN");
 
                 entity.Property(e => e.MapId)
-                    .HasColumnName("MAP_ID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("MAP_ID");
             });
 
-            modelBuilder.Entity<PogoSpecialGyms>(entity =>
+            modelBuilder.Entity<PogoSpecialGym>(entity =>
             {
                 entity.HasKey(e => new { e.GymId, e.ChatId })
-                    .HasName("PRIMARY");
+                    .HasName("PRIMARY")
+                    .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
 
                 entity.ToTable("POGO_SPECIAL_GYMS");
 
                 entity.Property(e => e.GymId)
-                    .HasColumnName("GYM_ID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("GYM_ID");
 
                 entity.Property(e => e.ChatId)
-                    .HasColumnName("CHAT_ID")
-                    .HasColumnType("bigint(20)");
+                    .HasColumnType("bigint(20)")
+                    .HasColumnName("CHAT_ID");
 
                 entity.Property(e => e.Data)
-                    .HasColumnName("DATA")
-                    .HasColumnType("varchar(200)")
-                    .HasCharSet("utf8")
-                    .HasCollation("utf8_general_ci");
+                    .HasMaxLength(200)
+                    .HasColumnName("DATA");
 
                 entity.Property(e => e.Type)
-                    .HasColumnName("TYPE")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("TYPE");
             });
 
-            modelBuilder.Entity<PogoStops>(entity =>
+            modelBuilder.Entity<PogoStop>(entity =>
             {
                 entity.ToTable("POGO_STOPS");
 
                 entity.Property(e => e.Id)
-                    .HasColumnName("ID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("ID");
 
                 entity.Property(e => e.Latitude)
-                    .HasColumnName("LATITUDE")
-                    .HasColumnType("decimal(12,9)");
+                    .HasPrecision(12, 9)
+                    .HasColumnName("LATITUDE");
 
                 entity.Property(e => e.Longitude)
-                    .HasColumnName("LONGITUDE")
-                    .HasColumnType("decimal(12,9)");
+                    .HasPrecision(12, 9)
+                    .HasColumnName("LONGITUDE");
 
                 entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasColumnName("NAME")
-                    .HasColumnType("varchar(200)")
-                    .HasCharSet("utf8")
-                    .HasCollation("utf8_general_ci");
+                    .HasMaxLength(200)
+                    .HasColumnName("NAME");
             });
 
             modelBuilder.Entity<PogoUser>(entity =>
@@ -883,59 +871,54 @@ namespace EventBot.DataAccess.Models
                 entity.ToTable("POGO_USER");
 
                 entity.Property(e => e.UserId)
-                    .HasColumnName("USER_ID")
-                    .HasColumnType("bigint(20)");
+                    .HasColumnType("bigint(20)")
+                    .ValueGeneratedNever()
+                    .HasColumnName("USER_ID");
 
                 entity.Property(e => e.Active).HasColumnName("ACTIVE");
 
                 entity.Property(e => e.FirstName)
-                    .HasColumnName("FIRST_NAME")
-                    .HasColumnType("varchar(200)")
-                    .HasCharSet("utf8")
-                    .HasCollation("utf8_general_ci");
+                    .HasMaxLength(200)
+                    .HasColumnName("FIRST_NAME");
 
                 entity.Property(e => e.GroupMembers)
-                    .HasColumnName("GROUP_MEMBERS")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("GROUP_MEMBERS");
 
                 entity.Property(e => e.IngameName)
-                    .HasColumnName("INGAME_NAME")
-                    .HasColumnType("varchar(200)")
-                    .HasCharSet("utf8")
-                    .HasCollation("utf8_general_ci");
+                    .HasMaxLength(200)
+                    .HasColumnName("INGAME_NAME");
 
                 entity.Property(e => e.IngressName)
-                    .HasColumnName("INGRESS_NAME")
-                    .HasColumnType("varchar(200)")
-                    .HasCharSet("utf8")
-                    .HasCollation("utf8_general_ci");
+                    .HasMaxLength(200)
+                    .HasColumnName("INGRESS_NAME");
 
                 entity.Property(e => e.LatMax)
-                    .HasColumnName("LAT_MAX")
-                    .HasColumnType("decimal(12,9)");
+                    .HasPrecision(12, 9)
+                    .HasColumnName("LAT_MAX");
 
                 entity.Property(e => e.LatMin)
-                    .HasColumnName("LAT_MIN")
-                    .HasColumnType("decimal(12,9)");
+                    .HasPrecision(12, 9)
+                    .HasColumnName("LAT_MIN");
 
                 entity.Property(e => e.Level)
-                    .HasColumnName("LEVEL")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("LEVEL");
 
                 entity.Property(e => e.LonMax)
-                    .HasColumnName("LON_MAX")
-                    .HasColumnType("decimal(12,9)");
+                    .HasPrecision(12, 9)
+                    .HasColumnName("LON_MAX");
 
                 entity.Property(e => e.LonMin)
-                    .HasColumnName("LON_MIN")
-                    .HasColumnType("decimal(12,9)");
+                    .HasPrecision(12, 9)
+                    .HasColumnName("LON_MIN");
 
                 entity.Property(e => e.Team)
-                    .HasColumnName("TEAM")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("TEAM");
             });
 
-            modelBuilder.Entity<PogoUserRaids>(entity =>
+            modelBuilder.Entity<PogoUserRaid>(entity =>
             {
                 entity.HasKey(e => e.UserId)
                     .HasName("PRIMARY");
@@ -943,125 +926,120 @@ namespace EventBot.DataAccess.Models
                 entity.ToTable("POGO_USER_RAIDS");
 
                 entity.Property(e => e.UserId)
-                    .HasColumnName("USER_ID")
-                    .HasColumnType("bigint(20)");
+                    .HasColumnType("bigint(20)")
+                    .ValueGeneratedNever()
+                    .HasColumnName("USER_ID");
 
                 entity.Property(e => e.ChatId)
-                    .HasColumnName("CHAT_ID")
-                    .HasColumnType("bigint(20)");
+                    .HasColumnType("bigint(20)")
+                    .HasColumnName("CHAT_ID");
 
                 entity.Property(e => e.GymId)
-                    .HasColumnName("GYM_ID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("GYM_ID");
 
                 entity.Property(e => e.Level)
-                    .HasColumnName("LEVEL")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("LEVEL");
 
                 entity.Property(e => e.PokeForm)
-                    .HasColumnName("POKE_FORM")
-                    .HasColumnType("varchar(1)")
-                    .HasCharSet("utf8")
-                    .HasCollation("utf8_general_ci");
+                    .HasMaxLength(1)
+                    .HasColumnName("POKE_FORM");
 
                 entity.Property(e => e.PokeId)
-                    .HasColumnName("POKE_ID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("POKE_ID");
 
                 entity.Property(e => e.RaidId)
-                    .HasColumnName("RAID_ID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("RAID_ID");
 
                 entity.Property(e => e.Start).HasColumnName("START");
 
                 entity.Property(e => e.TimeMode)
-                    .HasColumnName("TIME_MODE")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("TIME_MODE");
 
                 entity.Property(e => e.Title)
-                    .HasColumnName("TITLE")
-                    .HasColumnType("varchar(40)")
-                    .HasCharSet("utf8")
-                    .HasCollation("utf8_general_ci");
+                    .HasMaxLength(40)
+                    .HasColumnName("TITLE");
 
                 entity.Property(e => e.UpdRaidId)
-                    .HasColumnName("UPD_RAID_ID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("UPD_RAID_ID");
             });
 
             modelBuilder.Entity<RelChatBot>(entity =>
             {
                 entity.HasKey(e => new { e.ChatId, e.BotId })
-                    .HasName("PRIMARY");
+                    .HasName("PRIMARY")
+                    .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
 
                 entity.ToTable("REL_CHAT_BOT");
 
                 entity.Property(e => e.ChatId)
-                    .HasColumnName("CHAT_ID")
-                    .HasColumnType("bigint(20)");
+                    .HasColumnType("bigint(20)")
+                    .HasColumnName("CHAT_ID");
 
                 entity.Property(e => e.BotId)
-                    .HasColumnName("BOT_ID")
-                    .HasColumnType("bigint(20)");
+                    .HasColumnType("bigint(20)")
+                    .HasColumnName("BOT_ID");
 
                 entity.Property(e => e.AllowNotification).HasColumnName("ALLOW_NOTIFICATION");
             });
 
-            modelBuilder.Entity<States>(entity =>
+            modelBuilder.Entity<State>(entity =>
             {
                 entity.HasKey(e => new { e.UserId, e.Level })
-                    .HasName("PRIMARY");
+                    .HasName("PRIMARY")
+                    .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
 
                 entity.ToTable("STATES");
 
                 entity.Property(e => e.UserId)
-                    .HasColumnName("USER_ID")
-                    .HasColumnType("bigint(20)");
+                    .HasColumnType("bigint(20)")
+                    .HasColumnName("USER_ID");
 
                 entity.Property(e => e.Level)
-                    .HasColumnName("LEVEL")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("LEVEL");
 
                 entity.Property(e => e.Command)
-                    .IsRequired()
-                    .HasColumnName("COMMAND")
-                    .HasColumnType("varchar(50)")
-                    .HasCharSet("utf8")
-                    .HasCollation("utf8_general_ci");
+                    .HasMaxLength(50)
+                    .HasColumnName("COMMAND");
 
                 entity.Property(e => e.Step)
-                    .HasColumnName("STEP")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("STEP");
             });
 
-            modelBuilder.Entity<UserVotes>(entity =>
+            modelBuilder.Entity<UserVote>(entity =>
             {
                 entity.HasKey(e => new { e.PollId, e.UserId })
-                    .HasName("PRIMARY");
+                    .HasName("PRIMARY")
+                    .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
 
                 entity.ToTable("USER_VOTES");
 
                 entity.Property(e => e.PollId)
-                    .HasColumnName("POLL_ID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("POLL_ID");
 
                 entity.Property(e => e.UserId)
-                    .HasColumnName("USER_ID")
-                    .HasColumnType("bigint(20)");
+                    .HasColumnType("bigint(20)")
+                    .HasColumnName("USER_ID");
 
                 entity.Property(e => e.Attendee)
-                    .HasColumnName("ATTENDEE")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("ATTENDEE");
 
                 entity.Property(e => e.Comment)
-                    .HasColumnName("COMMENT")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasColumnName("COMMENT");
 
                 entity.Property(e => e.Time)
-                    .HasColumnName("TIME")
-                    .HasColumnType("varchar(10)")
-                    .HasCharSet("utf8")
-                    .HasCollation("utf8_general_ci");
+                    .HasMaxLength(10)
+                    .HasColumnName("TIME");
             });
 
             OnModelCreatingPartial(modelBuilder);

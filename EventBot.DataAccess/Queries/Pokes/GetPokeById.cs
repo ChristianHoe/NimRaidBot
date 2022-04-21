@@ -8,7 +8,7 @@ namespace EventBot.DataAccess.Queries.Pokes
         int PokeId
     );
 
-    public interface IGetPokeByIdQuery : IQuery<GetPokeByIdRequest, PogoPokes>
+    public interface IGetPokeByIdQuery : IQuery<GetPokeByIdRequest, PogoPoke?>
     {
     }
 
@@ -22,7 +22,7 @@ namespace EventBot.DataAccess.Queries.Pokes
         }
 
 
-        public PogoPokes Execute(GetPokeByIdRequest request)
+        public PogoPoke? Execute(GetPokeByIdRequest request)
         {
             using (var db = databaseFactory.CreateNew())
             {

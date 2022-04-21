@@ -11,7 +11,7 @@ namespace EventBot.DataAccess.Queries.Raid
         DateTime ExpiredBefore
     );
 
-    public interface IGetPollsToCleanUpsQuery : IQuery<GetPollsToCleanUpRequest, IEnumerable<ActivePolls>>
+    public interface IGetPollsToCleanUpsQuery : IQuery<GetPollsToCleanUpRequest, IEnumerable<ActivePoll>>
     {
     }
 
@@ -25,7 +25,7 @@ namespace EventBot.DataAccess.Queries.Raid
         }
 
 
-        public IEnumerable<ActivePolls> Execute(GetPollsToCleanUpRequest request)
+        public IEnumerable<ActivePoll> Execute(GetPollsToCleanUpRequest request)
         {
             using (var db = databaseFactory.CreateNew())
             {

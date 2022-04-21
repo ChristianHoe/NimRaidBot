@@ -26,7 +26,7 @@ namespace EventBot.DataAccess.Commands.Minun
         {
             using (var db = databaseFactory.CreateNew())
             {
-                var result = db.RelChatBot.SingleOrDefault(x => x.ChatId == request.UserId && x.BotId == request.BotId);
+                var result = db.RelChatBots.SingleOrDefault(x => x.ChatId == request.UserId && x.BotId == request.BotId);
 
                 if (result != null)
                 {

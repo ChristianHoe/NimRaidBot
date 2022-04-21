@@ -32,7 +32,7 @@ namespace EventBot.DataAccess.Commands.Base
 
                 if (result == null)
                 {
-                    db.Memberships.Add(new Memberships { UserId = request.UserId, GroupId = request.ChatId, LastAccess = DateTime.UtcNow, Created = DateTime.UtcNow });
+                    db.Memberships.Add(new Membership { UserId = request.UserId, GroupId = request.ChatId, LastAccess = DateTime.UtcNow, Created = DateTime.UtcNow });
                     db.SaveChanges();
                 }
             }
