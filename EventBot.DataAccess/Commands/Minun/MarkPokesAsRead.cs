@@ -13,7 +13,7 @@
 //    public interface IMarkPokesAsReadCommand : ICommand<MarkPokesAsReadRequest>
 //    {
 //    }
-//    public class MarkPokesAsReadCommand : IMarkPokesAsReadCommand
+//    public sealed class MarkPokesAsReadCommand : IMarkPokesAsReadCommand
 //    {
 //        readonly DatabaseFactory databaseFactory;
 

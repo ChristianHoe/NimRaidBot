@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Minun
 {
-    public record GetActiveUsersRequest(
+    public sealed record GetActiveUsersRequest(
         long BotId
     );
 
@@ -13,7 +13,7 @@ namespace EventBot.DataAccess.Queries.Minun
     {
     }
 
-    public class GetActiveUsers : IGetActiveUsers
+    public sealed class GetActiveUsers : IGetActiveUsers
     {
         readonly DatabaseFactory databaseFactory;
 

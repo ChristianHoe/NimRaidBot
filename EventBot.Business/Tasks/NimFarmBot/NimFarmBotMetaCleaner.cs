@@ -7,7 +7,7 @@ using Telegram.Bot;
 
 namespace EventBot.Business.Tasks.NimFarmBot
 {
-    public class MetaCleaner : IScheduledTask
+    public sealed class MetaCleaner : IScheduledTask
     {
         private readonly TelegramBotClient proxy;
         private readonly IClearEventMetaCommand clearEventMetaCommand;

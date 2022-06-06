@@ -3,16 +3,16 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.PoGo
 {
-    public record AnRequest(
+    public sealed record AnRequest(
         long UserId,
-        long BotId
+        long? BotId
     );
 
     public interface IAnCommand : ICommand<AnRequest>
     {
     }
 
-    public class An : IAnCommand
+    public sealed class An : IAnCommand
     {
         readonly DatabaseFactory databaseFactory;
 

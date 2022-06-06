@@ -63,7 +63,7 @@ namespace EventBot.Business.Interfaces
         //    return message.Message.MessageId;
         //}
 
-        protected int GetUserId(Message message)
+        protected long GetUserId(Message message)
         {
             return message.From.Id;
         }

@@ -5,16 +5,16 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Raid
 {
-    public record GetActiveChatsForUserRequest(
+    public sealed record GetActiveChatsForUserRequest(
         long UserId,
-        long BotId
+        long? BotId
     );
 
     public interface IGetActiveChatsForUser : IQuery<GetActiveChatsForUserRequest, PogoRaidUser[]>
     {
     }
 
-    public class GetActiveChatsForUser : IGetActiveChatsForUser
+    public sealed class GetActiveChatsForUser : IGetActiveChatsForUser
     {
         readonly DatabaseFactory databaseFactory;
 

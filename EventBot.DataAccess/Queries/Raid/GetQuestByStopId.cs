@@ -4,7 +4,7 @@ using EventBot.DataAccess.ModelsEx;
 
 namespace EventBot.DataAccess.Queries.Raid
 {
-    public record GetQuestByStopIdRequest(
+    public sealed record GetQuestByStopIdRequest(
         long StopId
     );
 
@@ -12,7 +12,7 @@ namespace EventBot.DataAccess.Queries.Raid
     {
     }
 
-    public class GetQuestByStopId : IGetQuestByStopIdQuery
+    public sealed class GetQuestByStopId : IGetQuestByStopIdQuery
     {
         readonly DatabaseFactory databaseFactory;
 

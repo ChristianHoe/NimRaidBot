@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Minun
 {
-    public record GetRaidBossPreferencesAllRequest
+    public sealed record GetRaidBossPreferencesAllRequest
     {
     }
 
@@ -13,7 +13,7 @@ namespace EventBot.DataAccess.Queries.Minun
     {
     }
 
-    public class GetRaidBossPreferencesAll : IGetRaidBossPreferencesAllQuery
+    public sealed class GetRaidBossPreferencesAll : IGetRaidBossPreferencesAllQuery
     {
         readonly DatabaseFactory databaseFactory;
 

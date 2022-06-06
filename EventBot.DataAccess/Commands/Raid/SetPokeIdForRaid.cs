@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public record SetPokeIdForRaidRequest(
+    public sealed record SetPokeIdForRaidRequest(
         long RaidId,
         int PokeId,
         char? PokeForm
@@ -13,7 +13,7 @@ namespace EventBot.DataAccess.Commands.Raid
     {
     }
 
-    public class SetPokeIdForRaidCommand : ISetPokeIdForRaidCommand
+    public sealed class SetPokeIdForRaidCommand : ISetPokeIdForRaidCommand
     {
         readonly DatabaseFactory databaseFactory;
 

@@ -5,8 +5,8 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Raid
 {
-    public record GetActivePogoGroupsRequest(
-        long[] BotIds
+    public sealed record GetActivePogoGroupsRequest(
+        long?[] BotIds
     );
 
     public interface IGetActivePogoGroups : IQuery<GetActivePogoGroupsRequest, IEnumerable<PogoRaidUserEx>>
@@ -15,10 +15,10 @@ namespace EventBot.DataAccess.Queries.Raid
 
     public class PogoRaidUserEx : PogoRaidUser
     {
-        public long BotId;
+        public long? BotId;
     }
 
-    public class GetActivePogoGroups : IGetActivePogoGroups
+    public sealed class GetActivePogoGroups : IGetActivePogoGroups
     {
         readonly DatabaseFactory databaseFactory;
 

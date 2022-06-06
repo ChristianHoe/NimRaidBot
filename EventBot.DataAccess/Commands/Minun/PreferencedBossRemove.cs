@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Minun
 {
-    public record PreferencedBossRemoveRequest(
+    public sealed record PreferencedBossRemoveRequest(
         long ChatId,
         int PokeId
     );
@@ -11,7 +11,7 @@ namespace EventBot.DataAccess.Commands.Minun
     public interface IPreferencedBossRemoveCommand : ICommand<PreferencedBossRemoveRequest>
     {
     }
-    public class PreferencedBossRemoveCommand : IPreferencedBossRemoveCommand
+    public sealed class PreferencedBossRemoveCommand : IPreferencedBossRemoveCommand
     {
         readonly DatabaseFactory databaseFactory;
 

@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Raid
 {
-    public record GetPollsToCleanUpRequest(
+    public sealed record GetPollsToCleanUpRequest(
         long ChatId,
         DateTime ExpiredBefore
     );
@@ -15,7 +15,7 @@ namespace EventBot.DataAccess.Queries.Raid
     {
     }
 
-    public class GetPollsToCleanUp : IGetPollsToCleanUpsQuery
+    public sealed class GetPollsToCleanUp : IGetPollsToCleanUpsQuery
     {
         readonly DatabaseFactory databaseFactory;
 

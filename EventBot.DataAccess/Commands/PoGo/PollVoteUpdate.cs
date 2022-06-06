@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.PoGo
 {
-    public record PollVoteUpdateRequest(
+    public sealed record PollVoteUpdateRequest(
         long ChatId,
         long MessageId,
         long UserId,
@@ -19,7 +19,7 @@ namespace EventBot.DataAccess.Commands.PoGo
     {
     }
 
-    public class PollVoteUpdate : IPollVoteUpdateCommand
+    public sealed class PollVoteUpdate : IPollVoteUpdateCommand
     {
         readonly DatabaseFactory databaseFactory;
 

@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public record CreateManuelRaidRequest(
+    public sealed record CreateManuelRaidRequest(
         long UserId,
         int DurationInMinutes
     );
@@ -14,7 +14,7 @@ namespace EventBot.DataAccess.Commands.Raid
     {
     }
 
-    public class CreateManuelRaidCommand : ICreateManuelRaidCommand
+    public sealed class CreateManuelRaidCommand : ICreateManuelRaidCommand
     {
         readonly DatabaseFactory databaseFactory;
 

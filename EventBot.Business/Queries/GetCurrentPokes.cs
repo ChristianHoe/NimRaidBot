@@ -4,7 +4,7 @@ using System.Collections.Concurrent;
 
 namespace EventBot.Business.Queries
 {
-    public record GetCurrentPokesRequest(
+    public sealed record GetCurrentPokesRequest(
         int MapId
     );
 
@@ -13,7 +13,7 @@ namespace EventBot.Business.Queries
         ConcurrentDictionary<ulong, PogoPoke> Execute(GetCurrentPokesRequest request);
     }
 
-    public class GetCurrentPokes : IGetCurrentPokesQuery
+    public sealed class GetCurrentPokes : IGetCurrentPokesQuery
     {
         private ConcurrentDictionary<int, ConcurrentDictionary<ulong, PogoPoke>> cache = new ConcurrentDictionary<int, ConcurrentDictionary<ulong, PogoPoke>>();
 

@@ -3,14 +3,14 @@ using System.Collections.Concurrent;
 
 namespace EventBot.Business.Queries
 {
-    public record GetPokeQueueRequest();
+    public sealed record GetPokeQueueRequest();
 
     public interface IGetPokeQueueQuery
     {
         ConcurrentQueue<PogoPoke> Execute(GetPokeQueueRequest request);
     }
 
-    public class GetPokeQueue : IGetPokeQueueQuery
+    public sealed class GetPokeQueue : IGetPokeQueueQuery
     {
         private ConcurrentQueue<PogoPoke> cache;
 

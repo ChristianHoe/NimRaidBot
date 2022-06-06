@@ -5,14 +5,14 @@ using EventBot.DataAccess.ModelsEx;
 
 namespace EventBot.DataAccess.Queries.Raid
 {
-    public record GetQuestsRequest(
+    public sealed record GetQuestsRequest(
     );
 
     public interface IGetQuestsQuery : IQuery<GetQuestsRequest, IList<Quest>>
     {
     }
 
-    public class GetQuests : IGetQuestsQuery
+    public sealed class GetQuests : IGetQuestsQuery
     {
         readonly DatabaseFactory databaseFactory;
 

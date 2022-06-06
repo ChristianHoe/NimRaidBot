@@ -7,13 +7,13 @@ using Telegram.Bot.Types.ReplyMarkups;
 
 namespace EventBot.Business.Commands.Farm
 {
-    public record CreateEventSetupTextRequest(
+    public sealed record CreateEventSetupTextRequest(
         Location Locations,
         DateTime? Start,
         Eventtypes Eventtypes
     );
 
-    public record CreateEventSetupTextResponse(
+    public sealed record CreateEventSetupTextResponse(
         string Text,
         InlineKeyboardMarkup InlineKeyboardMarkup,
         ParseMode ParseMode
@@ -24,7 +24,7 @@ namespace EventBot.Business.Commands.Farm
         CreateEventSetupTextResponse Execute(CreateEventSetupTextRequest request);
     }
 
-    public class CreateEventSetupText : ICreateEventSetupText
+    public sealed class CreateEventSetupText : ICreateEventSetupText
     {
         const string TIME_FORMAT = "dd.MM.yyyy HH:mm:ss";
 
@@ -37,10 +37,10 @@ namespace EventBot.Business.Commands.Farm
 
             //var chat = new[] { new InlineKeyboardCallbackButton("<< Chat", "c|-1"), new InlineKeyboardCallbackButton("Chat >>", "c|1") };
             //var keyBoardEvent = new[] { new InlineKeyboardCallbackButton("<< Event", "e|-1"), new InlineKeyboardCallbackButton("Event >>", "e|1") };
-            var keyBoardLocation = new[] { new InlineKeyboardButton { Text = "<< Loc", CallbackData = "l|-1" }, new InlineKeyboardButton { Text = "Loc >>", CallbackData = "l|1" } };
-            var keyBoardDay = new[] { new InlineKeyboardButton { Text = "-1d", CallbackData = "d|-1" }, new InlineKeyboardButton { Text = "+1d", CallbackData = "d|1"} };
-            var keyBoardTime = new[] { new InlineKeyboardButton { Text = "-30m", CallbackData = "m|-30" }, new InlineKeyboardButton { Text = "+30m", CallbackData = "m|+30"} };
-            var generate = new[] { new InlineKeyboardButton{ Text = "Erzeugen", CallbackData =  "c|1"} };
+            var keyBoardLocation = new[] { new InlineKeyboardButton("<< Loc") { CallbackData = "l|-1" }, new InlineKeyboardButton("Loc >>") { CallbackData = "l|1" } };
+            var keyBoardDay = new[] { new InlineKeyboardButton("-1d") { CallbackData = "d|-1" }, new InlineKeyboardButton("+1d") { CallbackData = "d|1"} };
+            var keyBoardTime = new[] { new InlineKeyboardButton("-30m") { CallbackData = "m|-30" }, new InlineKeyboardButton("+30m") { CallbackData = "m|+30"} };
+            var generate = new[] { new InlineKeyboardButton("Erzeugen") { CallbackData =  "c|1"} };
 
             var inlineKeyboard = new InlineKeyboardMarkup(new InlineKeyboardButton[4][] { /*chat, keyBoardEvent,*/ keyBoardLocation, keyBoardDay, keyBoardTime, generate });
 

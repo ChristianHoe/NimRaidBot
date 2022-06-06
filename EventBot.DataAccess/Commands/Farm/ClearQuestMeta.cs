@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EventBot.DataAccess.Commands.Farm
 {
-    public record ClearQuestMetaRequest();
+    public sealed record ClearQuestMetaRequest();
 
     public interface IClearQuestMetaCommand : ICommand<ClearQuestMetaRequest>
     {
     }
 
-    public class ClearQuestMetaCommand : IClearQuestMetaCommand
+    public sealed class ClearQuestMetaCommand : IClearQuestMetaCommand
     {
         readonly DatabaseFactory databaseFactory;
 

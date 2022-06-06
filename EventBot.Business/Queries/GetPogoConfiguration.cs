@@ -2,14 +2,14 @@ using EventBot.DataAccess.Models;
 
 namespace EventBot.Business.Queries
 {
-    public record GetPogoConfigurationRequest();
+    public sealed record GetPogoConfigurationRequest();
 
     public interface IGetPogoConfigurationQuery
     {
         PogoConfiguration Execute(GetPogoConfigurationRequest request);
     }
 
-    public class GetPogoConfiguration : IGetPogoConfigurationQuery
+    public sealed class GetPogoConfiguration : IGetPogoConfigurationQuery
     {
         private PogoConfiguration? cache;
 

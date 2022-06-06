@@ -3,16 +3,16 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Minun
 {
-    public record DeactiveMinunUserRequest(
+    public sealed record DeactiveMinunUserRequest(
         long UserId,
-        long BotId
+        long? BotId
     );
 
     public interface IDeactiveMinunUserCommand : ICommand<DeactiveMinunUserRequest>
     {
     }
 
-    public class DeactiveMinunUser : IDeactiveMinunUserCommand
+    public sealed class DeactiveMinunUser : IDeactiveMinunUserCommand
     {
         readonly DatabaseFactory databaseFactory;
 

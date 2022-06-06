@@ -10,7 +10,7 @@ using System.Threading;
 
 namespace EventBot.Business.NimRaidBot
 {
-    public class PollRemover : IScheduledTask
+    public sealed class PollRemover : IScheduledTask
     {
         private readonly TelegramBotClient proxy;
         private readonly IGetPollsToCleanUpsQuery getPollsToCleanUpsQuery;
@@ -39,7 +39,7 @@ namespace EventBot.Business.NimRaidBot
         {
             try
             {
-                var activeUsers = this.getActiveUsers.Execute(new GetActivePogoGroupsRequest(BotIds: new long[] { this.proxy.BotId }));
+                var activeUsers = this.getActiveUsers.Execute(new GetActivePogoGroupsRequest(BotIds: new long?[] { this.proxy.BotId }));
                 foreach(var user in activeUsers.Where(x => x.CleanUp.HasValue))
                 {
                     DateTime cleanUpTime = DateTime.UtcNow.AddMinutes(-1 * user.CleanUp.Value);

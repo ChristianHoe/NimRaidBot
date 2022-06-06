@@ -3,7 +3,7 @@ using EventBot.DataAccess.Database;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public record RemoveMembershipByUserIdsRequest(
+    public sealed record RemoveMembershipByUserIdsRequest(
         long GroupId,
         long[] UserIds
     );
@@ -12,7 +12,7 @@ namespace EventBot.DataAccess.Commands.Raid
     {
     }
 
-    public class RemoveMembershipByUserIdsCommand : IRemoveMembershipByUserIdsCommand
+    public sealed class RemoveMembershipByUserIdsCommand : IRemoveMembershipByUserIdsCommand
     {
         readonly DatabaseFactory databaseFactory;
 

@@ -6,13 +6,13 @@ using System.Text.Json;
 
 namespace EventBot.DataAccess.Queries.Base
 {
-    public record GetRocketMapMovesRequest();
+    public sealed record GetRocketMapMovesRequest();
 
     public interface IGetRocketMapMovesQuery : IQuery<GetRocketMapMovesRequest, Dictionary<int, Move>>
     {
     }
 
-    public class GetRocketMapMoves : IGetRocketMapMovesQuery
+    public sealed class GetRocketMapMoves : IGetRocketMapMovesQuery
     {
         private Dictionary<int, Move>? _cache;
 
@@ -28,6 +28,10 @@ namespace EventBot.DataAccess.Queries.Base
             var fileContent = File.ReadAllText(Path.Combine(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "RocketMap"), "moves.json"));
 
             _cache = JsonSerializer.Deserialize<Dictionary<int, Move>>(fileContent);
+
+            if (_cache == null)
+                throw new ArgumentNullException("moves.json invalid");
+
             return _cache;
         }
     }

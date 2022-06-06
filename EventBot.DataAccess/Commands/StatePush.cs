@@ -21,13 +21,13 @@ namespace EventBot.DataAccess.Commands {
         public int Step { get; }
     }
 
-    public record StatePushRequest(
+    public sealed record StatePushRequest(
         State State
     );
 
     public interface IStatePushCommand : ICommand<StatePushRequest> { }
 
-    public class StatePush : IStatePushCommand {
+    public sealed class StatePush : IStatePushCommand {
         readonly DatabaseFactory databaseFactory;
 
         public StatePush (DatabaseFactory databaseFactory) {

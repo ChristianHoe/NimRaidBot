@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public record AddSpecialGymRequest(
+    public sealed record AddSpecialGymRequest(
         long ChatId,
         int GymId,
         GymType Type
@@ -16,7 +16,7 @@ namespace EventBot.DataAccess.Commands.Raid
     {
     }
 
-    public class AddSpecialGym : IAddSpecialGymCommand
+    public sealed class AddSpecialGym : IAddSpecialGymCommand
     {
         readonly DatabaseFactory databaseFactory;
 

@@ -15,7 +15,7 @@ using Telegram.Bot.Exceptions;
 
 namespace EventBot.Business.NimRaidBot
 {
-    public class Announcer : IScheduledTask
+    public sealed class Announcer : IScheduledTask
     {
         readonly private TelegramBotClient proxy;
         private readonly MinunBot minunBot;
@@ -166,7 +166,7 @@ namespace EventBot.Business.NimRaidBot
 
             var locationsToNotify = getCurrentNotificationsQuery.Execute(new GetCurrentNotificationsRequest(Threshold: DateTime.UtcNow.AddDays(-7), LocationId: raidToNotify.GymId));
 
-            var chats = this.activeUsers.Execute(new GetActivePogoGroupsRequest(BotIds: new long[] { this.proxy.BotId }));
+            var chats = this.activeUsers.Execute(new GetActivePogoGroupsRequest(BotIds: new long?[] { this.proxy.BotId }));
             int numberOfCurrentActiveUsers = chats.Count(x => x.RaidLevel.HasValue);
             if (numberOfCurrentActiveUsers <= 0)
                 return;

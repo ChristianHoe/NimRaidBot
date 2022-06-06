@@ -11,7 +11,7 @@ using Telegram.Bot;
 
 namespace EventBot.Business.NimPokeBot
 {
-    public class NimPokeBotCleaner : IScheduledTask
+    public sealed class NimPokeBotCleaner : IScheduledTask
     {
         private readonly TelegramBotClient proxy;
         private readonly IGetPokesToCleanUpQuery getPokesToCleanUpQuery;
@@ -40,7 +40,7 @@ namespace EventBot.Business.NimPokeBot
         {
             try
             {
-                var activeUsers = this.getActiveUsers.Execute(new GetActivePogoGroupsRequest(BotIds: new long[] { this.proxy.BotId }));
+                var activeUsers = this.getActiveUsers.Execute(new GetActivePogoGroupsRequest(BotIds: new long?[] { this.proxy.BotId }));
                 foreach (var user in activeUsers.Where(x => x.CleanUp.HasValue))
                 {
                     DateTime cleanUpTime = DateTime.UtcNow.AddMinutes(-1);

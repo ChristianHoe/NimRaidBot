@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Farm
 {
-    public record GetActivePollByEventIdRequest(
+    public sealed record GetActivePollByEventIdRequest(
         int EventId,
         long ChatId
     );
@@ -13,7 +13,7 @@ namespace EventBot.DataAccess.Queries.Farm
     {
     }
 
-    public class GetActivePollByEventId : IGetActivePollByEventId
+    public sealed class GetActivePollByEventId : IGetActivePollByEventId
     {
         readonly DatabaseFactory databaseFactory;
 

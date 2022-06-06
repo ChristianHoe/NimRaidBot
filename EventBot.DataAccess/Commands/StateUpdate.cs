@@ -17,7 +17,7 @@ namespace EventBot.DataAccess.Commands
     {
     }
 
-    public class StateUpdate : IStateUpdateCommand
+    public sealed class StateUpdate : IStateUpdateCommand
     {
         readonly DatabaseFactory databaseFactory;
 

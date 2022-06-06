@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public record ModifyChatTitleRequest(
+    public sealed record ModifyChatTitleRequest(
         long ChatId,
         string Name
     );
@@ -12,7 +12,7 @@ namespace EventBot.DataAccess.Commands.Raid
     {
     }
 
-    public class ModifyChatTitle : IModifyChatTitleCommand
+    public sealed class ModifyChatTitle : IModifyChatTitleCommand
     {
         readonly DatabaseFactory databaseFactory;
 

@@ -4,13 +4,13 @@ using System;
 
 namespace EventBot.DataAccess.Commands.Farm
 {
-    public record ClearPokeMetaRequest();
+    public sealed record ClearPokeMetaRequest();
 
     public interface IClearPokeMetaCommand : ICommand<ClearPokeMetaRequest>
     {
     }
 
-    public class ClearPokeMetaCommand : IClearPokeMetaCommand
+    public sealed class ClearPokeMetaCommand : IClearPokeMetaCommand
     {
         readonly DatabaseFactory databaseFactory;
 

@@ -5,12 +5,12 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.PoGo
 {
-    public record PollVotesRequest(
+    public sealed record PollVotesRequest(
         long ChatId,
         long MessageId
     );
 
-    public record PollVoteResponse(
+    public sealed record PollVoteResponse(
         long UserId,
         string? FirstName,
         string? IngameName,
@@ -29,7 +29,7 @@ namespace EventBot.DataAccess.Queries.PoGo
 
 
 
-    public class PollVotes : IPollVotesUsers
+    public sealed class PollVotes : IPollVotesUsers
     {
         readonly DatabaseFactory databaseFactory;
 

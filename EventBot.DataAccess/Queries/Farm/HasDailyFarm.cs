@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Farm
 {
-    public record HasDailyFarmRequest(
+    public sealed record HasDailyFarmRequest(
         long ChatId,
         DateTime Day
     );
@@ -13,7 +13,7 @@ namespace EventBot.DataAccess.Queries.Farm
     {
     }
 
-    public class HasDailyFarm : IHasDailyFarm
+    public sealed class HasDailyFarm : IHasDailyFarm
     {
         readonly DatabaseFactory databaseFactory;
 

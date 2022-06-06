@@ -5,13 +5,13 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Farm
 {
-    public record EventLocations2Request();
+    public sealed record EventLocations2Request();
 
     public interface IEventLocations2Query : IQuery<EventLocations2Request, IEnumerable<Models.Location>>
     {
     }
 
-    public class EventLocations2 : IEventLocations2Query
+    public sealed class EventLocations2 : IEventLocations2Query
     {
         readonly DatabaseFactory databaseFactory;
 

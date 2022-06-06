@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public record AddRocketMapStopsRequest(
+    public sealed record AddRocketMapStopsRequest(
         IEnumerable<PogoStop> Stops
     );
 
@@ -13,7 +13,7 @@ namespace EventBot.DataAccess.Commands.Raid
     {
     }
 
-    public class AddRocketMapStopsCommand : IAddRocketMapStopsCommand
+    public sealed class AddRocketMapStopsCommand : IAddRocketMapStopsCommand
     {
         readonly DatabaseFactory databaseFactory;
 

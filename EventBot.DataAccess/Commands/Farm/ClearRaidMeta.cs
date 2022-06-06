@@ -4,13 +4,13 @@ using System;
 
 namespace EventBot.DataAccess.Commands.Farm
 {
-    public record ClearRaidMetaRequest();
+    public sealed record ClearRaidMetaRequest();
 
     public interface IClearRaidMetaCommand : ICommand<ClearRaidMetaRequest>
     {
     }
 
-    public class ClearRaidMetaCommand : IClearRaidMetaCommand
+    public sealed class ClearRaidMetaCommand : IClearRaidMetaCommand
     {
         readonly DatabaseFactory databaseFactory;
 

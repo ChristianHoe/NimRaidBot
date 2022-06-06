@@ -5,14 +5,14 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Pokes
 {
-    public record UpdatePokesRequest(
+    public sealed record UpdatePokesRequest(
         IEnumerable<PogoPoke> Pokes
     );
 
     public interface IUpdatePokesCommand : ICommand<UpdatePokesRequest>
     {
     }
-    public class UpdatePokesCommand : IUpdatePokesCommand
+    public sealed class UpdatePokesCommand : IUpdatePokesCommand
     {
         readonly DatabaseFactory databaseFactory;
 

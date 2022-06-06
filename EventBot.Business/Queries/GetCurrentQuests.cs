@@ -3,14 +3,14 @@ using EventBot.DataAccess.ModelsEx;
 
 namespace EventBot.Business.Queries
 {
-    public record GetCurrentQuestsRequest();
+    public sealed record GetCurrentQuestsRequest();
 
     public interface IGetCurrentQuestsQuery
     {
         ConcurrentDictionary<int, Quest> Execute(GetCurrentQuestsRequest request);
     }
 
-    public class GetCurrentQuests : IGetCurrentQuestsQuery
+    public sealed class GetCurrentQuests : IGetCurrentQuestsQuery
     {
         private ConcurrentDictionary<int, Quest> cache;
 

@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public record UpdateMembershipAccessRequest(
+    public sealed record UpdateMembershipAccessRequest(
         long GroupId,
         long UserId
     );
@@ -14,7 +14,7 @@ namespace EventBot.DataAccess.Commands.Raid
     {
     }
 
-    public class UpdateMembershipAccess : IUpdateMembershipAccessCommand
+    public sealed class UpdateMembershipAccess : IUpdateMembershipAccessCommand
     {
         readonly DatabaseFactory databaseFactory;
 

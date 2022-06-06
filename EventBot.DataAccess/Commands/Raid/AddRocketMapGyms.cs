@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public record AddRocketMapGymsRequest(
+    public sealed record AddRocketMapGymsRequest(
         IEnumerable<PokeMapGym> Gyms
     );
 
@@ -15,7 +15,7 @@ namespace EventBot.DataAccess.Commands.Raid
     {
     }
 
-    public class AddRocketMapGymsCommand : IAddRocketMapGymsCommand
+    public sealed class AddRocketMapGymsCommand : IAddRocketMapGymsCommand
     {
         readonly DatabaseFactory databaseFactory;
 

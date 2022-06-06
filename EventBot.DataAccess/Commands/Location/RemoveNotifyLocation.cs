@@ -3,7 +3,7 @@ using EventBot.DataAccess.Database;
 
 namespace EventBot.DataAccess.Commands.Location
 {
-    public record RemoveNotifyLocationRequest(
+    public sealed record RemoveNotifyLocationRequest(
         long ChatId,
         int LocationId
     );
@@ -12,7 +12,7 @@ namespace EventBot.DataAccess.Commands.Location
     {
     }
 
-    public class RemoveNotifyLocationCommand : IRemoveNotifyLocationCommand
+    public sealed class RemoveNotifyLocationCommand : IRemoveNotifyLocationCommand
     {
         readonly DatabaseFactory databaseFactory;
 

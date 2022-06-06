@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Raid
 {
-    public record GetNextPollToProcessRequest
+    public sealed record GetNextPollToProcessRequest
     {
     }
 
@@ -12,7 +12,7 @@ namespace EventBot.DataAccess.Queries.Raid
     {
     }
 
-    public class GetNextPollToProcess : IGetNextPollToProcessQuery
+    public sealed class GetNextPollToProcess : IGetNextPollToProcessQuery
     {
         readonly DatabaseFactory databaseFactory;
 

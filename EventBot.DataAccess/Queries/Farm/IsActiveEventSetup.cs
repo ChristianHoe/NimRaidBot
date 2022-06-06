@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Farm
 {
-    public record IsActiveEventSetupRequest(
+    public sealed record IsActiveEventSetupRequest(
         long ChatId,
         long MessageId
     );
@@ -12,7 +12,7 @@ namespace EventBot.DataAccess.Queries.Farm
     {
     }
 
-    public class IsActiveEventSetup : IIsActiveEventSetupQuery
+    public sealed class IsActiveEventSetup : IIsActiveEventSetupQuery
     {
         readonly DatabaseFactory databaseFactory;
 

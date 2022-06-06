@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace EventBot.DataAccess.Commands.Pokes
 {
-    public record AddPokeNotificationRequest(
+    public sealed record AddPokeNotificationRequest(
         IEnumerable<PogoRelPokesChat> Notifications
     );
 
@@ -12,7 +12,7 @@ namespace EventBot.DataAccess.Commands.Pokes
     {
     }
 
-    public class AddPokeNotificationCommand : IAddPokeNotificationCommand
+    public sealed class AddPokeNotificationCommand : IAddPokeNotificationCommand
     {
         readonly DatabaseFactory databaseFactory;
 

@@ -4,7 +4,7 @@ using EventBot.DataAccess.Models;
 
 namespace EventBot.DataAccess.Queries.Raid
 {
-    public record GetNextQuestToProcessRequest
+    public sealed record GetNextQuestToProcessRequest
     {
     }
 
@@ -12,7 +12,7 @@ namespace EventBot.DataAccess.Queries.Raid
     {
     }
 
-    public class GetNextQuestToProcess : IGetNextQuestToProcessQuery
+    public sealed class GetNextQuestToProcess : IGetNextQuestToProcessQuery
     {
         readonly DatabaseFactory databaseFactory;
 

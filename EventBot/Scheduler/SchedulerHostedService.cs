@@ -92,7 +92,7 @@ namespace EventBot.Scheduler
             }
         }
 
-        private record SchedulerTaskWrapper(
+        private sealed record SchedulerTaskWrapper(
             IScheduledTask Task,
             DateTime NextRunTime
         )

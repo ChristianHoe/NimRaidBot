@@ -11,7 +11,7 @@ using Telegram.Bot.Types.Enums;
 
 namespace EventBot.Business.Tasks.NimPokeBot
 {
-    public class QuestAnnouncer : IScheduledTask
+    public sealed class QuestAnnouncer : IScheduledTask
     {
         private readonly TelegramBotClient proxy;
         private readonly TelegramBotClient raidBotProxy;

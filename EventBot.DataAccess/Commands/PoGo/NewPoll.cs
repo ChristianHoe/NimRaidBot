@@ -3,7 +3,7 @@ using EventBot.DataAccess.Models;
 
 namespace EventBot.DataAccess.Commands.PoGo
 {
-    public record NewPollRequest(
+    public sealed record NewPollRequest(
         long ChatId,
         long MessageId,
         int? RaidId = null,
@@ -15,7 +15,7 @@ namespace EventBot.DataAccess.Commands.PoGo
     {
     }
 
-    public class NewPoll : INewPollCommand
+    public sealed class NewPoll : INewPollCommand
     {
         readonly DatabaseFactory databaseFactory;
 

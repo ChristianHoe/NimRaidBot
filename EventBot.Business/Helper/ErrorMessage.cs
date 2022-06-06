@@ -11,12 +11,12 @@ namespace EventBot.Business.Helper
     {
         public static int? TelegramId;
 
-        public static async Task SendMessage(TelegramBotClient proxy, string userDefinedText, [CallerFilePath] string filePath = null, [CallerMemberName] string callee = null)
+        public static async Task SendMessage(TelegramBotClient proxy, string userDefinedText, [CallerFilePath] string filePath = "", [CallerMemberName] string callee = "")
         {
             await SendMessage(proxy, userDefinedText, null, filePath, callee);
         }
 
-        public static async Task SendMessage(TelegramBotClient proxy, string userDefinedText, Exception exception, [CallerFilePath] string filePath = null, [CallerMemberName] string callee = null)
+        public static async Task SendMessage(TelegramBotClient proxy, string userDefinedText, Exception? exception, [CallerFilePath] string filePath = "", [CallerMemberName] string callee = "")
         {
             if (TelegramId == null)
                 return;

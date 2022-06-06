@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public record SetMinRaidLevelRequest(
+    public sealed record SetMinRaidLevelRequest(
         long ChatId,
         int? RaidLevel
     );
@@ -12,7 +12,7 @@ namespace EventBot.DataAccess.Commands.Raid
     {
     }
 
-    public class SetMinRaidLevelCommand : ISetMinRaidLevelCommand
+    public sealed class SetMinRaidLevelCommand : ISetMinRaidLevelCommand
     {
         readonly DatabaseFactory databaseFactory;
 

@@ -4,7 +4,7 @@ using MySqlConnector;
 
 namespace EventBot.DataAccess.Queries.Raid
 {
-    public record MarkPollAsProcessingRequest(
+    public sealed record MarkPollAsProcessingRequest(
         int Id
     );
 
@@ -12,7 +12,7 @@ namespace EventBot.DataAccess.Queries.Raid
     {
     }
 
-    public class MarkPollAsProcessing : IMarkPollAsProcessingQuery
+    public sealed class MarkPollAsProcessing : IMarkPollAsProcessingQuery
     {
         readonly DatabaseFactory databaseFactory;
 

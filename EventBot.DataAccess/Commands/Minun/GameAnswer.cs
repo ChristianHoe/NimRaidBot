@@ -3,7 +3,7 @@ using EventBot.DataAccess.Models;
 
 namespace EventBot.DataAccess.Commands.Minun
 {
-    public record GameAnswerRequest(
+    public sealed record GameAnswerRequest(
         long ChatId,
         int MessageId,
         long UserId,
@@ -15,7 +15,7 @@ namespace EventBot.DataAccess.Commands.Minun
     {
     }
 
-    public class GameAnswerCommand : IGameAnswerCommand
+    public sealed class GameAnswerCommand : IGameAnswerCommand
     {
         readonly DatabaseFactory databaseFactory;
 

@@ -4,7 +4,7 @@ using System;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public record ClearRaidsRequest(
+    public sealed record ClearRaidsRequest(
         long ChatId
     );
 
@@ -12,7 +12,7 @@ namespace EventBot.DataAccess.Commands.Raid
     {
     }
 
-    public class ClearRaidsCommand : IClearRaidsCommand
+    public sealed class ClearRaidsCommand : IClearRaidsCommand
     {
         readonly DatabaseFactory databaseFactory;
 

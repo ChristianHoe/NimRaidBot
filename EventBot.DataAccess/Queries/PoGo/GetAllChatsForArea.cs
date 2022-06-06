@@ -5,13 +5,13 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.PoGo
 {
-    public record GetAllChatsForAreaRequest();
+    public sealed record GetAllChatsForAreaRequest();
 
     public interface IGetAllChatsForArea : IQuery<GetAllChatsForAreaRequest, IEnumerable<PogoRelScanChat>>
     {
     }
 
-    public class GetAllChatsForArea : IGetAllChatsForArea
+    public sealed class GetAllChatsForArea : IGetAllChatsForArea
     {
         readonly DatabaseFactory databaseFactory;
 

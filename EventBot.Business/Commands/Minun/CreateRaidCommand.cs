@@ -30,8 +30,6 @@ namespace EventBot.Business.Commands.Minun
             ISetChatForManualRaidAndInitializeCommand setChatForManualRaidCommand,
             IGetActiveChatsForUser getActiveChatsForUser,
             IGetCurrentManualRaidQuery getCurrentManualRaidQuery,
-            IGetCurrentChatSettingsQuery getCurrentChatSettingsQuery,
-            IGetGymsByChatQuery getGymsByChatQuery,
             ISetGymForManualRaidCommand setGymForManualRaidCommand,
             ISetTimeModeForManualRaidCommand setTimeModeForManualRaidCommand,
             ISetNowForManualRaidCommand setNowForManualRaidhCommand,
@@ -205,6 +203,12 @@ namespace EventBot.Business.Commands.Minun
                 }
 
                 var current = this.getCurrentManualRaidQuery.Execute(new GetCurrentManualRaidRequest(UserId: userId));
+                if (current == null)
+                {
+                    await bot.SendTextMessageAsync(chatId, "Raid nicht in der Datenbank gefunden. Bitte informiere den Administrator.").ConfigureAwait(false);
+                    return StateResult.TryAgain;
+                }
+
 
                 var start = DateTime.UtcNow;
                 if (current.TimeMode == 1)
@@ -219,7 +223,6 @@ namespace EventBot.Business.Commands.Minun
 
                 this.setNowForManualRaidCommand.Execute(new SetNowForManualRaidRequest(UserId: userId, Start: start));
 
-                //var current = this.getCurrentManualRaidQuery.Execute(new GetCurrentManualRaidRequest { UserId = userId });
                 if (current.TimeMode == 2)
                     return await this.Step11(message, text, bot, batchMode);
             }   

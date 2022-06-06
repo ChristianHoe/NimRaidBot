@@ -6,6 +6,6 @@ namespace EventBot.Business.Interfaces
 {
     public interface IMemberAdded
     {
-        Task Execute(Message message, TelegramBotClient proxy, long botId);
+        Task Execute(Message message, TelegramBotClient proxy, long? botId);
     }
 }

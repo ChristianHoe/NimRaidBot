@@ -2,7 +2,7 @@
 
 namespace EventBot.Business.Commands.Raid
 {
-    public record UserRemoveRequest(
+    public sealed record UserRemoveRequest(
         long UserId,
         long ChatId
     );
@@ -12,7 +12,7 @@ namespace EventBot.Business.Commands.Raid
         void Execute(UserRemoveRequest request);
     }
 
-    public class UserRemove : IUserRemove
+    public sealed class UserRemove : IUserRemove
     {
         private readonly IUserChannelRelationRemoveCommand userChannelRelationRemoveCommand;
 

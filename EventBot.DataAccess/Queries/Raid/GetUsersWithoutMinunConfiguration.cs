@@ -6,7 +6,7 @@ using EventBot.DataAccess.Models;
 
 namespace EventBot.DataAccess.Queries.Raid
 {
-    public record GetUsersWithoutMinunConfigurationRequest(
+    public sealed record GetUsersWithoutMinunConfigurationRequest(
         long GroupId,
         DateTime Threshold
     );
@@ -15,7 +15,7 @@ namespace EventBot.DataAccess.Queries.Raid
     {
     }
 
-    public class GetUsersWithoutMinunConfiguration : IGetUsersWithoutMinunConfigurationQuery
+    public sealed class GetUsersWithoutMinunConfiguration : IGetUsersWithoutMinunConfigurationQuery
     {
         readonly DatabaseFactory databaseFactory;
 

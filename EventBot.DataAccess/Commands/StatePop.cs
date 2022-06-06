@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands
 {
-    public record StatePopRequest(
+    public sealed record StatePopRequest(
         State State
     );
 
@@ -11,7 +11,7 @@ namespace EventBot.DataAccess.Commands
     {
     }
 
-    public class StatePop : IStatePopCommand
+    public sealed class StatePop : IStatePopCommand
     {
         readonly DatabaseFactory databaseFactory;
 

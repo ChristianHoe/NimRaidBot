@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries
 {
-    public record QueryCurrentStateRequest(
+    public sealed record QueryCurrentStateRequest(
         long ChatId
     );
 
@@ -12,7 +12,7 @@ namespace EventBot.DataAccess.Queries
     {
     }
 
-    public class QueryCurrentState : IQueryCurrentState
+    public sealed class QueryCurrentState : IQueryCurrentState
     {
         readonly DatabaseFactory databaseFactory;
 

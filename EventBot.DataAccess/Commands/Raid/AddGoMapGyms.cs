@@ -16,7 +16,7 @@
 //     {
 //     }
 
-//     public class AddGoMapGymsCommand : IAddGoMapGymsCommand
+//     public sealed class AddGoMapGymsCommand : IAddGoMapGymsCommand
 //     {
 //         readonly DatabaseFactory databaseFactory;
 

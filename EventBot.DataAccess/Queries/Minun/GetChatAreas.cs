@@ -5,14 +5,14 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Minun
 {
-    public record GetChatAreasRequest(
+    public sealed record GetChatAreasRequest(
         long[] ChatIds
     );
 
     public interface IGetChatAreas : IQuery<GetChatAreasRequest, IEnumerable<PogoRaidUser>>    {
     }
 
-    public class GetChatAreas : IGetChatAreas
+    public sealed class GetChatAreas : IGetChatAreas
     {
         readonly DatabaseFactory databaseFactory;
 

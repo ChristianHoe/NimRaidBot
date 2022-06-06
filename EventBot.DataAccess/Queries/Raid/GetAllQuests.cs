@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Raid
 {
-    public record GetAllQuestsRequest
+    public sealed record GetAllQuestsRequest
     {
         //public DateTime Date;
     }
@@ -14,7 +14,7 @@ namespace EventBot.DataAccess.Queries.Raid
     {
     }
 
-    public class GetAllQuests : IGetAllQuestsQuery
+    public sealed class GetAllQuests : IGetAllQuestsQuery
     {
         readonly DatabaseFactory databaseFactory;
 

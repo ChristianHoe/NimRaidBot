@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public record AddUserRequest(
+    public sealed record AddUserRequest(
         long UserId,
         string FirstName
     );
@@ -13,7 +13,7 @@ namespace EventBot.DataAccess.Commands.Raid
     {
     }
 
-    public class AddUser : IAddUserCommand
+    public sealed class AddUser : IAddUserCommand
     {
         readonly DatabaseFactory databaseFactory;
 

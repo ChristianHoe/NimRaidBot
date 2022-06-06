@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Minun
 {
-    public record GetCurrentGamesRequest(
+    public sealed record GetCurrentGamesRequest(
         DateTime Until
     );
 
@@ -14,7 +14,7 @@ namespace EventBot.DataAccess.Queries.Minun
     {
     }
 
-    public class GetCurrentGames : IGetCurrentGamesQuery
+    public sealed class GetCurrentGames : IGetCurrentGamesQuery
     {
         readonly DatabaseFactory databaseFactory;
 

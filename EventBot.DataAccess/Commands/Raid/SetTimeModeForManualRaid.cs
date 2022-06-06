@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public record SetTimeModeForManualRaidRequest(
+    public sealed record SetTimeModeForManualRaidRequest(
         long UserId,
         int TimeMode
     );
@@ -12,7 +12,7 @@ namespace EventBot.DataAccess.Commands.Raid
     {
     }
 
-    public class SetTimeModeForManualRaidCommand : ISetTimeModeForManualRaidCommand
+    public sealed class SetTimeModeForManualRaidCommand : ISetTimeModeForManualRaidCommand
     {
         readonly DatabaseFactory databaseFactory;
 

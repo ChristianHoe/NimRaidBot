@@ -19,7 +19,7 @@
 //        public PogoRelPokesChats Nofication;
 //    }
 
-//    public class GetModifiedPokes : IGetModifiedPokesQuery
+//    public sealed class GetModifiedPokes : IGetModifiedPokesQuery
 //    {
 //        readonly DatabaseFactory databaseFactory;
 

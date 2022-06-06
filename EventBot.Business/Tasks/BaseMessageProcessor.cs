@@ -139,7 +139,7 @@ namespace EventBot.Business.Tasks
 
         private async Task AnswerInlineQueryAsync(InlineQuery inlineQuery)
         {
-            await proxy.AnswerInlineQueryAsync(inlineQuery.Id, new Telegram.Bot.Types.InlineQueryResults.InlineQueryResultBase[] {
+            await proxy.AnswerInlineQueryAsync(inlineQuery.Id, new Telegram.Bot.Types.InlineQueryResults.InlineQueryResult[] {
                 new Telegram.Bot.Types.InlineQueryResults.InlineQueryResultArticle("1", "1111", new Telegram.Bot.Types.InlineQueryResults.InputTextMessageContent("laber1"))
                 ,new Telegram.Bot.Types.InlineQueryResults.InlineQueryResultArticle("2", "2222", new Telegram.Bot.Types.InlineQueryResults.InputTextMessageContent("laber2"))
                 ,new Telegram.Bot.Types.InlineQueryResults.InlineQueryResultArticle("3", "1111",  new Telegram.Bot.Types.InlineQueryResults.InputTextMessageContent("laber1"))

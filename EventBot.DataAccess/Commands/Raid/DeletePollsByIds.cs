@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public record DeletePollsByIdsRequest(
+    public sealed record DeletePollsByIdsRequest(
         int[] Ids
     );
 
@@ -11,7 +11,7 @@ namespace EventBot.DataAccess.Commands.Raid
     {
     }
 
-    public class DeletePollsByIdsCommand : IDeletePollsByIdsCommand
+    public sealed class DeletePollsByIdsCommand : IDeletePollsByIdsCommand
     {
         readonly DatabaseFactory databaseFactory;
 

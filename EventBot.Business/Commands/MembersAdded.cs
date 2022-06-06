@@ -8,7 +8,7 @@ using Telegram.Bot.Types;
 
 namespace EventBot.Business.Commands
 {
-    public class MemberAdded : IMemberAdded
+    public abstract class MemberAdded : IMemberAdded
     {
         protected readonly IGetCurrentChatSettingsQuery getCurrentChatSettingsQuery;
         protected readonly IAddChatCommand addChatCommand;
@@ -33,8 +33,11 @@ namespace EventBot.Business.Commands
             return Task.CompletedTask;
         }
 
-        public async Task Execute(Message message, TelegramBotClient proxy, long botId)
+        public async Task Execute(Message message, TelegramBotClient proxy, long? botId)
         {
+            if (message.NewChatMembers == null)
+                return;
+
             var chatId = message.Chat.Id;
             foreach (var member in message.NewChatMembers)
             {
@@ -43,7 +46,7 @@ namespace EventBot.Business.Commands
                     var currentSettings = this.getCurrentChatSettingsQuery.Execute(new GetCurrentChatSettingsRequest(ChatId: chatId));
                     if (currentSettings == null)
                     {
-                        this.addChatCommand.Execute(new AddChatRequest(ChatId: chatId, Name: message.Chat.Title));
+                        this.addChatCommand.Execute(new AddChatRequest(ChatId: chatId, Name: message.Chat.Title ?? "?"));
                     }
 
                     this.addBotCommand.Execute(new BotAddRequest(ChatId: chatId, BotId: botId));
@@ -52,7 +55,7 @@ namespace EventBot.Business.Commands
                     var admins = await proxy.GetChatAdministratorsAsync(message.Chat.Id);
                     foreach (var user in admins)
                     {
-                        this.userAdd.Execute(new Commands.Raid.UserAddRequest(UserId: user.User.Id, ChatId: chatId, UserName: user.User.Username));
+                        this.userAdd.Execute(new Commands.Raid.UserAddRequest(UserId: user.User.Id, ChatId: chatId, UserName: user.User.Username ?? "?"));
                     }
 
                     return;

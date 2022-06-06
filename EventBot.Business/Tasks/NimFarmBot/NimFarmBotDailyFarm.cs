@@ -9,7 +9,7 @@ using Telegram.Bot;
 
 namespace EventBot.Business.Tasks.NimFarmBot
 {
-    public class DailyFarm : IScheduledTask
+    public sealed class DailyFarm : IScheduledTask
     {
         private readonly TelegramBotClient proxy;
         private readonly IGetActiveGroups activeGroups;

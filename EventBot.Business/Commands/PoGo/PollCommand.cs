@@ -39,7 +39,7 @@ namespace EventBot.Business.Commands.PoGo
                 return;
             }
 
-            var inlineKeyboard = new InlineKeyboardMarkup(new[] { new InlineKeyboardButton { Text = "0", CallbackData = "0" }, new InlineKeyboardButton { Text = "+1", CallbackData = "1" }, new InlineKeyboardButton { Text = "+2", CallbackData = "2"} } );
+            var inlineKeyboard = new InlineKeyboardMarkup(new[] { new InlineKeyboardButton("0") { CallbackData = "0" }, new InlineKeyboardButton("+1") { CallbackData = "1" }, new InlineKeyboardButton("+2") { CallbackData = "2"} } );
 
             var msg = await bot.SendTextMessageAsync(message.Chat.Id, text, replyMarkup: inlineKeyboard).ConfigureAwait(false);
 

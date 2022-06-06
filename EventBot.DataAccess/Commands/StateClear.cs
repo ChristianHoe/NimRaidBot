@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands
 {
-    public record StateClearRequest(
+    public sealed record StateClearRequest(
         long ChatId
     );
 
@@ -11,7 +11,7 @@ namespace EventBot.DataAccess.Commands
     {
     }
 
-    public class StateClear : IStateClearCommand
+    public sealed class StateClear : IStateClearCommand
     {
         readonly DatabaseFactory databaseFactory;
 

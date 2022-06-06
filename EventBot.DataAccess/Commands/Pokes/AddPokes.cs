@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace EventBot.DataAccess.Commands.Pokes
 {
-    public record AddPokesRequest(
+    public sealed record AddPokesRequest(
         IEnumerable<PogoPoke> Pokes
     );
 
@@ -12,7 +12,7 @@ namespace EventBot.DataAccess.Commands.Pokes
     {
     }
 
-    public class AddPokesCommand : IAddPokesCommand
+    public sealed class AddPokesCommand : IAddPokesCommand
     {
         readonly DatabaseFactory databaseFactory;
 

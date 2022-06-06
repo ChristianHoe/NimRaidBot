@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Base
 {
-    public record NumberOfBotsInChatRequest(
+    public sealed record NumberOfBotsInChatRequest(
         long ChatId
     );
 
@@ -11,7 +11,7 @@ namespace EventBot.DataAccess.Queries.Base
     {
     }
 
-    public class NumberOfBotsInChat : INumberOfBotsInChatQuery
+    public sealed class NumberOfBotsInChat : INumberOfBotsInChatQuery
     {
         readonly DatabaseFactory databaseFactory;
 

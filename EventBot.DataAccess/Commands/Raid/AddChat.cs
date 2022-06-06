@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public record AddChatRequest(
+    public sealed record AddChatRequest(
         long ChatId,
         string Name
     );
@@ -13,7 +13,7 @@ namespace EventBot.DataAccess.Commands.Raid
     {
     }
 
-    public class AddChat : IAddChatCommand
+    public sealed class AddChat : IAddChatCommand
     {
         readonly DatabaseFactory databaseFactory;
 

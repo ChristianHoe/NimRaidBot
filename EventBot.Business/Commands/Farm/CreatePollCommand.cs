@@ -5,7 +5,7 @@ using Telegram.Bot.Types.ReplyMarkups;
 
 namespace EventBot.Business.Commands.Farm
 {
-    public record CreatePollRequest(
+    public sealed record CreatePollRequest(
         int EventId,
         string Text,
         InlineKeyboardMarkup InlineKeyboardMarkup,
@@ -17,7 +17,7 @@ namespace EventBot.Business.Commands.Farm
         Task<bool> Execute(CreatePollRequest request, long chatId, TelegramBotClient bot);
     }
 
-    public class CreatePollCommand : ICreatePollCommand
+    public sealed class CreatePollCommand : ICreatePollCommand
     {
         private readonly DataAccess.Commands.PoGo.INewPollCommand newPollCommand;
         private readonly DataAccess.Queries.Farm.IGetActivePollByEventId getActivePollByEventId;

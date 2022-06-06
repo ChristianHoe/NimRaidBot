@@ -10,7 +10,7 @@ using Telegram.Bot.Types;
 
 namespace EventBot.Business.Queries.PoGo
 {
-    public class ActiveUsersQuery : IQuery<IEnumerable<DataAccess.Models.PogoUser>>
+    public sealed class ActiveUsersQuery : IQuery<IEnumerable<DataAccess.Models.PogoUser>>
     {
         DataAccess.Queries.PoGo.IActiveUsers query;
 

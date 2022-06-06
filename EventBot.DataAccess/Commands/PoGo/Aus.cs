@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.PoGo
 {
-    public record AusRequest(
+    public sealed record AusRequest(
         long UserId
     );
 
@@ -11,7 +11,7 @@ namespace EventBot.DataAccess.Commands.PoGo
     {
     }
 
-    public class Aus : IAusCommand
+    public sealed class Aus : IAusCommand
     {
         readonly DatabaseFactory databaseFactory;
 

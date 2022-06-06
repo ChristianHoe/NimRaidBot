@@ -5,7 +5,7 @@ using EventBot.DataAccess.Models;
 
 namespace EventBot.DataAccess.Queries.Location
 {
-    public record GetActiveGymsForChatRequest(
+    public sealed record GetActiveGymsForChatRequest(
         IEnumerable<long> ChatIds
     );
 
@@ -13,7 +13,7 @@ namespace EventBot.DataAccess.Queries.Location
     {
     }
 
-    public class GetActiveGymsForChat : IGetActiveGymsForChatQuery
+    public sealed class GetActiveGymsForChat : IGetActiveGymsForChatQuery
     {
         readonly DatabaseFactory databaseFactory;
 

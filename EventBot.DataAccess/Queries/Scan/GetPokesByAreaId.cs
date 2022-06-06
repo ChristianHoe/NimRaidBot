@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Scan
 {
-    public record GetPokesByAreaIdRequest(
+    public sealed record GetPokesByAreaIdRequest(
         long ScanAreaId
     );
 
@@ -13,7 +13,7 @@ namespace EventBot.DataAccess.Queries.Scan
     {
     }
 
-    public class GetPokesByAreaId : IGetPokesByAreaId
+    public sealed class GetPokesByAreaId : IGetPokesByAreaId
     {
         readonly DatabaseFactory databaseFactory;
 

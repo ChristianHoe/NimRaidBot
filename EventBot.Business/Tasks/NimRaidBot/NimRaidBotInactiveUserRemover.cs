@@ -10,7 +10,7 @@ using Telegram.Bot.Types.Enums;
 
 namespace EventBot.Business.Tasks.NimRaidBot
 {
-    public class NimRaidBotInactiveUserRemover : IScheduledTask
+    public sealed class NimRaidBotInactiveUserRemover : IScheduledTask
     {
         private readonly TelegramBotClient proxy;
         private readonly IGetActivePogoGroups getActiveUsers;
@@ -43,10 +43,10 @@ namespace EventBot.Business.Tasks.NimRaidBot
         {
             try
             {
-                var activeGroups = this.getActiveUsers.Execute(new GetActivePogoGroupsRequest(BotIds: new long[] { this.proxy.BotId }));
+                var activeGroups = this.getActiveUsers.Execute(new GetActivePogoGroupsRequest(BotIds: new long?[] { this.proxy.BotId }));
                 foreach(var group in activeGroups.Where(x => x.KickInactive == true))
                 {
-                    var botPrivileges = await proxy.GetChatMemberAsync(group.ChatId, (int)this.proxy.BotId);
+                    var botPrivileges = await proxy.GetChatMemberAsync(group.ChatId, (long)this.proxy.BotId);
                     if (botPrivileges.Status != ChatMemberStatus.Creator && botPrivileges.Status != ChatMemberStatus.Administrator)
                         continue;
 

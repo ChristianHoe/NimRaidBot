@@ -3,16 +3,16 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Base
 {
-    public record BotRemoveRequest(
+    public sealed record BotRemoveRequest(
         long ChatId,
-        long BotId
+        long? BotId
     );
 
     public interface IBotRemoveCommand : ICommand<BotRemoveRequest>
     {
     }
 
-    public class BotRemove : IBotRemoveCommand
+    public sealed class BotRemove : IBotRemoveCommand
     {
         readonly DatabaseFactory databaseFactory;
 

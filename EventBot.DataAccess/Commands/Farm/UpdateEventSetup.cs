@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Farm
 {
-    public record UpdateEventSetupRequest(
+    public sealed record UpdateEventSetupRequest(
         EventSetup EventSetup
     );
 
@@ -12,7 +12,7 @@ namespace EventBot.DataAccess.Commands.Farm
     {
     }
 
-    public class UpdateEventSetup : IUpdateEventSetupCommand
+    public sealed class UpdateEventSetup : IUpdateEventSetupCommand
     {
         readonly DatabaseFactory databaseFactory;
 

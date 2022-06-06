@@ -4,14 +4,14 @@ using System.Collections.Generic;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public record AddQuestsRequest(
+    public sealed record AddQuestsRequest(
         IEnumerable<PogoQuest> Quests
     );
 
     public interface IAddQuestsCommand : ICommand<AddQuestsRequest>
     {
     }
-    public class AddQuests : IAddQuestsCommand
+    public sealed class AddQuests : IAddQuestsCommand
     {
         readonly DatabaseFactory databaseFactory;
 

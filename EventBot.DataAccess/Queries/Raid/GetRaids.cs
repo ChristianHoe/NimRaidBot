@@ -37,7 +37,7 @@ namespace EventBot.DataAccess.Queries.Raid
     //     public long? Owner;
     // }
 
-//     public class GetRaids : IGetRaidsQuery
+//     public sealed class GetRaids : IGetRaidsQuery
 //     {
 //         readonly DatabaseFactory databaseFactory;
 

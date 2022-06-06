@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Pokes
 {
-    public record GetPokesForChatRequest(
+    public sealed record GetPokesForChatRequest(
         long ChatId
     );
 
@@ -13,7 +13,7 @@ namespace EventBot.DataAccess.Queries.Pokes
     {
     }
 
-    public class GetPokesForChat : IGetPokesForChatQuery
+    public sealed class GetPokesForChat : IGetPokesForChatQuery
     {
         readonly DatabaseFactory databaseFactory;
 

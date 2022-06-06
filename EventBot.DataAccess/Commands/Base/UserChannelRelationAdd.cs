@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Base
 {
-    public record UserChannelRelationAddRequest(
+    public sealed record UserChannelRelationAddRequest(
         long UserId,
         long ChatId
     );
@@ -14,7 +14,7 @@ namespace EventBot.DataAccess.Commands.Base
     {
     }
 
-    public class UserChannelRelationAdd : IUserChannelRelationAddCommand
+    public sealed class UserChannelRelationAdd : IUserChannelRelationAddCommand
     {
         readonly DatabaseFactory databaseFactory;
 

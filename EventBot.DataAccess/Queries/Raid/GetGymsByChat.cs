@@ -5,7 +5,7 @@ using EventBot.DataAccess.Database;
 
 namespace EventBot.DataAccess.Queries.Raid
 {
-    public record GetGymsByChatRequest(
+    public sealed record GetGymsByChatRequest(
         PogoRaidUser Chat
     );
 
@@ -13,7 +13,7 @@ namespace EventBot.DataAccess.Queries.Raid
     {
     }
 
-    public class GetGymsByChat : IGetGymsByChatQuery
+    public sealed class GetGymsByChat : IGetGymsByChatQuery
     {
         readonly DatabaseFactory databaseFactory;
 

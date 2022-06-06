@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Minun
 {
-    public record EnableNotificationsRequest(
+    public sealed record EnableNotificationsRequest(
         long UserId
     );
 
@@ -11,7 +11,7 @@ namespace EventBot.DataAccess.Commands.Minun
     {
     }
 
-    public class EnableNotifications : IEnableNotificationsCommand
+    public sealed class EnableNotifications : IEnableNotificationsCommand
     {
         readonly DatabaseFactory databaseFactory;
 

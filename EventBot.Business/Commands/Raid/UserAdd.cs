@@ -3,7 +3,7 @@ using EventBot.DataAccess.Commands.Raid;
 
 namespace EventBot.Business.Commands.Raid
 {
-    public record UserAddRequest(
+    public sealed record UserAddRequest(
         long UserId,
         string UserName,
         long ChatId
@@ -14,7 +14,7 @@ namespace EventBot.Business.Commands.Raid
         void Execute(UserAddRequest request);
     }
 
-    public class UserAdd : IUserAdd
+    public sealed class UserAdd : IUserAdd
     {
         private readonly IAddUserCommand addUserCommand;
         private readonly IUserChannelRelationAddCommand userChannelRelationAddCommand;

@@ -13,7 +13,7 @@ using Telegram.Bot.Types.ReplyMarkups;
 
 namespace EventBot.Business.Commands.Raid
 {
-    public record SendRaidPollRequest(
+    public sealed record SendRaidPollRequest(
         IEnumerable<PollVoteResponse> Votes,
         DataAccess.Queries.Raid.Raid Raid,
         Dictionary<int, string> PokeNames,
@@ -22,7 +22,7 @@ namespace EventBot.Business.Commands.Raid
         IEnumerable<int> TimeOffsets
     );
 
-    public record RaidPollResponse(
+    public sealed record RaidPollResponse(
         string Text,
         InlineKeyboardMarkup InlineKeyboardMarkup,
         ParseMode ParseMode
@@ -33,7 +33,7 @@ namespace EventBot.Business.Commands.Raid
         RaidPollResponse Execute(SendRaidPollRequest request);
     }
 
-    public class CreatePollText : ICreatePollText
+    public sealed class CreatePollText : ICreatePollText
     {
         const string PIN = "\U0001F4CD";
         const string PIN2 = "\U0001F4CC";
@@ -217,11 +217,11 @@ namespace EventBot.Business.Commands.Raid
 
             var startFrames = CreateStartTimes(start, request.TimeOffsets, 5).Select(x => x.ToString("HH:mm")).ToArray();
             var keyBoardStartFrames = new InlineKeyboardButton[] {
-                 new InlineKeyboardButton { Text = THUMBS_UP, CallbackData = "t|"}
-                , new InlineKeyboardButton { Text = startFrames[0], CallbackData = $"t|{startFrames[0]}" }
-                , new InlineKeyboardButton { Text = startFrames[1], CallbackData = $"t|{startFrames[1]}" }
-                , new InlineKeyboardButton { Text = startFrames[2], CallbackData = $"t|{startFrames[2]}" }
-                , new InlineKeyboardButton { Text = startFrames[3], CallbackData = $"t|{startFrames[3]}" }
+                 new InlineKeyboardButton(THUMBS_UP) { CallbackData = "t|"}
+                , new InlineKeyboardButton(startFrames[0]) { CallbackData = $"t|{startFrames[0]}" }
+                , new InlineKeyboardButton(startFrames[1]) { CallbackData = $"t|{startFrames[1]}" }
+                , new InlineKeyboardButton(startFrames[2]) { CallbackData = $"t|{startFrames[2]}" }
+                , new InlineKeyboardButton(startFrames[3]) { CallbackData = $"t|{startFrames[3]}" }
             };
 
             // var extendedStartFrames = CreateStartTimes(start.AddMinutes(45), request.TimeOffsets, 5).Select(x => x.ToString("HH:mm")).ToArray();
@@ -233,12 +233,12 @@ namespace EventBot.Business.Commands.Raid
             // };
 
             var keyBoardNumberOfPersons = new[] { 
-                  new InlineKeyboardButton { Text = SATELLITE, CallbackData = "c|r" }
+                  new InlineKeyboardButton(SATELLITE) { CallbackData = "c|r" }
                 //, new InlineKeyboardButton { Text = THUMBS_UP, CallbackData = "t|"}
-                , new InlineKeyboardButton { Text = "-1", CallbackData = "a|-1" }
-                , new InlineKeyboardButton { Text = "0", CallbackData = "a|0" }
-                , new InlineKeyboardButton { Text = "+1", CallbackData = "a|1" }
-                , new InlineKeyboardButton { Text = ADMISSION_TICKET, CallbackData = "c|i"}
+                , new InlineKeyboardButton("-1") { CallbackData = "a|-1" }
+                , new InlineKeyboardButton("0") { CallbackData = "a|0" }
+                , new InlineKeyboardButton("+1") { CallbackData = "a|1" }
+                , new InlineKeyboardButton(ADMISSION_TICKET) { CallbackData = "c|i"}
                 };
 
             //var inlineKeyboard = new InlineKeyboardMarkup(new InlineKeyboardButton[3][] { keyBoardStartFrames, extendedKeyBoardStartFrames, keyBoardNumberOfPersons });
@@ -420,8 +420,11 @@ namespace EventBot.Business.Commands.Raid
             if (moveId == null)
                 return string.Empty;
 
-            if (this.getRocketMapMovesQuery.Execute(null).TryGetValue(moveId.Value, out Models.RocketMap.Move move))
+            if (this.getRocketMapMovesQuery.Execute(new GetRocketMapMovesRequest()).TryGetValue(moveId.Value, out Models.RocketMap.Move? move))
             {
+                if (move == null)
+                    return string.Empty;
+
                 switch(move.type)
                 {
                     case Models.RocketMap.ElementType.Bug:

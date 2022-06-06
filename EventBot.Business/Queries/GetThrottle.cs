@@ -2,9 +2,9 @@
 
 namespace EventBot.Business.Queries
 {
-    public record GetThrottleRequest();
+    public sealed record GetThrottleRequest();
 
-    public record ThroughPut(
+    public sealed record ThroughPut(
         long Ticks
     )
     {
@@ -21,7 +21,7 @@ namespace EventBot.Business.Queries
         ConcurrentDictionary<long, ThroughPut> Execute(GetThrottleRequest request);
     }
 
-    public class GetThrottle : IGetThrottleQuery
+    public sealed class GetThrottle : IGetThrottleQuery
     {
         private ConcurrentDictionary<long, ThroughPut> cache = new ConcurrentDictionary<long, ThroughPut>();
 

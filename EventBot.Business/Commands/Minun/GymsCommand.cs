@@ -19,23 +19,17 @@ namespace EventBot.Business.Commands.Minun
 
     public class GymsCommand : StatefulCommand, IGymsCommand
     {
-        private readonly MinunBot minunBot;
         private readonly TelegramProxies.NimRaidBot nimRaidBot;
         private readonly IGetActiveChatsForUser getActiveChatsForUser;
         private readonly IGetNotifyLocationsByChatIdQuery getNotifyLocationsByChatIdQuery;
-        private readonly IGetSpecialGymsForChatsQuery getSpecialGymsForChatsQuery;
-        private readonly IGetGymsByChatQuery getGymsByChatQuery;
         private readonly IGetActiveGymsForChatQuery getActiveGymsForChatQuery;
         private readonly IRemoveNotifyLocationCommand removeNotifyLocationCommand;
         private readonly IAddNotifyLocationCommand addNotifyLocationCommand;
 
         public GymsCommand(
-            MinunBot minunBot,
             TelegramProxies.NimRaidBot nimRaidBot,
             IGetActiveChatsForUser getActiveChatsForUser,
             IGetNotifyLocationsByChatIdQuery getNotifyLocationsByChatIdQuery,
-            IGetSpecialGymsForChatsQuery getSpecialGymsForChatsQuery,
-            IGetGymsByChatQuery getGymsByChatQuery,
             IGetActiveGymsForChatQuery getActiveGymsForChatQuery,
             IRemoveNotifyLocationCommand removeNotifyLocationCommand,
             IAddNotifyLocationCommand addNotifyLocationCommand,
@@ -47,12 +41,9 @@ namespace EventBot.Business.Commands.Minun
         {
             base.Steps.Add(0, Step0);
             base.Steps.Add(1, Step1);
-            this.minunBot = minunBot;
             this.nimRaidBot = nimRaidBot;
             this.getActiveChatsForUser = getActiveChatsForUser;
             this.getNotifyLocationsByChatIdQuery = getNotifyLocationsByChatIdQuery;
-            this.getSpecialGymsForChatsQuery = getSpecialGymsForChatsQuery;
-            this.getGymsByChatQuery = getGymsByChatQuery;
             this.getActiveGymsForChatQuery = getActiveGymsForChatQuery;
             this.removeNotifyLocationCommand = removeNotifyLocationCommand;
             this.addNotifyLocationCommand = addNotifyLocationCommand;
@@ -92,9 +83,12 @@ namespace EventBot.Business.Commands.Minun
             if (gymId == null)
                 return StateResult.TryAgain;
 
+            var gym = gyms.SingleOrDefault(x => x.Id == gymId.Value);
+            if (gym == null)
+                return StateResult.TryAgain;
+
             var notifications = this.getNotifyLocationsByChatIdQuery.Execute(new GetNotifyLocationsByChatIdRequest(ChatIds: new[] { chatId } ));
 
-            var gym = gyms.SingleOrDefault(x => x.Id == gymId.Value);
             if (notifications.Any(x => x.LocationId == gymId))
             {
                 this.removeNotifyLocationCommand.Execute(new RemoveNotifyLocationRequest(ChatId: chatId, LocationId: gymId.Value));

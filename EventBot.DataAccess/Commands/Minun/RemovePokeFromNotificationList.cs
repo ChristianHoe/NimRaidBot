@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Minun
 {
-    public record RemovePokeFromNotificationListRequest(
+    public sealed record RemovePokeFromNotificationListRequest(
         long ChatId,
         int PokeId
     );
@@ -12,7 +12,7 @@ namespace EventBot.DataAccess.Commands.Minun
     {
     }
 
-    public class RemovePokeFromNotificationList : IRemovePokeFromNotificationListCommand
+    public sealed class RemovePokeFromNotificationList : IRemovePokeFromNotificationListCommand
     {
         readonly DatabaseFactory databaseFactory;
 

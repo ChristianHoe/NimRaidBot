@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Pokes
 {
-    public record RemoveNoficationsByIdsRequest(
+    public sealed record RemoveNoficationsByIdsRequest(
         int[] Ids
     );
 
@@ -11,7 +11,7 @@ namespace EventBot.DataAccess.Commands.Pokes
     {
     }
 
-    public class RemoveNotificationsByIdsCommand : IRemoveNotificationsByIdsCommand
+    public sealed class RemoveNotificationsByIdsCommand : IRemoveNotificationsByIdsCommand
     {
         readonly DatabaseFactory databaseFactory;
 

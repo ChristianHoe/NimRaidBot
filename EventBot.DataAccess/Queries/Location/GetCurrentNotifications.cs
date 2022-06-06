@@ -6,7 +6,7 @@ using EventBot.DataAccess.ModelsEx;
 
 namespace EventBot.DataAccess.Queries.Location
 {
-    public record GetCurrentNotificationsRequest(
+    public sealed record GetCurrentNotificationsRequest(
         int LocationId,
         DateTime Threshold
     );
@@ -15,7 +15,7 @@ namespace EventBot.DataAccess.Queries.Location
     {
     }
 
-    public class GetCurrentNotifications : IGetCurrentNotificationsQuery
+    public sealed class GetCurrentNotifications : IGetCurrentNotificationsQuery
     {
         readonly DatabaseFactory databaseFactory;
 

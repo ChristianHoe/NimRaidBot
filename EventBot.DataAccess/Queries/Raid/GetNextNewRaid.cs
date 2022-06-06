@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Raid
 {
-    public record GetNextNewRaidRequest
+    public sealed record GetNextNewRaidRequest
     {
     }
 
@@ -12,7 +12,7 @@ namespace EventBot.DataAccess.Queries.Raid
     {
     }
 
-    public class GetNextNewRaid : IGetNextNewRaidQuery
+    public sealed class GetNextNewRaid : IGetNextNewRaidQuery
     {
         readonly DatabaseFactory databaseFactory;
 

@@ -4,7 +4,7 @@ using MySqlConnector;
 
 namespace EventBot.DataAccess.Queries.Pokes
 {
-    public record MarkAsProcessingRequest(
+    public sealed record MarkAsProcessingRequest(
         int Id
     );
 
@@ -12,7 +12,7 @@ namespace EventBot.DataAccess.Queries.Pokes
     {
     }
 
-    public class MarkAsProcessing : IMarkAsProcessingQuery
+    public sealed class MarkAsProcessing : IMarkAsProcessingQuery
     {
         readonly DatabaseFactory databaseFactory;
 

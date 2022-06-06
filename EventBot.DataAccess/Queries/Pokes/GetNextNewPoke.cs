@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Pokes
 {
-    public record GetNextNewPokeRequest
+    public sealed record GetNextNewPokeRequest
     {
     }
 
@@ -13,7 +13,7 @@ namespace EventBot.DataAccess.Queries.Pokes
     {
     }
 
-    public class GetNextNewPoke : IGetNextNewPokeQuery
+    public sealed class GetNextNewPoke : IGetNextNewPokeQuery
     {
         readonly DatabaseFactory databaseFactory;
 

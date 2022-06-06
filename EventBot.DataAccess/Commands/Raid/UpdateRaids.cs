@@ -5,14 +5,14 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public record UpdateRaidsRequest(
+    public sealed record UpdateRaidsRequest(
         IEnumerable<PogoRaid> Raids
     );
 
     public interface IUpdateRaidsCommand : ICommand<UpdateRaidsRequest>
     {
     }
-    public class UpdateRaidsCommand : IUpdateRaidsCommand
+    public sealed class UpdateRaidsCommand : IUpdateRaidsCommand
     {
         readonly DatabaseFactory databaseFactory;
 

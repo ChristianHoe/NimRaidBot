@@ -18,7 +18,7 @@
 //    {
 //    }
 
-//    public class GetPokes : IGetPokes
+//    public sealed class GetPokes : IGetPokes
 //    {
 //        readonly DatabaseFactory databaseFactory;
 

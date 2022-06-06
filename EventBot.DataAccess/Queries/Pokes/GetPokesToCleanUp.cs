@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Pokes
 {
-    public record GetPokesToCleanUpRequest(
+    public sealed record GetPokesToCleanUpRequest(
         long ChatId,
         DateTime ExpiredBefore
     );
@@ -15,7 +15,7 @@ namespace EventBot.DataAccess.Queries.Pokes
     {
     }
 
-    public class GetPokesToCleanUp : IGetPokesToCleanUpQuery
+    public sealed class GetPokesToCleanUp : IGetPokesToCleanUpQuery
     {
         readonly DatabaseFactory databaseFactory;
 

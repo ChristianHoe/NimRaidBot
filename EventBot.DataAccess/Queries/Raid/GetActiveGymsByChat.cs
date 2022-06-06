@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EventBot.DataAccess.Queries.Raid
 {
-    public record GetActiveGymsByChatRequest(
+    public sealed record GetActiveGymsByChatRequest(
         long ChatId
     );
 
@@ -14,7 +14,7 @@ namespace EventBot.DataAccess.Queries.Raid
     {
     }
 
-    public class GetActiveGymsByChat : IGetActiveGymsByChatQuery
+    public sealed class GetActiveGymsByChat : IGetActiveGymsByChatQuery
     {
         readonly DatabaseFactory databaseFactory;
 

@@ -10,12 +10,12 @@ using Telegram.Bot.Types;
 
 namespace EventBot.Business.Queries
 {
-    public record State(
+    public sealed record State(
         string Command,
         int Step
     );
 
-    public class StatePeakQuery : IQuery<State?>
+    public sealed class StatePeakQuery : IQuery<State?>
     {
         IQueryCurrentState query;
 

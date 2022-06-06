@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public record SetUserLevelRequest(
+    public sealed record SetUserLevelRequest(
         long UserId,
         int Level
     );
@@ -12,7 +12,7 @@ namespace EventBot.DataAccess.Commands.Raid
     {
     }
 
-    public class SetUserLevelCommand : ISetUserLevelCommand
+    public sealed class SetUserLevelCommand : ISetUserLevelCommand
     {
         readonly DatabaseFactory databaseFactory;
 

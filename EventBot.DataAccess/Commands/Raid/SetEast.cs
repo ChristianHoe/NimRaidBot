@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public record SetEastRequest(
+    public sealed record SetEastRequest(
         long ChatId,
         decimal East
     );
@@ -12,7 +12,7 @@ namespace EventBot.DataAccess.Commands.Raid
     {
     }
 
-    public class SetEastCommand : ISetEastCommand
+    public sealed class SetEastCommand : ISetEastCommand
     {
         readonly DatabaseFactory databaseFactory;
 

@@ -14,7 +14,7 @@
 //     {
 //     }
 
-//     public class AddMinunUser : IAddMinunUserCommand
+//     public sealed class AddMinunUser : IAddMinunUserCommand
 //     {
 //         readonly DatabaseFactory databaseFactory;
 

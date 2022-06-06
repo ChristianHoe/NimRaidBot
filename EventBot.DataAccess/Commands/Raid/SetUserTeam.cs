@@ -10,7 +10,7 @@ namespace EventBot.DataAccess.Commands.Raid
         Gelb = 3
     }
 
-    public record SetUserTeamRequest(
+    public sealed record SetUserTeamRequest(
         long UserId,
         TeamType Team
     );
@@ -19,7 +19,7 @@ namespace EventBot.DataAccess.Commands.Raid
     {
     }
 
-    public class SetUserTeamCommand : ISetUserTeamCommand
+    public sealed class SetUserTeamCommand : ISetUserTeamCommand
     {
         readonly DatabaseFactory databaseFactory;
 

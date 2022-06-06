@@ -11,16 +11,16 @@ using Telegram.Bot.Types.ReplyMarkups;
 
 namespace EventBot.Business.Commands.Minun
 {
-    public record GamePokeCreateTextRequest(
+    public sealed record GamePokeCreateTextRequest(
         DateTime Now,
         PogoGamePoke Game,
         IEnumerable<PogoGamePokesAnswer> Votes
     );
 
-    public record GamePokeCreateTextResponse(
+    public sealed record GamePokeCreateTextResponse(
         string Text,
         InlineKeyboardMarkup? InlineKeyboardMarkup = null,
-        ParseMode ParseMode = ParseMode.Default
+        ParseMode ParseMode = ParseMode.MarkdownV2
     );
 
     public interface IGamePokeCreateText
@@ -28,7 +28,7 @@ namespace EventBot.Business.Commands.Minun
         GamePokeCreateTextResponse Execute(GamePokeCreateTextRequest request);
     }
 
-    public class GamePokeCreateText : IGamePokeCreateText
+    public sealed class GamePokeCreateText : IGamePokeCreateText
     {
         private struct PokeData
         {
@@ -82,16 +82,16 @@ namespace EventBot.Business.Commands.Minun
             CreatePokeWithTyping(text, request.Game.Choice4PokeId, request.Game.Choice4PokeMoveTyp);
             
             var keyBoardPoke1 = new[] { 
-                new InlineKeyboardButton { Text = pokeNames[request.Game.Choice1PokeId], CallbackData = request.Game.Choice1PokeId.ToString() }, 
+                new InlineKeyboardButton(pokeNames[request.Game.Choice1PokeId]) { CallbackData = request.Game.Choice1PokeId.ToString() }, 
             };
             var keyBoardPoke2 = new[] { 
-                new InlineKeyboardButton { Text = pokeNames[request.Game.Choice2PokeId], CallbackData = request.Game.Choice2PokeId.ToString() }, 
+                new InlineKeyboardButton(pokeNames[request.Game.Choice2PokeId]) { CallbackData = request.Game.Choice2PokeId.ToString() }, 
             };
             var keyBoardPoke3 = new[] { 
-                new InlineKeyboardButton { Text = pokeNames[request.Game.Choice3PokeId], CallbackData = request.Game.Choice3PokeId.ToString() }, 
+                new InlineKeyboardButton(pokeNames[request.Game.Choice3PokeId]) { CallbackData = request.Game.Choice3PokeId.ToString() }, 
             };
             var keyBoardPoke4 = new[] { 
-                new InlineKeyboardButton { Text = pokeNames[request.Game.Choice4PokeId], CallbackData = request.Game.Choice4PokeId.ToString() }, 
+                new InlineKeyboardButton(pokeNames[request.Game.Choice4PokeId]) { CallbackData = request.Game.Choice4PokeId.ToString() }, 
             };
 
             var inlineKeyboard = new InlineKeyboardMarkup(new InlineKeyboardButton[4][] { keyBoardPoke1, keyBoardPoke2, keyBoardPoke3, keyBoardPoke4 });
@@ -101,7 +101,7 @@ namespace EventBot.Business.Commands.Minun
 
         private void CreatePokeWithTyping(StringBuilder text, int id, int moveType)
         {
-            var values = this.getPokeBaseValuesQuery.Execute(null);
+            var values = this.getPokeBaseValuesQuery.Execute(new GetPokeBaseValuesRequest());
             var pokeNames = EventBot.Models.GoMap.Helper.PokeNames;
             var poke = values[id];
             var type = poke.type1;
@@ -111,7 +111,7 @@ namespace EventBot.Business.Commands.Minun
 
         private GamePokeCreateTextResponse Finished(GamePokeCreateTextRequest request)
         {
-            var values = this.getPokeBaseValuesQuery.Execute(null);
+            var values = this.getPokeBaseValuesQuery.Execute(new GetPokeBaseValuesRequest());
             var targetPoke = values[request.Game.TargetPokeId];
 
             var pokeNames = EventBot.Models.GoMap.Helper.PokeNames;
@@ -138,7 +138,7 @@ namespace EventBot.Business.Commands.Minun
 
 
             var pokeNames = EventBot.Models.GoMap.Helper.PokeNames;
-            var values = this.getPokeBaseValuesQuery.Execute(null);
+            var values = this.getPokeBaseValuesQuery.Execute(new GetPokeBaseValuesRequest());
             var targetPoke = new PokeData { PokeMoveType = (ElementType)request.Game.TargetPokeMoveTyp, Values = values[request.Game.TargetPokeId] };
             var pokes = new PokeData[]
             {

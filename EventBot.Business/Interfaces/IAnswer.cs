@@ -37,7 +37,7 @@ namespace EventBot.Business.Interfaces
             return message.Message.MessageId;
         }
 
-        protected int GetUserId(CallbackQuery message)
+        protected long GetUserId(CallbackQuery message)
         {
             return message.From.Id;
         }

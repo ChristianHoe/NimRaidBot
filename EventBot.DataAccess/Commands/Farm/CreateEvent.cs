@@ -4,7 +4,7 @@ using System;
 
 namespace EventBot.DataAccess.Commands.Farm
 {
-    public record CreateEventRequest(
+    public sealed record CreateEventRequest(
         int? LocationId,
         DateTime? Start,
         DateTime? Finished,
@@ -16,7 +16,7 @@ namespace EventBot.DataAccess.Commands.Farm
     {
     }
 
-    public class CreateEvent : ICreateEventCommand
+    public sealed class CreateEvent : ICreateEventCommand
     {
         readonly DatabaseFactory databaseFactory;
 

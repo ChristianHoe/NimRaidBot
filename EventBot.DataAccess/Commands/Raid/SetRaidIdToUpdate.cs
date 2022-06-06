@@ -4,7 +4,7 @@ using EventBot.DataAccess.Database;
 namespace EventBot.DataAccess.Commands.Raid
 {
 
-    public record SetRaidIdToUpdateRequest(
+    public sealed record SetRaidIdToUpdateRequest(
         long UserId,
         int RaidId
     );
@@ -13,7 +13,7 @@ namespace EventBot.DataAccess.Commands.Raid
     {
     }
 
-    public class SetRaidIdToUpdateCommand : ISetRaidIdToUpdateCommand
+    public sealed class SetRaidIdToUpdateCommand : ISetRaidIdToUpdateCommand
     {
         readonly DatabaseFactory databaseFactory;
 

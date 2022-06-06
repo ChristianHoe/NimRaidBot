@@ -4,7 +4,7 @@ using EventBot.DataAccess.Models;
 
 namespace EventBot.DataAccess.Commands.Minun
 {
-    public record GameCreateRequest(
+    public sealed record GameCreateRequest(
         long ChatId,
         int MessageId,
         int Difficulty,
@@ -25,7 +25,7 @@ namespace EventBot.DataAccess.Commands.Minun
     {
     }
 
-    public class GameCreate : IGameCreateCommand
+    public sealed class GameCreate : IGameCreateCommand
     {
         readonly DatabaseFactory databaseFactory;
 

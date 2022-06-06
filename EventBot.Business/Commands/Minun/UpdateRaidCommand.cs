@@ -190,7 +190,7 @@ namespace EventBot.Business.Commands.Minun
             var raidId = this.getCurrentManualRaidQuery.Execute(new GetCurrentManualRaidRequest(UserId: userId)).UpdRaidId;
 
 
-            var chats = this.getActivePogoGroups.Execute(new GetActivePogoGroupsRequest(BotIds: new long[] { this.nimRaidBot.BotId }));
+            var chats = this.getActivePogoGroups.Execute(new GetActivePogoGroupsRequest(BotIds: new long?[] { this.nimRaidBot.BotId }));
             int numberOfCurrentActiveUsers = chats.Count(x => x.RaidLevel.HasValue);
             if (numberOfCurrentActiveUsers <= 0)
                 return StateResult.Finished;

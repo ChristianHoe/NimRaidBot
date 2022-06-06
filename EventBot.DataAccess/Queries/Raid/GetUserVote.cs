@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Raid
 {
-    public record GetUserVoteRequest(
+    public sealed record GetUserVoteRequest(
         long ChatId,
         long MessageId,
         long UserId,
@@ -17,7 +17,7 @@ namespace EventBot.DataAccess.Queries.Raid
     {
     }
 
-    public class GetUserVote : IGetUserVoteQuery
+    public sealed class GetUserVote : IGetUserVoteQuery
     {
         readonly DatabaseFactory databaseFactory;
 

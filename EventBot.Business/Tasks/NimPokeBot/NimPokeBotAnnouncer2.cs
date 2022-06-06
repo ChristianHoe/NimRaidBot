@@ -12,7 +12,7 @@ using EventBot.DataAccess.Queries.Raid;
 
 namespace EventBot.Business.NimPokeBot
 {
-    public class Announcer2 : IScheduledTask
+    public sealed class Announcer2 : IScheduledTask
     {
         private readonly TelegramBotClient proxy;
         private readonly TelegramBotClient raidBotProxy;
@@ -77,7 +77,7 @@ namespace EventBot.Business.NimPokeBot
             TimeZoneInfo timezone = TimeZoneInfo.FindSystemTimeZoneById(TimeZoneIds.Local);
 
 
-            var chats = this.activeUsers.Execute(new GetActivePogoGroupsRequest(BotIds: new long[] { this.proxy.BotId, this.raidBotProxy.BotId } ));
+            var chats = this.activeUsers.Execute(new GetActivePogoGroupsRequest(BotIds: new long?[] { this.proxy.BotId, this.raidBotProxy.BotId } ));
             int numberOfCurrentActiveUsers = chats.Count();
             if (numberOfCurrentActiveUsers <= 0)
                 return;

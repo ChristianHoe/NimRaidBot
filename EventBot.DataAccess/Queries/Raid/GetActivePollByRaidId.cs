@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Raid
 {
-    public record GetActivePollByRaidRequest(
+    public sealed record GetActivePollByRaidRequest(
         int RaidId,
         long ChatId
     );
@@ -13,7 +13,7 @@ namespace EventBot.DataAccess.Queries.Raid
     {
     }
 
-    public class GetActivePollByRaidId : IGetActivePollByRaidId
+    public sealed class GetActivePollByRaidId : IGetActivePollByRaidId
     {
         readonly DatabaseFactory databaseFactory;
 

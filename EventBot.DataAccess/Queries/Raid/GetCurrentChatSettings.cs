@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Raid
 {
-    public record GetCurrentChatSettingsRequest(
+    public sealed record GetCurrentChatSettingsRequest(
         long ChatId
     );
 
@@ -12,7 +12,7 @@ namespace EventBot.DataAccess.Queries.Raid
     {
     }
 
-    public class GetCurrentChatSettings : IGetCurrentChatSettingsQuery
+    public sealed class GetCurrentChatSettings : IGetCurrentChatSettingsQuery
     {
         readonly DatabaseFactory databaseFactory;
 

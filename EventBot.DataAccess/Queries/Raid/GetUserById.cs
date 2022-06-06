@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Raid
 {
-    public record GetUserByIdRequest(
+    public sealed record GetUserByIdRequest(
         long UserId
     );
 
@@ -12,7 +12,7 @@ namespace EventBot.DataAccess.Queries.Raid
     {
     }
 
-    public class GetUserById : IGetUserByIdQuery
+    public sealed class GetUserById : IGetUserByIdQuery
     {
         readonly DatabaseFactory databaseFactory;
 

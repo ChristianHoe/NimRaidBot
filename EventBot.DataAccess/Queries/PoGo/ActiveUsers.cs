@@ -5,13 +5,13 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.PoGo
 {
-    public record ActiveUsersRequest();
+    public sealed record ActiveUsersRequest();
 
     public interface IActiveUsers : IQuery<ActiveUsersRequest, IEnumerable<PogoUser>>
     {
     }
 
-    public class ActiveUsers : IActiveUsers
+    public sealed class ActiveUsers : IActiveUsers
     {
         readonly DatabaseFactory databaseFactory;
 

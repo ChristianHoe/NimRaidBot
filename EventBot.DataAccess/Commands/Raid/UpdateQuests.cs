@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public record UpdateQuestsRequest(
+    public sealed record UpdateQuestsRequest(
         IEnumerable<PogoQuest> Quests
     );
 
@@ -13,7 +13,7 @@ namespace EventBot.DataAccess.Commands.Raid
     {
     }
 
-    public class UpdateQuests : IUpdateQuestsCommand
+    public sealed class UpdateQuests : IUpdateQuestsCommand
     {
         readonly DatabaseFactory databaseFactory;
 

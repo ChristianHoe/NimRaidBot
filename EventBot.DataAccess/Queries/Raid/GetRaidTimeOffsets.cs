@@ -4,7 +4,7 @@ using EventBot.DataAccess.Database;
 
 namespace EventBot.DataAccess.Queries.Raid
 {
-    public record GetRaidTimeOffsetsRequest(
+    public sealed record GetRaidTimeOffsetsRequest(
         int? OffsetId
     );
 
@@ -12,7 +12,7 @@ namespace EventBot.DataAccess.Queries.Raid
     {
     }
 
-    public class GetRaidTimeOffsets : IGetRaidTimeOffsetsQuery
+    public sealed class GetRaidTimeOffsets : IGetRaidTimeOffsetsQuery
     {
         readonly DatabaseFactory databaseFactory;
         private ILookup<int, int>? _cache;

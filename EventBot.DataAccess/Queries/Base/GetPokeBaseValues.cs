@@ -6,13 +6,13 @@ using System.Text.Json;
 
 namespace EventBot.DataAccess.Queries.Base
 {
-    public record GetPokeBaseValuesRequest();
+    public sealed record GetPokeBaseValuesRequest();
 
     public interface IGetPokeBaseValuesQuery : IQuery<GetPokeBaseValuesRequest, Dictionary<int, BaseValue>>
     {
     }
 
-    public class GetPokeBaseValues : IGetPokeBaseValuesQuery
+    public sealed class GetPokeBaseValues : IGetPokeBaseValuesQuery
     {
         private Dictionary<int, BaseValue>? _cache;
 
@@ -27,7 +27,12 @@ namespace EventBot.DataAccess.Queries.Base
 
             var fileContent = File.ReadAllText(Path.Combine(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "PokeAlarm"), "basevalues.json"));
 
-            return _cache = JsonSerializer.Deserialize<Dictionary<int, BaseValue>>(fileContent);
+            _cache = JsonSerializer.Deserialize<Dictionary<int, BaseValue>>(fileContent);
+
+            if (_cache == null)
+                throw new ArgumentNullException("basevalues.json not valid");
+
+            return _cache;
         }
     }
 }

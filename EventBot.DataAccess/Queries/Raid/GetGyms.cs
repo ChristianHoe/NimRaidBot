@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Raid
 {
-    public record GetGymsRequest
+    public sealed record GetGymsRequest
     {
     }
 
@@ -13,7 +13,7 @@ namespace EventBot.DataAccess.Queries.Raid
     {
     }
 
-    public class GetGyms : IGetGymsQuery
+    public sealed class GetGyms : IGetGymsQuery
     {
         readonly DatabaseFactory databaseFactory;
 

@@ -4,13 +4,13 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Farm
 {
-    public record GetNextPollToProcessRequest();
+    public sealed record GetNextPollToProcessRequest();
 
     public interface IGetNextPollToProcessQuery : IQuery<GetNextPollToProcessRequest, ActivePoll?>
     {
     }
 
-    public class GetNextPollToProcess : IGetNextPollToProcessQuery
+    public sealed class GetNextPollToProcess : IGetNextPollToProcessQuery
     {
         readonly DatabaseFactory databaseFactory;
 

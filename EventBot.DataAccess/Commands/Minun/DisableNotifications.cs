@@ -3,16 +3,16 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Minun
 {
-    public record DisableNotificationsRequest(
+    public sealed record DisableNotificationsRequest(
         long UserId,
-        long BotId
+        long? BotId
     );
 
     public interface IDisableNotificationsCommand : ICommand<DisableNotificationsRequest>
     {
     }
 
-    public class DisableNotifications : IDisableNotificationsCommand
+    public sealed class DisableNotifications : IDisableNotificationsCommand
     {
         readonly DatabaseFactory databaseFactory;
 

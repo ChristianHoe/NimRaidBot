@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Pokes
 {
-    public record GetCurrentPokesRequest(
+    public sealed record GetCurrentPokesRequest(
         int MapId
     );
 
@@ -14,7 +14,7 @@ namespace EventBot.DataAccess.Queries.Pokes
     {
     }
 
-    public class GetCurrentPokes : IGetCurrentPokesQuery
+    public sealed class GetCurrentPokes : IGetCurrentPokesQuery
     {
         readonly DatabaseFactory databaseFactory;
 

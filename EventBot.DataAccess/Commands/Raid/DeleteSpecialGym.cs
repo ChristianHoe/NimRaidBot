@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public record DeleteSpecialGymRequest(
+    public sealed record DeleteSpecialGymRequest(
         long ChatId,
         int GymId,
         GymType Type
@@ -14,7 +14,7 @@ namespace EventBot.DataAccess.Commands.Raid
     {
     }
 
-    public class DeleteSpecialGym : IDeleteSpecialGymCommand
+    public sealed class DeleteSpecialGym : IDeleteSpecialGymCommand
     {
         readonly DatabaseFactory databaseFactory;
 

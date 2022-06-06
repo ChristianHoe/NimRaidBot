@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public record SetWestRequest(
+    public sealed record SetWestRequest(
         long ChatId,
         decimal West
     );
@@ -12,7 +12,7 @@ namespace EventBot.DataAccess.Commands.Raid
     {
     }
 
-    public class SetWestCommand : ISetWestCommand
+    public sealed class SetWestCommand : ISetWestCommand
     {
         readonly DatabaseFactory databaseFactory;
 

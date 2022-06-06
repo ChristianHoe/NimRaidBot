@@ -4,6 +4,6 @@ namespace EventBot.DataAccess.ModelsEx
 {
     public class NotifyLocationExtended : NotifyLocation
     {
-        public long BotId { get; set; }
+        public long? BotId { get; set; }
     }
 }

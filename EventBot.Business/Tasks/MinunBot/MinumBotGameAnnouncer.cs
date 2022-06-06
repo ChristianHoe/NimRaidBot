@@ -9,7 +9,7 @@ using Telegram.Bot;
 
 namespace EventBot.Business.Tasks.MinunBot
 {
-    public class MinumBotGameAnnouncer : IScheduledTask
+    public sealed class MinumBotGameAnnouncer : IScheduledTask
     {
         private readonly TelegramBotClient proxy;
         private readonly IGetCurrentGamesQuery getCurrentGamesQuery;

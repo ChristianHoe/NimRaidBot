@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Farm
 {
-    public record EventLocationsRequest(
+    public sealed record EventLocationsRequest(
         string Name
     );
 
@@ -14,7 +14,7 @@ namespace EventBot.DataAccess.Queries.Farm
     {
     }
 
-    public class EventLocations : IEventLocationsQuery
+    public sealed class EventLocations : IEventLocationsQuery
     {
         readonly DatabaseFactory databaseFactory;
 

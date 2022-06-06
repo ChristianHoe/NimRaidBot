@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Minun
 {
-    public record AddPokeToNotificationListRequest(
+    public sealed record AddPokeToNotificationListRequest(
         long ChatId,
         int PokeId,
         char? Gender,
@@ -15,7 +15,7 @@ namespace EventBot.DataAccess.Commands.Minun
     {
     }
 
-    public class AddPokeToNotificationList : IAddPokeToNotificationListCommand
+    public sealed class AddPokeToNotificationList : IAddPokeToNotificationListCommand
     {
         readonly DatabaseFactory databaseFactory;
 

@@ -6,7 +6,7 @@ using EventBot.DataAccess.Models;
 
 namespace EventBot.DataAccess.Queries.Location
 {
-    public record GetNotifyLocationsByChatIdRequest(
+    public sealed record GetNotifyLocationsByChatIdRequest(
         IEnumerable<long> ChatIds
     );
 
@@ -14,7 +14,7 @@ namespace EventBot.DataAccess.Queries.Location
     {
     }
 
-    public class GetNotifyLocationsByChatId : IGetNotifyLocationsByChatIdQuery
+    public sealed class GetNotifyLocationsByChatId : IGetNotifyLocationsByChatIdQuery
     {
         readonly DatabaseFactory databaseFactory;
 

@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Base
 {
-    public record UserChannelRelationRemoveRequest(
+    public sealed record UserChannelRelationRemoveRequest(
         long UserId,
         long ChatId
     );
@@ -12,7 +12,7 @@ namespace EventBot.DataAccess.Commands.Base
     {
     }
 
-    public class UserChannelRelationRemove : IUserChannelRelationRemoveCommand
+    public sealed class UserChannelRelationRemove : IUserChannelRelationRemoveCommand
     {
         readonly DatabaseFactory databaseFactory;
 

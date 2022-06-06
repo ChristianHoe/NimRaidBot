@@ -4,13 +4,13 @@ using EventBot.DataAccess.Models;
 
 namespace EventBot.DataAccess.Queries.PoGo
 {
-    public record GetPogoConfigurationRequest();
+    public sealed record GetPogoConfigurationRequest();
 
     public interface IGetPogoConfiguration : IQuery<GetPogoConfigurationRequest, PogoConfiguration>
     {
     }
 
-    public class GetPogoConfiguration : IGetPogoConfiguration
+    public sealed class GetPogoConfiguration : IGetPogoConfiguration
     {
         readonly DatabaseFactory databaseFactory;
 

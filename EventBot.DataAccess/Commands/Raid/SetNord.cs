@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Commands.Raid
 {
-    public record SetNordRequest(
+    public sealed record SetNordRequest(
         long ChatId,
         decimal Nord
     );
@@ -12,7 +12,7 @@ namespace EventBot.DataAccess.Commands.Raid
     {
     }
 
-    public class SetNordCommand : ISetNordCommand
+    public sealed class SetNordCommand : ISetNordCommand
     {
         readonly DatabaseFactory databaseFactory;
 

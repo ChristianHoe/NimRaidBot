@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.PoGo
 {
-    public record IsActivePollRequest(
+    public sealed record IsActivePollRequest(
         long ChatId,
         long MessageId
     );
@@ -12,7 +12,7 @@ namespace EventBot.DataAccess.Queries.PoGo
     {
     }
 
-    public class IsActivePoll : IIsActivePoll
+    public sealed class IsActivePoll : IIsActivePoll
     {
         readonly DatabaseFactory databaseFactory;
 

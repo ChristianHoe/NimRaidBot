@@ -7,7 +7,7 @@ using Telegram.Bot.Types;
 
 namespace EventBot.Business.Commands
 {
-    public class MemberRemoved : IMemberRemoved
+    public sealed class MemberRemoved : IMemberRemoved
     {
         private readonly Raid.IUserRemove userRemove;
         private readonly IBotRemoveCommand removeBotCommand;
@@ -27,8 +27,11 @@ namespace EventBot.Business.Commands
             this.numberOfBotsInChatQuery = numberOfBotsInChatQuery;
         }
 
-        public Task Execute(Message message, TelegramBotClient bot, long botId)
+        public Task Execute(Message message, TelegramBotClient bot, long? botId)
         {
+            if (message.LeftChatMember?.Id == null)
+                return Task.CompletedTask;
+
             if (message.LeftChatMember.Id == botId)
             {
                 this.removeBotCommand.Execute(new BotRemoveRequest(ChatId: message.Chat.Id, BotId: botId));

@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Minun
 {
-    public record GetGameAnswersRequest(
+    public sealed record GetGameAnswersRequest(
         long ChatId,
         int MessageId
     );
@@ -14,7 +14,7 @@ namespace EventBot.DataAccess.Queries.Minun
     {
     }
 
-    public class GetGameAnswers : IGetGameAnswersQuery
+    public sealed class GetGameAnswers : IGetGameAnswersQuery
     {
         readonly DatabaseFactory databaseFactory;
 

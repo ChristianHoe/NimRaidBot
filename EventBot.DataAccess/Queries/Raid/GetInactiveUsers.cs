@@ -6,7 +6,7 @@ using EventBot.DataAccess.Models;
 
 namespace EventBot.DataAccess.Queries.Raid
 {
-    public record GetInactiveUsersRequest(
+    public sealed record GetInactiveUsersRequest(
         long GroupId,
         DateTime Threshold
     );
@@ -15,7 +15,7 @@ namespace EventBot.DataAccess.Queries.Raid
     {
     }
 
-    public class GetInactiveUsers : IGetInactiveUsersQuery
+    public sealed class GetInactiveUsers : IGetInactiveUsersQuery
     {
         readonly DatabaseFactory databaseFactory;
 

@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace EventBot.DataAccess.Queries.Scan
 {
-    public record GetActiveAreasRequest(
+    public sealed record GetActiveAreasRequest(
         int MapId
     );
 
@@ -13,7 +13,7 @@ namespace EventBot.DataAccess.Queries.Scan
     {
     }
 
-    public class GetActiveAreas : IGetActiveAreas
+    public sealed class GetActiveAreas : IGetActiveAreas
     {
         readonly DatabaseFactory databaseFactory;
 
