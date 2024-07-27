@@ -218,13 +218,12 @@ namespace EventBot
             //    return instance;
             //});
 
-            container.Register<PoGoDispatcher, PoGoDispatcher>(SimpleInjector.Lifestyle.Singleton);
-            container.Register<RaidDispatcher, RaidDispatcher>(SimpleInjector.Lifestyle.Singleton);
-            container.Register<MinunDispatcher, MinunDispatcher>(SimpleInjector.Lifestyle.Singleton);
+            container.Register<PoGoDispatcher>(SimpleInjector.Lifestyle.Singleton);
+            container.Register<RaidDispatcher>(SimpleInjector.Lifestyle.Singleton);
+            container.Register<MinunDispatcher>(SimpleInjector.Lifestyle.Singleton);
 
-            container.Register<MemberAdded, MemberAdded>();
-            container.Register<MembersAdded, MembersAdded>();
-            container.Register<MemberRemoved, MemberRemoved>();
+            container.Register<MembersAdded>();
+            container.Register<MemberRemoved>();
 
             container.Register<Business.Commands.IHelpCommand, Business.Commands.HelpCommand>(SimpleInjector.Lifestyle.Transient);
             container.Register<Business.Commands.ICancelCommand, Business.Commands.CancelCommand>();
